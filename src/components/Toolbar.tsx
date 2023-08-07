@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 import {
   Avatar,
@@ -14,6 +15,10 @@ import {
   Tooltip,
   Typography
 } from '@mui/material';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store/store';
+import { setLogin } from '../store/login';
 
 import { ArrowForward } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
@@ -49,11 +54,16 @@ const StyledNavLink = styled(NavLink)`
   color: rgba(33, 37, 41, 1);
 `;
 
-const login = false; // předělat na store access_token e1f8764e-b19a-4219-8fda-dc24a3502f80
-
 const LogButton = () => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-  const settings = ['Profile', 'Log Out'];
+  const dispatch = useDispatch();
+  const login = useSelector((state: RootState) => state.login.login);
+
+  useEffect(() => {
+    const token = Cookies.get('token');
+    const isLogin: boolean = token ? true : false;
+    dispatch(setLogin(isLogin));
+  }, [dispatch]);
 
   const openUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -63,7 +73,11 @@ const LogButton = () => {
     setAnchorElUser(null);
   };
 
-  if (login) {
+  const logoutUser = () => {
+    dispatch(setLogin(false));
+  };
+
+  if (!login) {
     return (
       <NavLink to="/login">
         <Button color="primary" endIcon={<ArrowForward />}>
@@ -97,11 +111,12 @@ const LogButton = () => {
             }}
             open={Boolean(anchorElUser)}
             onClose={closeUserMenu}>
-            {settings.map((setting) => (
-              <MenuItem key={setting} onClick={closeUserMenu}>
-                <Typography textAlign="center">{setting}</Typography>
-              </MenuItem>
-            ))}
+            <MenuItem onClick={closeUserMenu}>
+              <Typography textAlign="center">Profile</Typography>
+            </MenuItem>
+            <MenuItem onClick={logoutUser}>
+              <Typography textAlign="center">Log out</Typography>
+            </MenuItem>
           </Menu>
         </StyledBoxAvatar>
       </>

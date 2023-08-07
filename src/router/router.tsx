@@ -1,24 +1,28 @@
-// import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-// import Cookies from 'js-cookie';
 
+import PrivateRoutes from './PrivateRoutes';
 import LoginPage from '../pages/LoginPage';
 import MyArticles from '../pages/MyArticles';
 import Toolbar from '../components/Toolbar';
 import Home from '../pages/Home';
-// import CreateArticle from '../pages/CreateArticle';
+import AddArticle from '../pages/AddArticle';
+// import Article from '../pages/Article';
+// import ArticleEdit from '../pages/ArticleEdit';
 
 const Router = () => {
-  // const [jwtState, setJwtState] = useState(Cookies.get('token') || null);
-
+  console.log('Router rendering...');
   return (
     <>
       <Toolbar />
       <Routes>
         <Route index element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/my-articles" element={<MyArticles />} />
-        {/* <Route path="/article/new" element={<CreateArticle />} /> */}
+        <Route element={<PrivateRoutes />}>
+          <Route path="/articles/" element={<MyArticles />} />
+          <Route path="/article/new" element={<AddArticle />} />
+          {/* <Route path="/articles/:id" element={<Article />} />
+          <Route path="/articles/:id" element={<ArticleEdit />} /> */}
+        </Route>
       </Routes>
     </>
   );

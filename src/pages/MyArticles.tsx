@@ -1,21 +1,20 @@
 /* eslint-disable react/jsx-key */
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-// import { useGetArticles } from '../hooks/useGetArticles';
-// import { useQuery } from '@tanstack/react-query';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../store/store';
+import { setArticles } from '../store/article';
 
 import { Article } from '../model/Articles';
-// import { request } from '../utils/axiosClient';
-import Cookies from 'js-cookie';
-import axios from 'axios';
 
 import { Box, Typography, Button, Grid, IconButton, SvgIcon } from '@mui/material';
 import { styled } from '@mui/material/styles';
-
 import { ReactComponent as DeleteIcon } from '../assets/deleteIcon.svg';
 import { ReactComponent as EditIcon } from '../assets/editIcon.svg';
-import LoadingPage from '../components/Loading';
+
 import DataTable from '../components/DataTable';
 
 const StyledTypography = styled(Typography)`
@@ -34,44 +33,37 @@ const StyledGrid = styled(Grid)`
 `;
 
 const MyArticles: React.FC = () => {
-  const [listArticles, setListArticles] = useState<Article[]>([]);
-  // const { data: articles, isLoading, isError } = useGetArticles();
+  const [isLoading, setIsLoading] = useState(true);
+
+  const dispatch = useDispatch();
+  const articles = useSelector((state: RootState) => state.article.articles);
 
   const config = {
     headers: {
-      'X-API-KEY': 'd4234190-5f6b-4d51-b3f3-80cc4810d0b7',
-      Validation: Cookies.get('token')
+      'X-API-KEY': 'd4234190-5f6b-4d51-b3f3-80cc4810d0b7'
+      // Autorization: `Bearer ${Cookies.get('token')}`
     }
   };
 
   /** Get articles from API */
-  const getArticles = async (): Promise<Article> => {
+  const getArticles = async () => {
     console.log('fetch');
-    const { data } = await axios.get(`https://fullstack.exercise.applifting.cz/articles`, config);
-    console.log('data', data);
-    return data;
+    setIsLoading(false);
+    try {
+      const response = await axios.get(`https://fullstack.exercise.applifting.cz/articles`, config);
+      console.log('data', response);
+      const data = await response.data.items;
+      dispatch(setArticles(data));
+      setIsLoading(true);
+    } catch (error) {
+      console.error(error);
+      setIsLoading(true);
+    }
   };
 
-  // const { isError, isSuccess, isLoading, data, error } = useQuery({
-  //   queryKey: ['articles'],
-  //   queryFn: getArticles
-  // });
-
-  // const articles = data;
-  // console.log('articles', articles);
-
-  // if (isLoading) {
-  //   return <LoadingPage />;
-  // }
-
-  // if (isError) {
-  //   console.log('error', error);
-  // }
-
   useEffect(() => {
-    console.log('mounted');
     getArticles();
-  }, [setListArticles]);
+  }, []);
 
   const columns: GridColDef[] = [
     { field: 'title', headerName: 'Article title', flex: 1 },
@@ -98,11 +90,11 @@ const MyArticles: React.FC = () => {
       )
     }
   ];
-
+  /** */
   const handleEdit = (id: number) => {
     console.log(`Edit record with ID ${id}`);
   };
-
+  /** */
   const handleCancel = (id: number) => {
     console.log(`Delete record with ID ${id}`);
   };
@@ -121,10 +113,10 @@ const MyArticles: React.FC = () => {
         </Grid>
 
         <Grid item xs={9}>
-          {!listArticles ? (
+          {articles.length ? (
             <Typography variant="body1">Nejsou k dispozici žádná data.</Typography>
           ) : (
-            <DataTable headerColumns={columns} articles={listArticles} />
+            <DataTable headerColumns={columns} articles={articles} loading={isLoading} />
           )}
         </Grid>
       </StyledGrid>
