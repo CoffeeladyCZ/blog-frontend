@@ -13,6 +13,7 @@ import { Article } from '../model/Articles';
 type DataTablePropsType = {
   headerColumns: GridColDef<GridValidRowModel>[];
   articles: Article[];
+  loading: boolean;
 };
 
 const rows: GridRowsProp = [
@@ -30,12 +31,14 @@ const StyledDataGrid = styled(DataGrid)`
 
 const DataTable: React.FC<DataTablePropsType> = ({
   headerColumns,
-  articles
+  articles,
+  loading
 }: DataTablePropsType) => {
   return (
     <StyledDataGrid
       rows={articles}
       columns={headerColumns}
+      loading={loading}
       initialState={{
         pagination: {
           paginationModel: { page: 0, pageSize: 5 }

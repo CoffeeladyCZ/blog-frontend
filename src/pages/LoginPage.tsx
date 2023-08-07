@@ -5,6 +5,10 @@ import { useTranslation } from 'react-i18next';
 import { Navigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store/store';
+import { setLogin } from '../store/login';
+
 import { Button, Card, Grid, TextField, Typography, CardContent, CardActions } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
@@ -37,6 +41,9 @@ const LoginPage: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  const dispatch = useDispatch();
+  const login = useSelector((state: RootState) => state.login.login);
+
   const {
     register,
     handleSubmit,
@@ -61,18 +68,17 @@ const LoginPage: React.FC = () => {
       response = await axios.post(apiLogin, data, config);
       access_token = await response.data.access_token;
       Cookies.set('token', access_token);
+      dispatch(setLogin(true));
     } catch (error) {
       console.error(error);
       setIsLoading(false);
-      setErrorMessage('Error');
+      setErrorMessage((error as any)?.response?.data?.message);
     }
     console.log('token', access_token);
   };
 
-  const isUserLogin = false; // později přidat hodnotu ze storu
-
-  return Cookies.get('token') ? (
-    <Navigate to="/my-articles" replace />
+  return login ? (
+    <Navigate to="/articles" replace />
   ) : (
     <StyledCard>
       <form onSubmit={handleSubmit(onSubmit)}>
