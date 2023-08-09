@@ -8,18 +8,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store/store';
 import { setArticles } from '../store/article';
 
-import { Article } from '../model/Articles';
-
 import { Box, Typography, Button, Grid, IconButton, SvgIcon } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { ReactComponent as DeleteIcon } from '../assets/deleteIcon.svg';
 import { ReactComponent as EditIcon } from '../assets/editIcon.svg';
 
 import DataTable from '../components/DataTable';
-
-const StyledTypography = styled(Typography)`
-  font-size: 32px;
-`;
+import { StyledHeadline1 } from '../styled/styled';
 
 const StyledBox = styled(Box)`
   margin-top: 50px;
@@ -90,7 +85,7 @@ const MyArticles: React.FC = () => {
       )
     }
   ];
-  /** */
+  /** Edits current article */
   const handleEdit = (id: number) => {
     console.log(`Edit record with ID ${id}`);
   };
@@ -103,7 +98,7 @@ const MyArticles: React.FC = () => {
     <StyledBox>
       <StyledGrid container rowSpacing={3}>
         <Grid item xs={2}>
-          <StyledTypography variant="h1">My articles</StyledTypography>
+          <StyledHeadline1 variant="h1">My articles</StyledHeadline1>
         </Grid>
 
         <Grid item xs={6}>
@@ -113,7 +108,7 @@ const MyArticles: React.FC = () => {
         </Grid>
 
         <Grid item xs={9}>
-          {articles.length ? (
+          {!articles.length ? (
             <Typography variant="body1">Nejsou k dispozici žádná data.</Typography>
           ) : (
             <DataTable headerColumns={columns} articles={articles} loading={isLoading} />

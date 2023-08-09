@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import { useTranslation } from 'react-i18next';
+// import { useTranslation } from 'react-i18next';
 import { Navigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
@@ -9,24 +9,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { setLogin } from '../store/login';
 
-import { Button, Card, Grid, TextField, Typography, CardContent, CardActions } from '@mui/material';
+import { Button, Card, Grid, TextField, CardContent, CardActions } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { StyledHeadline3, StyledErrorMessage } from '../styled/styled';
 
 type FormValues = {
   username: string;
   password: string;
 };
 
-const StyledTypography = styled(Typography)`
-  font-size: 1.75rem;
-  margin-bottom: 1.5rem;
-`;
-
 const StyledCard = styled(Card)`
   width: 368px;
   margin: 0 auto;
   margin-top: 50px;
-  box-shadow: "0px 16px 48px rgba(0, 0, 0, 0.175);
+  box-shadow: "0px 16px 48px rgba(0, 0, 0, 0.175); // TODO předělat na global variable
 `;
 
 const StyledCardActions = styled(CardActions)`
@@ -34,10 +30,10 @@ const StyledCardActions = styled(CardActions)`
   justify-content: end;
 `;
 
-const apiLogin = 'https://fullstack.exercise.applifting.cz/login';
+const apiLogin = 'https://fullstack.exercise.applifting.cz/login'; // TODO Fuj
 
 const LoginPage: React.FC = () => {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -83,13 +79,13 @@ const LoginPage: React.FC = () => {
     <StyledCard>
       <form onSubmit={handleSubmit(onSubmit)}>
         <CardContent>
-          <StyledTypography variant="h3">Log In</StyledTypography>
+          <StyledHeadline3 variant="h3">Log In</StyledHeadline3>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
                 label="E-mail"
                 {...register('username', {
-                  required: t('errorMessage:email')
+                  required: 'Item is required'
                 })}
                 error={Boolean(errors.username)}
                 helperText={errors.username?.message}
@@ -104,7 +100,7 @@ const LoginPage: React.FC = () => {
                 label="Password"
                 type="password"
                 {...register('password', {
-                  required: t('errorMessage:password')
+                  required: 'Item is required'
                 })}
                 error={Boolean(errors.password)}
                 helperText={errors.password?.message}
@@ -116,9 +112,9 @@ const LoginPage: React.FC = () => {
             </Grid>
           </Grid>
           {errorMessage && (
-            <Typography variant="h6" sx={{ color: '#d32f2f' }} id="error">
+            <StyledErrorMessage variant="h6" id="error">
               {errorMessage}
-            </Typography>
+            </StyledErrorMessage>
           )}
         </CardContent>
         <StyledCardActions>

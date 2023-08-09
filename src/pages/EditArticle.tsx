@@ -2,28 +2,15 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Cookies from 'js-cookie';
-
-import { CircularProgress, Grid, Button, Box, TextField, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import MarkdownEditor from '@uiw/react-md-editor';
 
+import { CircularProgress, Grid, Button, TextField } from '@mui/material';
+import { styled } from '@mui/material/styles';
+
+import { StyledBox, StyledHeadline1 } from '../styled/styled';
+import { FormValuesTypes } from '../model/Articles';
+
 import LoginPage from './LoginPage';
-
-type FormValues = {
-  title: string;
-  image: string;
-  content: string;
-};
-
-const StyledTypography = styled(Typography)`
-  font-size: 32px;
-`;
-
-const StyledBox = styled(Box)`
-  margin-top: 50px;
-  display: flex;
-  justify-content: center;
-`;
 
 const StyledGrid = styled(Grid)`
   max-width: 1152px;
@@ -36,28 +23,30 @@ const EditArticle: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<FormValues>({
+  } = useForm<FormValuesTypes>({
     mode: 'onChange'
   });
 
   axios.defaults.headers.common['Authorization'] = `Bearer ${Cookies.get('token')}`; //zůstane do refreshe stránky
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: FormValuesTypes) => {
     console.log('submit', data);
     await updateArticle(data);
   };
 
-  const updateArticle = async (data: FormValues) => {
+  const updateArticle = async (data: FormValuesTypes) => {
     setIsLoading(true);
     const apiURL = 'https://fullstack.exercise.applifting.cz/articles';
     const config = {
       headers: {
-        'X-API-KEY': 'd4234190-5f6b-4d51-b3f3-80cc4810d0b7'
+        'X-API-KEY': 'd4234190-5f6b-4d51-b3f3-80cc4810d0b7',
+        Autorization: `Bearer ${Cookies.get('token')}`
       }
     };
 
     try {
-      console.log('token new article', Cookies.get('token'));
+      const response = axios.patch(apiURL, data, config);
+      console.log('token new article', response);
       // await axios.patch(apiURL, data, config);
     } catch (error) {
       console.error(error);
@@ -77,7 +66,7 @@ const EditArticle: React.FC = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <StyledGrid container rowSpacing={3}>
           <Grid item xs={4}>
-            <StyledTypography variant="h1">Edit article</StyledTypography>
+            <StyledHeadline1 variant="h1">Edit article</StyledHeadline1>
           </Grid>
           <Grid item xs={3}>
             <Button variant="contained">Publish Article</Button>
