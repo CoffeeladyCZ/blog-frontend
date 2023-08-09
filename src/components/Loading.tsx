@@ -1,13 +1,8 @@
 import React from 'react';
-import { CircularProgress, Container } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { CircularProgress } from '@mui/material';
 
-const StyledContainer = styled(Container)`
-  height: 100vh;
-  margin-top: 100px;
-  display: flex;
-  justify-content: center;
-`;
+import { StyledContainer } from '../styled/styled';
+
 const Loading: React.FC = () => {
   return (
     <StyledContainer>

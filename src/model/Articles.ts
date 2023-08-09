@@ -10,3 +10,9 @@ export type Article = {
 export type ArticlesList = {
   articles: [Article];
 };
+
+export type FormValuesTypes = {
+  title: string;
+  image: string;
+  content: string;
+};

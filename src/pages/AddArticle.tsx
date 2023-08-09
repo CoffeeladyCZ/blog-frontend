@@ -1,30 +1,16 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Cookies from 'js-cookie';
 import axios from 'axios';
-
-import { CircularProgress, Grid, Button, Box, TextField, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import MarkdownEditor from '@uiw/react-md-editor';
 
+import { styled } from '@mui/material/styles';
+import { Grid, Button, TextField } from '@mui/material';
+import { StyledBox, StyledHeadline1 } from '../styled/styled';
+
+import { FormValuesTypes } from '../model/Articles';
 import LoginPage from './LoginPage';
-import { Article } from '../model/Articles';
-
-type FormValues = {
-  title: string;
-  image: string;
-  content: string;
-};
-
-const StyledTypography = styled(Typography)`
-  font-size: 32px;
-`;
-
-const StyledBox = styled(Box)`
-  margin-top: 50px;
-  display: flex;
-  justify-content: center;
-`;
+import Loading from '../components/Loading';
 
 const StyledGrid = styled(Grid)`
   max-width: 1152px;
@@ -38,31 +24,34 @@ const AddArticle: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<FormValues>({
+  } = useForm<FormValuesTypes>({
     mode: 'onChange'
   });
 
+  /** Changes actual content */
   const handleEditorChange = (value: string | undefined) => {
-    if (value) setContent(value);
+    if (value) {
+      setContent(value);
+    }
   };
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: FormValuesTypes) => {
     setIsLoading(true);
     data.content = content; // Sets content from markdown
     await createArticle(data);
     setIsLoading(false);
   };
 
-  const createArticle = async (data: FormValues) => {
+  const createArticle = async (data: FormValuesTypes) => {
     const config = {
       headers: {
-        'X-API-KEY': 'd4234190-5f6b-4d51-b3f3-80cc4810d0b7'
+        'X-API-KEY': 'd4234190-5f6b-4d51-b3f3-80cc4810d0b7',
+        Autorization: `Bearer ${Cookies.get('token')}`
       }
     };
 
     try {
-      console.log('token new article', Cookies.get('token'));
-      await axios.post('/articles', data, config);
+      await axios.post('https://fullstack.exercise.applifting.cz/articles', data, config);
     } catch (error) {
       console.error(error);
     }
@@ -71,7 +60,7 @@ const AddArticle: React.FC = () => {
   if (!Cookies.get('token')) return <LoginPage />;
 
   if (isLoading) {
-    return <CircularProgress />;
+    return <Loading />;
   }
 
   return (
@@ -79,7 +68,7 @@ const AddArticle: React.FC = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <StyledGrid container rowSpacing={3}>
           <Grid item xs={4}>
-            <StyledTypography variant="h1">Create new article</StyledTypography>
+            <StyledHeadline1 variant="h1">Create new article</StyledHeadline1>
           </Grid>
           <Grid item xs={3}>
             <Button variant="contained">Publish Article</Button>

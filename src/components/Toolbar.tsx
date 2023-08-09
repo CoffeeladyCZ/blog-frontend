@@ -19,6 +19,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { setLogin } from '../store/login';
+import { StyledNavLink } from '../styled/styled';
 
 import { ArrowForward } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
@@ -49,13 +50,9 @@ const StyledToolbar = styled(Toolbar)`
   justify-content: space-between;
 `;
 
-const StyledNavLink = styled(NavLink)`
-  text-decoration: none;
-  color: rgba(33, 37, 41, 1);
-`;
-
-const LogButton = () => {
+const LoginSection: React.FC = () => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+
   const dispatch = useDispatch();
   const login = useSelector((state: RootState) => state.login.login);
 
@@ -65,14 +62,17 @@ const LogButton = () => {
     dispatch(setLogin(isLogin));
   }, [dispatch]);
 
+  /** Opens user menu */
   const openUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
 
+  /** Closes user menu */
   const closeUserMenu = () => {
     setAnchorElUser(null);
   };
 
+  /** Log out user from application */
   const logoutUser = () => {
     dispatch(setLogin(false));
   };
@@ -138,7 +138,7 @@ const AppHeader: React.FC = () => {
             <StyledNavLink to="#">Recent Articles</StyledNavLink>
             <StyledNavLink to="/about">About</StyledNavLink>
           </StyledBox>
-          <LogButton />
+          <LoginSection />
         </StyledToolbar>
       </StyledContainer>
     </StyledAppBar>
