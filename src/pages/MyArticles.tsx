@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import axios from 'axios';
-import Cookies from 'js-cookie';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store/store';
 import { setArticles } from '../store/article';
@@ -28,7 +27,7 @@ const StyledGrid = styled(Grid)`
 `;
 
 const MyArticles: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
   const articles = useSelector((state: RootState) => state.article.articles);
@@ -43,16 +42,16 @@ const MyArticles: React.FC = () => {
   /** Get articles from API */
   const getArticles = async () => {
     console.log('fetch');
-    setIsLoading(false);
+    setIsLoading(true);
     try {
       const response = await axios.get(`https://fullstack.exercise.applifting.cz/articles`, config);
       console.log('data', response);
       const data = await response.data.items;
       dispatch(setArticles(data));
-      setIsLoading(true);
+      setIsLoading(false);
     } catch (error) {
       console.error(error);
-      setIsLoading(true);
+      setIsLoading(false);
     }
   };
 
