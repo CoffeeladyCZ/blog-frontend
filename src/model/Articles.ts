@@ -8,11 +8,13 @@ export type Article = {
 };
 
 export type ArticlesList = {
-  articles: [Article];
+  articles: Article[];
 };
 
 export type FormValuesTypes = {
+  articleId: string;
   title: string;
-  image: string;
+  imageId: string | undefined;
   content: string;
+  perex: string;
 };
