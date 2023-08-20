@@ -14,7 +14,12 @@ export type ArticlesList = {
 export type FormValuesTypes = {
   articleId: string;
   title: string;
-  imageId: string | undefined;
+  imageId: string | null;
   content: string;
   perex: string;
+};
+
+export type ImageType = {
+  imageId: string;
+  name: string;
 };
