@@ -70,7 +70,6 @@ const LoginPage: React.FC = () => {
       setIsLoading(false);
       setErrorMessage((error as any)?.response?.data?.message);
     }
-    console.log('token', access_token);
   };
 
   return login ? (

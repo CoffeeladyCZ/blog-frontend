@@ -7,7 +7,7 @@ import Toolbar from '../components/Toolbar';
 import Home from '../pages/Home';
 import AddArticle from '../pages/AddArticle';
 // import Article from '../pages/Article';
-// import ArticleEdit from '../pages/ArticleEdit';
+import EditArticle from '../pages/EditArticle';
 
 const Router = () => {
   console.log('Router rendering...');
@@ -20,8 +20,8 @@ const Router = () => {
         <Route element={<PrivateRoutes />}>
           <Route path="/articles/" element={<MyArticles />} />
           <Route path="/article/new" element={<AddArticle />} />
-          {/* <Route path="/articles/:id" element={<Article />} />
-          <Route path="/articles/:id" element={<ArticleEdit />} /> */}
+          {/* <Route path="/articles/:id" element={<Article />} /> */}
+          <Route path="/article/edit/:id" element={<EditArticle />} />
         </Route>
       </Routes>
     </>

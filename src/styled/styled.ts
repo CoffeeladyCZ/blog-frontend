@@ -32,3 +32,11 @@ export const StyledHeadline3 = styled(Typography)`
 export const StyledErrorMessage = styled(Typography)`
   color: #d32f2f;
 `;
+
+export const StyledUploadedFile = styled('div')`
+  display: flex;
+`;
+
+export const StyledSpan = styled('span')`
+  font-weight: bold;
+`;

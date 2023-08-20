@@ -41,16 +41,16 @@ const MyArticles: React.FC = () => {
 
   /** Get articles from API */
   const getArticles = async () => {
-    console.log('fetch');
     setIsLoading(true);
+
     try {
       const response = await axios.get(`https://fullstack.exercise.applifting.cz/articles`, config);
       console.log('data', response);
       const data = await response.data.items;
       dispatch(setArticles(data));
-      setIsLoading(false);
     } catch (error) {
       console.error(error);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -70,12 +70,14 @@ const MyArticles: React.FC = () => {
       flex: 1,
       renderCell: (params: GridRenderCellParams) => (
         <>
-          <IconButton aria-label="Edit" onClick={() => handleEdit(params.row.id)}>
-            <SvgIcon>
-              <EditIcon />
-            </SvgIcon>
+          <IconButton aria-label="Edit" onClick={() => handleEdit(params.row.articleId)}>
+            <NavLink to={`/article/edit/${params.row.articleId}`}>
+              <SvgIcon>
+                <EditIcon />
+              </SvgIcon>
+            </NavLink>
           </IconButton>
-          <IconButton aria-label="Delete" onClick={() => handleCancel(params.row.id)}>
+          <IconButton aria-label="Delete" onClick={() => handleCancel(params.row.articleId)}>
             <SvgIcon>
               <DeleteIcon />
             </SvgIcon>

@@ -89,7 +89,7 @@ const LoginSection: React.FC = () => {
     return (
       <>
         <StyledBoxAvatar>
-          <StyledNavLink to="#">My articles</StyledNavLink>
+          <StyledNavLink to="/articles/">My articles</StyledNavLink>
           <StyledNavLink to="/article/new">Create articles</StyledNavLink>
           <Tooltip title="Open menu">
             <IconButton onClick={openUserMenu}>
