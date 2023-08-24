@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
 // import { useTranslation } from 'react-i18next';
 import { Navigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
-
 import { useDispatch, useSelector } from 'react-redux';
+
 import { RootState } from '../store/store';
 import { setLogin } from '../store/login';
+import { httpPost } from '../utils/axiosService';
 
 import { Button, Card, Grid, TextField, CardContent, CardActions } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -22,15 +22,13 @@ const StyledCard = styled(Card)`
   width: 368px;
   margin: 0 auto;
   margin-top: 50px;
-  box-shadow: "0px 16px 48px rgba(0, 0, 0, 0.175); // TODO předělat na global variable
+  box-shadow: 0px 16px 48px rgba(0, 0, 0, 0.175); // TODO předělat na global variable
 `;
 
 const StyledCardActions = styled(CardActions)`
   padding: 16px;
   justify-content: end;
 `;
-
-const apiLogin = 'https://fullstack.exercise.applifting.cz/login'; // TODO Fuj
 
 const LoginPage: React.FC = () => {
   // const { t } = useTranslation();
@@ -48,27 +46,21 @@ const LoginPage: React.FC = () => {
     mode: 'onChange'
   });
 
-  const config = {
-    headers: {
-      'X-API-KEY': 'd4234190-5f6b-4d51-b3f3-80cc4810d0b7'
-    }
-  };
-
   const onSubmit = async (data: FormValues) => {
     setIsLoading(true);
 
-    console.log('data', data);
     let response;
     let access_token;
     try {
-      response = await axios.post(apiLogin, data, config);
+      response = await httpPost('/login', data);
       access_token = await response.data.access_token;
       Cookies.set('token', access_token);
       dispatch(setLogin(true));
     } catch (error) {
       console.error(error);
-      setIsLoading(false);
       setErrorMessage((error as any)?.response?.data?.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 

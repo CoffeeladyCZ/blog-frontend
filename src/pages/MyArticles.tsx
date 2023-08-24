@@ -2,12 +2,25 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
+
 import { RootState } from '../store/store';
 import { setArticles } from '../store/article';
+import { httpDelete, httpGet } from '../utils/axiosService';
 
-import { Box, Typography, Button, Grid, IconButton, SvgIcon } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Grid,
+  IconButton,
+  SvgIcon
+} from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { ReactComponent as DeleteIcon } from '../assets/deleteIcon.svg';
 import { ReactComponent as EditIcon } from '../assets/editIcon.svg';
@@ -26,17 +39,21 @@ const StyledGrid = styled(Grid)`
   padding: 0 24px;
 `;
 
+const StyledDialogTitle = styled(DialogTitle)`
+  background-color: #4dabf5;
+  color: #ffffff;
+  margin-bottom: 20px;
+`;
+
 const MyArticles: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false);
 
   const dispatch = useDispatch();
   const articles = useSelector((state: RootState) => state.article.articles);
 
-  const config = {
-    headers: {
-      'X-API-KEY': 'd4234190-5f6b-4d51-b3f3-80cc4810d0b7'
-      // Autorization: `Bearer ${Cookies.get('token')}`
-    }
+  const closeDialog = () => {
+    setIsOpenDialog(false);
   };
 
   /** Get articles from API */
@@ -44,8 +61,7 @@ const MyArticles: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.get(`https://fullstack.exercise.applifting.cz/articles`, config);
-      console.log('data', response);
+      const response = await httpGet('/articles');
       const data = await response.data.items;
       dispatch(setArticles(data));
     } catch (error) {
@@ -61,8 +77,8 @@ const MyArticles: React.FC = () => {
 
   const columns: GridColDef[] = [
     { field: 'title', headerName: 'Article title', flex: 1 },
-    { field: 'perex', headerName: 'Perex', flex: 1 },
-    { field: 'author', headerName: 'Author', flex: 1 },
+    { field: 'perex', headerName: 'Perex', flex: 2 },
+    { field: 'author', headerName: 'Authod', flex: 1 },
     { field: 'comments', headerName: '# of comments', flex: 1 },
     {
       field: 'actions',
@@ -70,29 +86,53 @@ const MyArticles: React.FC = () => {
       flex: 1,
       renderCell: (params: GridRenderCellParams) => (
         <>
-          <IconButton aria-label="Edit" onClick={() => handleEdit(params.row.articleId)}>
+          <IconButton aria-label="Edit">
             <NavLink to={`/article/edit/${params.row.articleId}`}>
               <SvgIcon>
                 <EditIcon />
               </SvgIcon>
             </NavLink>
           </IconButton>
-          <IconButton aria-label="Delete" onClick={() => handleCancel(params.row.articleId)}>
+          <IconButton aria-label="Delete" onClick={() => setIsOpenDialog(true)}>
             <SvgIcon>
               <DeleteIcon />
             </SvgIcon>
           </IconButton>
+          <Dialog open={isOpenDialog} onClose={closeDialog}>
+            <StyledDialogTitle>Delete article</StyledDialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                <p>You are about to delete an article {params.row.title}.</p>
+                <p>Do you really want to continue? The action is irreversible.</p>
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => setIsOpenDialog(false)}>Cancel</Button>
+              <Button variant="contained" onClick={() => deleteArticle(params.row.articleId)}>
+                Delete
+              </Button>
+            </DialogActions>
+          </Dialog>
         </>
       )
     }
   ];
-  /** Edits current article */
-  const handleEdit = (id: number) => {
-    console.log(`Edit record with ID ${id}`);
-  };
-  /** */
-  const handleCancel = (id: number) => {
+
+  /**
+   * Deletes choose article
+   */
+  const deleteArticle = async (id: number) => {
     console.log(`Delete record with ID ${id}`);
+    setIsLoading(true);
+    try {
+      await httpDelete(`/articles/${id}`);
+      setIsOpenDialog(false);
+      await getArticles();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
