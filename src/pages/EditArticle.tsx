@@ -4,11 +4,11 @@ import Cookies from 'js-cookie';
 import MarkdownEditor from '@uiw/react-md-editor';
 import { useParams, useNavigate } from 'react-router-dom';
 
-import { Grid, Button, TextField, Tooltip, IconButton, Typography } from '@mui/material';
+import { Grid, Button, TextField, Tooltip, IconButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Close } from '@mui/icons-material';
 
-import { StyledBox, StyledHeadline1, StyledUploadedFile, StyledSpan } from '../styled/styled';
+import { StyledBox, StyledHeadline1 } from '../styled/styled';
 import { FormValuesTypes } from '../model/Articles';
 import { httpPatch, httpGet, httpGetImage } from '../utils/axiosService';
 import { useFileUpload } from '../hooks/useFileUpload';
@@ -18,7 +18,6 @@ import LoginPage from './LoginPage';
 import Loading from '../components/Loading';
 import MediaUploadInput from '../components/MediaUploadInput';
 import Notification from '../components/Notification';
-import article from '../store/article';
 
 const StyledGrid = styled(Grid)`
   max-width: 1152px;
@@ -119,7 +118,7 @@ const EditArticle: React.FC = () => {
     data.content = content;
 
     try {
-      const response = httpPatch(`/articles/${id}`, data);
+      httpPatch(`/articles/${id}`, data);
       setShowSuccessAlert(true);
       navigate('/articles');
     } catch (error) {

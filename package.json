@@ -21,6 +21,7 @@
     "@types/styled-components": "^5.1.26",
     "@uiw/react-md-editor": "^3.23.3",
     "axios": "^1.4.0",
+    "dayjs": "^1.11.9",
     "eslint": "^8.44.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "i18next": "^23.2.11",

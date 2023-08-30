@@ -8,6 +8,7 @@ import Home from '../pages/Home';
 import AddArticle from '../pages/AddArticle';
 // import Article from '../pages/Article';
 import EditArticle from '../pages/EditArticle';
+import RecentArticles from '../pages/RecentArticles';
 
 const Router = () => {
   console.log('Router rendering...');
@@ -17,6 +18,7 @@ const Router = () => {
       <Routes>
         <Route index element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/recent-articles" element={<RecentArticles />} />
         <Route element={<PrivateRoutes />}>
           <Route path="/articles/" element={<MyArticles />} />
           <Route path="/article/new" element={<AddArticle />} />
