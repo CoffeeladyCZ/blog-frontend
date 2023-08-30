@@ -135,7 +135,7 @@ const AppHeader: React.FC = () => {
             </IconButton>
           </NavLink>
           <StyledBox>
-            <StyledNavLink to="#">Recent Articles</StyledNavLink>
+            <StyledNavLink to="/recent-articles">Recent Articles</StyledNavLink>
             <StyledNavLink to="/about">About</StyledNavLink>
           </StyledBox>
           <LoginSection />

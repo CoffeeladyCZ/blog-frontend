@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container, Grid, Typography } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 
@@ -7,6 +7,10 @@ export const StyledContainer = styled(Container)`
   margin-top: 100px;
   display: flex;
   justify-content: center;
+`;
+
+export const StyledGrid = styled(Grid)`
+  max-width: 1152px;
 `;
 
 export const StyledBox = styled(Box)`
@@ -21,7 +25,8 @@ export const StyledNavLink = styled(NavLink)`
 `;
 
 export const StyledHeadline1 = styled(Typography)`
-  font-size: 32px;
+  font-size: 2rem;
+  padding-bottom: 1rem;
 `;
 
 export const StyledHeadline3 = styled(Typography)`
@@ -29,6 +34,16 @@ export const StyledHeadline3 = styled(Typography)`
   margin-bottom: 1.5rem;
 `;
 
+export const StyledH4 = styled(Typography)`
+  font-size: 24px;
+  line-height: 2.4;
+`;
+
+export const StyledBodyText = styled(Typography)`
+  font-size: 1rem;
+  line-height: 24px;
+  color: #212529;
+`;
 export const StyledErrorMessage = styled(Typography)`
   color: #d32f2f;
 `;

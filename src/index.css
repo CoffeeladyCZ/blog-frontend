@@ -8,8 +8,9 @@ html {
   box-sizing: inherit;
 }
 
-body{
+body {
   margin: 0;
   padding: 0;
-  font-family: "Helvetica Neue", Arial, sans-serif;;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
 }
