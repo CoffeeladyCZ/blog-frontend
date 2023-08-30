@@ -7,6 +7,37 @@ export type Article = {
   lastUpdatedAt: string;
 };
 
+export type ArticleDetailTypes = {
+  articleId: string;
+  comments: string[];
+  content: string;
+  createdAt: string;
+  imageId: string;
+  lastUpdatedAt: string;
+  perex: string;
+  title: string;
+  image?: string;
+};
+
+export const defaultArticleValues = {
+  articleId: '',
+  title: '',
+  imageId: '',
+  content: '',
+  perex: ''
+};
+
+export const defaultArticleDetailValues = {
+  articleId: '',
+  comments: [],
+  title: '',
+  imageId: '',
+  content: '',
+  perex: '',
+  createdAt: '',
+  lastUpdatedAt: ''
+};
+
 export type ArticlesList = {
   articles: Article[];
 };
@@ -15,6 +46,7 @@ export type FormValuesTypes = {
   articleId: string;
   title: string;
   imageId: string | null;
+  image?: string;
   content: string;
   perex: string;
 };

@@ -42,8 +42,17 @@ export const StyledH4 = styled(Typography)`
 export const StyledBodyText = styled(Typography)`
   font-size: 1rem;
   line-height: 24px;
-  color: #212529;
 `;
+export const StyledBodyTextXL = styled(Typography)`
+  font-size: 20px;
+  line-height: 34px;
+`;
+
+export const StyledSmallText = styled(Typography)`
+  color: rgba(108, 117, 125, 1);
+  line-height: 20px;
+`;
+
 export const StyledErrorMessage = styled(Typography)`
   color: #d32f2f;
 `;

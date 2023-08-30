@@ -9,10 +9,11 @@ import { styled } from '@mui/material/styles';
 import { Close } from '@mui/icons-material';
 
 import { StyledBox, StyledHeadline1 } from '../styled/styled';
-import { FormValuesTypes } from '../model/Articles';
-import { httpPatch, httpGet, httpGetImage } from '../utils/axiosService';
+import { FormValuesTypes, defaultArticleValues } from '../model/Articles';
+import { httpPatch, httpGetImage } from '../utils/axiosService';
 import { useFileUpload } from '../hooks/useFileUpload';
 import { blobToBase64 } from '../utils/utils';
+import { fetchImage, getArticle } from '../utils/apiUtils';
 
 import LoginPage from './LoginPage';
 import Loading from '../components/Loading';
@@ -46,16 +47,10 @@ const EditArticle: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [image, setImage] = useState<string | ArrayBuffer | null>(null);
   const [showSuccessAlert, setShowSuccessAlert] = useState<boolean>(false);
-  const [articleData, setArticleData] = useState<FormValuesTypes>({
-    articleId: '',
-    title: '',
-    imageId: '',
-    content: '',
-    perex: ''
-  });
+  const [articleData, setArticleData] = useState<FormValuesTypes>(defaultArticleValues);
 
   const { id } = useParams();
-  const { uploadFile, deleteFile, setFeaturedImage, imageId } = useFileUpload();
+  const { uploadFile, deleteFile, imageId } = useFileUpload();
   const navigate = useNavigate();
 
   const {
@@ -67,12 +62,35 @@ const EditArticle: React.FC = () => {
   });
 
   useEffect(() => {
-    getArticle();
+    const fetchData = async () => {
+      try {
+        const article = await getArticle(id);
+        if (article) {
+          setArticleData(article);
+          if (article.image) {
+            setImage(article.image);
+            setShowSuccessAlert(true);
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
   }, [id]);
 
   useEffect(() => {
     if (imageId) {
-      getImage(imageId);
+      const loadImage = async () => {
+        try {
+          const base64Image = await fetchImage(imageId);
+          setImage(base64Image);
+          setShowSuccessAlert(true);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      loadImage();
     }
     setImage(null);
   }, [imageId]);
@@ -88,23 +106,6 @@ const EditArticle: React.FC = () => {
       setShowSuccessAlert(true);
     } catch (error) {
       console.error(error);
-    }
-  };
-
-  const getArticle = async () => {
-    if (id) {
-      try {
-        const response = await httpGet(`/articles/${id}`);
-        const imageId = response.data.imageId;
-        if (imageId) {
-          await getImage(imageId);
-        }
-        setFeaturedImage(response.data.imageId);
-        setArticleData(response.data);
-        setContent(response.data.content);
-      } catch (error) {
-        console.error(error);
-      }
     }
   };
 
