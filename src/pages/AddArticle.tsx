@@ -1,30 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Cookies from 'js-cookie';
 import { httpPost } from '../utils/axiosService';
 import MarkdownEditor from '@uiw/react-md-editor';
 
-import { styled } from '@mui/material/styles';
-import { Grid, Button, IconButton, TextField, Tooltip } from '@mui/material';
-import { StyledBox, StyledHeadline1, StyledUploadedFile, StyledSpan } from '../styled/styled';
+import { Grid, Button, TextField, Tooltip } from '@mui/material';
+import {
+  StyledBox,
+  StyledImageContainer,
+  StyledArticleGrid,
+  StyledH1,
+  StyledButtonGrid,
+  StyledIconImageButton,
+  StyledImg
+} from '../styled/styled';
+
 import { Close } from '@mui/icons-material';
 
 import { FormValuesTypes } from '../model/Articles';
 import { useFileUpload } from '../hooks/useFileUpload';
+import { fetchImage } from '../utils/apiUtils';
 
 import LoginPage from './LoginPage';
 import Loading from '../components/Loading';
 import MediaUploadInput from '../components/MediaUploadInput';
 import Notification from '../components/Notification';
 
-const StyledGrid = styled(Grid)`
-  max-width: 1152px;
-`;
-
 const AddArticle: React.FC = () => {
   const [content, setContent] = useState<string>('You can use markdown! Yeeey!');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState<boolean>(false);
+  const [image, setImage] = useState<string | ArrayBuffer | null>(null);
 
   const { uploadFile, deleteFile, cleanFileInput, uploadedFile, imageId } = useFileUpload();
 
@@ -37,6 +43,22 @@ const AddArticle: React.FC = () => {
     mode: 'onChange'
   });
 
+  useEffect(() => {
+    if (imageId) {
+      const loadImage = async () => {
+        try {
+          const base64Image = await fetchImage(imageId);
+          setImage(base64Image);
+          setShowSuccessAlert(true);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      loadImage();
+    }
+    setImage(null);
+  }, [imageId]);
+
   /** Changes actual content */
   const handleEditorChange = (value: string | undefined) => {
     if (value) {
@@ -48,21 +70,22 @@ const AddArticle: React.FC = () => {
     setIsLoading(true);
     data.content = content;
     data.imageId = imageId;
-    console.log('data', data);
     await createArticle(data);
-    setIsLoading(false);
   };
 
   /** Creates article */
   const createArticle = async (data: FormValuesTypes) => {
+    setIsLoading(true);
     try {
       await httpPost('/articles', data);
       setShowSuccessAlert(true);
       cleanFileInput();
-      setContent('You can use markdown! Yeeey!');
       reset();
     } catch (error) {
       console.error(error);
+    } finally {
+      setContent('You can use markdown! Yeeey!');
+      setIsLoading(false);
     }
   };
 
@@ -83,16 +106,18 @@ const AddArticle: React.FC = () => {
         />
       )}
       <form onSubmit={handleSubmit(onSubmit)}>
-        <StyledGrid container rowSpacing={4}>
-          <Grid item xs={4}>
-            <StyledHeadline1 variant="h1">Create new article</StyledHeadline1>
+        <StyledArticleGrid container rowSpacing={4}>
+          <Grid container justifyContent="space-between" spacing={0}>
+            <Grid item xs={4}>
+              <StyledH1 variant="h1">Create new article</StyledH1>
+            </Grid>
+            <StyledButtonGrid item xs={3}>
+              <Button variant="contained" type="submit">
+                Publish Article
+              </Button>
+            </StyledButtonGrid>
           </Grid>
-          <Grid item xs={3}>
-            <Button variant="contained" type="submit">
-              Publish Article
-            </Button>
-          </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={12}>
             <TextField
               label="Article title"
               {...register('title', {
@@ -106,7 +131,7 @@ const AddArticle: React.FC = () => {
               fullWidth
             />
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={12}>
             <TextField
               label="Perex"
               {...register('perex', {
@@ -120,23 +145,28 @@ const AddArticle: React.FC = () => {
               fullWidth
             />
           </Grid>
-          <Grid item xs={8}>
-            {!uploadedFile && <MediaUploadInput onFileUpload={uploadFile} isLoading={isLoading} />}
-            {uploadedFile && (
-              <StyledUploadedFile>
-                <p>
-                  <StyledSpan>Uploaded file: </StyledSpan>
-                  {uploadedFile.name}
-                </p>
-                <Tooltip title="Delete upload file">
-                  <IconButton color="primary" onClick={deleteFile}>
-                    <Close />
-                  </IconButton>
-                </Tooltip>
-              </StyledUploadedFile>
+          <Grid item xs={12}>
+            {image && typeof image === 'string' && imageId && (
+              <div>
+                <p>Featured image:</p>
+                <StyledImageContainer>
+                  <StyledImg src={image} alt="Uploaded" />
+                  <Tooltip title="Delete upload file">
+                    <StyledIconImageButton
+                      size="small"
+                      color="primary"
+                      onClick={() => deleteFile(imageId)}>
+                      <Close />
+                    </StyledIconImageButton>
+                  </Tooltip>
+                </StyledImageContainer>
+              </div>
             )}
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={12}>
+            {!uploadedFile && <MediaUploadInput onFileUpload={uploadFile} isLoading={isLoading} />}
+          </Grid>
+          <Grid item xs={12}>
             <MarkdownEditor
               id="content"
               value={content}
@@ -145,7 +175,7 @@ const AddArticle: React.FC = () => {
               onChange={handleEditorChange}
             />
           </Grid>
-        </StyledGrid>
+        </StyledArticleGrid>
       </form>
     </StyledBox>
   );

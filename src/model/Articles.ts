@@ -38,10 +38,6 @@ export const defaultArticleDetailValues = {
   lastUpdatedAt: ''
 };
 
-export type ArticlesList = {
-  articles: Article[];
-};
-
 export type FormValuesTypes = {
   articleId: string;
   title: string;

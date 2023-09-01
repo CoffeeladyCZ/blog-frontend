@@ -1,5 +1,5 @@
-import { Box, Container, Grid, Typography } from '@mui/material';
-import { NavLink } from 'react-router-dom';
+import { Box, Container, Grid, Typography, IconButton } from '@mui/material';
+import { NavLink, Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 
 export const StyledContainer = styled(Container)`
@@ -11,12 +11,22 @@ export const StyledContainer = styled(Container)`
 
 export const StyledGrid = styled(Grid)`
   max-width: 1152px;
+  padding: 0 24px;
+`;
+
+export const StyledArticleGrid = styled(Grid)`
+  max-width: 760px;
+`;
+
+export const StyledButtonGrid = styled(Grid)`
+  text-align: end;
 `;
 
 export const StyledBox = styled(Box)`
   margin-top: 50px;
   display: flex;
   justify-content: center;
+  padding: 0 24px;
 `;
 
 export const StyledNavLink = styled(NavLink)`
@@ -24,12 +34,21 @@ export const StyledNavLink = styled(NavLink)`
   color: rgba(33, 37, 41, 1); // upravit na globální proměnnou
 `;
 
-export const StyledHeadline1 = styled(Typography)`
+export const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: rgba(33, 37, 41, 1); // upravit na globální proměnnou
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+export const StyledH1 = styled(Typography)`
   font-size: 2rem;
   padding-bottom: 1rem;
 `;
 
-export const StyledHeadline3 = styled(Typography)`
+export const StyledH3 = styled(Typography)`
   font-size: 1.75rem;
   margin-bottom: 1.5rem;
 `;
@@ -63,4 +82,22 @@ export const StyledUploadedFile = styled('div')`
 
 export const StyledSpan = styled('span')`
   font-weight: bold;
+`;
+
+export const StyledImageContainer = styled('div')`
+  position: relative;
+  display: inline-block;
+`;
+
+export const StyledIconImageButton = styled(IconButton)`
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.2);
+`;
+
+export const StyledImg = styled('img')`
+  width: 200px;
+  height: auto;
 `;

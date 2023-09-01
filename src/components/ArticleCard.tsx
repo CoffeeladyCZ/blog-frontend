@@ -19,16 +19,12 @@ type ArticleCardProps = {
 const StyledCard = styled(Card)`
   display: flex;
   box-shadow: none;
+  max-width: 860px;
 `;
 
 const StyledBox = styled(Box)`
   display: flex;
   flex-direction: column;
-`;
-
-const StyledCardMedia = styled(CardMedia)`
-  height: 250px;
-  width: 250px;
 `;
 
 const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
@@ -64,7 +60,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
 
   return (
     <StyledCard>
-      {image && <StyledCardMedia image={image}></StyledCardMedia>}
+      {image && <CardMedia image={image} sx={{ width: 250, height: 250 }} component="img" />}
       <StyledBox>
         <CardContent>
           <StyledH4 variant="h4">{article.title}</StyledH4>

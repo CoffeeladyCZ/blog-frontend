@@ -4,43 +4,26 @@ import Cookies from 'js-cookie';
 import MarkdownEditor from '@uiw/react-md-editor';
 import { useParams, useNavigate } from 'react-router-dom';
 
-import { Grid, Button, TextField, Tooltip, IconButton } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Grid, Button, TextField, Tooltip } from '@mui/material';
 import { Close } from '@mui/icons-material';
 
-import { StyledBox, StyledHeadline1 } from '../styled/styled';
+import {
+  StyledBox,
+  StyledImageContainer,
+  StyledArticleGrid,
+  StyledH1,
+  StyledButtonGrid,
+  StyledIconImageButton,
+  StyledImg
+} from '../styled/styled';
 import { FormValuesTypes, defaultArticleValues } from '../model/Articles';
-import { httpPatch, httpGetImage } from '../utils/axiosService';
 import { useFileUpload } from '../hooks/useFileUpload';
-import { blobToBase64 } from '../utils/utils';
-import { fetchImage, getArticle } from '../utils/apiUtils';
+import { fetchImage, getDetailArticle, updateArticleData } from '../utils/apiUtils';
 
 import LoginPage from './LoginPage';
 import Loading from '../components/Loading';
 import MediaUploadInput from '../components/MediaUploadInput';
 import Notification from '../components/Notification';
-
-const StyledGrid = styled(Grid)`
-  max-width: 1152px;
-`;
-
-const StyledImg = styled('img')`
-  width: 200px;
-  height: auto;
-`;
-
-const StyledIconButton = styled(IconButton)`
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 1;
-  background-color: rgba(0, 0, 0, 0.2);
-`;
-
-const StyledImageContainer = styled('div')`
-  position: relative;
-  display: inline-block;
-`;
 
 const EditArticle: React.FC = () => {
   const [content, setContent] = useState<string>('You can use markdown! Yeeey!');
@@ -49,7 +32,7 @@ const EditArticle: React.FC = () => {
   const [showSuccessAlert, setShowSuccessAlert] = useState<boolean>(false);
   const [articleData, setArticleData] = useState<FormValuesTypes>(defaultArticleValues);
 
-  const { id } = useParams();
+  const { id = '' } = useParams<{ id: string }>();
   const { uploadFile, deleteFile, imageId } = useFileUpload();
   const navigate = useNavigate();
 
@@ -64,12 +47,11 @@ const EditArticle: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const article = await getArticle(id);
+        const article = await getDetailArticle(id);
         if (article) {
           setArticleData(article);
           if (article.image) {
             setImage(article.image);
-            setShowSuccessAlert(true);
           }
         }
       } catch (error) {
@@ -95,20 +77,6 @@ const EditArticle: React.FC = () => {
     setImage(null);
   }, [imageId]);
 
-  const getImage = async (imageId: string) => {
-    try {
-      const imageResponse = await httpGetImage(`/images/${imageId}`, {
-        responseType: 'blob'
-      });
-      const imageBlob = new Blob([imageResponse.data]);
-      const base64Image = await blobToBase64(imageBlob);
-      setImage(base64Image);
-      setShowSuccessAlert(true);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const onSubmit = async (data: FormValuesTypes) => {
     await updateArticle(data);
   };
@@ -117,16 +85,14 @@ const EditArticle: React.FC = () => {
     setIsLoading(true);
     data.imageId = imageId;
     data.content = content;
-
     try {
-      httpPatch(`/articles/${id}`, data);
-      setShowSuccessAlert(true);
-      navigate('/articles');
+      updateArticleData(data, id);
     } catch (error) {
       console.error(error);
+    } finally {
       setIsLoading(false);
+      navigate('/articles');
     }
-    setIsLoading(false);
   };
 
   if (!Cookies.get('token')) return <LoginPage />;
@@ -146,16 +112,18 @@ const EditArticle: React.FC = () => {
         />
       )}
       <form onSubmit={handleSubmit(onSubmit)}>
-        <StyledGrid container rowSpacing={3}>
-          <Grid item xs={4}>
-            <StyledHeadline1 variant="h1">Edit article</StyledHeadline1>
+        <StyledArticleGrid container rowSpacing={3}>
+          <Grid container justifyContent="space-between" spacing={0}>
+            <Grid item xs={12} sm="auto">
+              <StyledH1 variant="h1">Edit article</StyledH1>
+            </Grid>
+            <StyledButtonGrid item xs={12} sm={3}>
+              <Button type="submit" variant="contained">
+                Save Article
+              </Button>
+            </StyledButtonGrid>
           </Grid>
-          <Grid item xs={3}>
-            <Button type="submit" variant="contained">
-              Save Article
-            </Button>
-          </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={12}>
             <TextField
               label="Title"
               {...register('title', {
@@ -170,7 +138,7 @@ const EditArticle: React.FC = () => {
               fullWidth
             />
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={12}>
             <TextField
               label="Perex"
               {...register('perex', {
@@ -186,36 +154,37 @@ const EditArticle: React.FC = () => {
               fullWidth
             />
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={12}>
             {image && typeof image === 'string' && (
               <div>
                 <p>Featured image:</p>
                 <StyledImageContainer>
                   <StyledImg src={image} alt="Uploaded" />
                   <Tooltip title="Delete upload file">
-                    <StyledIconButton size="small" color="primary" onClick={deleteFile}>
-                      <Close />
-                    </StyledIconButton>
-                  </Tooltip>
-                </StyledImageContainer>
-              </div>
-            )}
-            {imageId && !image && (
-              <div>
-                <p>Featured image:</p>
-                <StyledImageContainer>
-                  <StyledImg src={imageId} alt="Uploaded" />
-                  <Tooltip title="Delete upload file">
-                    <StyledIconButton size="small" color="primary" onClick={deleteFile}>
-                      <Close />
-                    </StyledIconButton>
+                    {image && !articleData.imageId ? (
+                      <StyledIconImageButton
+                        size="small"
+                        color="primary"
+                        onClick={() => deleteFile(imageId)}>
+                        <Close />
+                      </StyledIconImageButton>
+                    ) : (
+                      <StyledIconImageButton
+                        size="small"
+                        color="primary"
+                        onClick={() => deleteFile(articleData.imageId)}>
+                        <Close />
+                      </StyledIconImageButton>
+                    )}
                   </Tooltip>
                 </StyledImageContainer>
               </div>
             )}
           </Grid>
           <Grid item xs={8}>
-            {!image && <MediaUploadInput onFileUpload={uploadFile} isLoading={isLoading} />}
+            {!image && !imageId && (
+              <MediaUploadInput onFileUpload={uploadFile} isLoading={isLoading} />
+            )}
           </Grid>
           <Grid item xs={8}>
             <MarkdownEditor
@@ -228,7 +197,7 @@ const EditArticle: React.FC = () => {
               data-color-mode="light"
             />
           </Grid>
-        </StyledGrid>
+        </StyledArticleGrid>
       </form>
     </StyledBox>
   );

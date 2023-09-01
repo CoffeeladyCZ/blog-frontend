@@ -1,5 +1,5 @@
-import { ArticleDetailTypes } from '../model/Articles';
-import { httpGetImage, httpGet } from '../utils/axiosService';
+import { ArticleDetailTypes, FormValuesTypes, Article } from '../model/Articles';
+import { httpGetImage, httpGet, httpPatch } from '../utils/axiosService';
 import { blobToBase64 } from '../utils/utils';
 
 export async function fetchImage(imageId: string) {
@@ -15,7 +15,10 @@ export async function fetchImage(imageId: string) {
     throw error;
   }
 }
-export const getArticle = async (id: string | undefined): Promise<ArticleDetailTypes | void> => {
+
+export const getDetailArticle = async (
+  id: string | undefined
+): Promise<ArticleDetailTypes | void> => {
   if (id) {
     try {
       const response = await httpGet(`/articles/${id}`);
@@ -30,5 +33,23 @@ export const getArticle = async (id: string | undefined): Promise<ArticleDetailT
     } catch (error) {
       console.error(error);
     }
+  }
+};
+
+export const getListArticles = async () => {
+  try {
+    const response = await httpGet('/articles');
+    const data: Article[] = await response.data.items;
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const updateArticleData = async (data: FormValuesTypes, id: string) => {
+  try {
+    httpPatch(`/articles/${id}`, data);
+  } catch (error) {
+    console.error(error);
   }
 };
