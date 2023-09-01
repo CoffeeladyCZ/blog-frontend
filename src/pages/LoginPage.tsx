@@ -11,7 +11,7 @@ import { httpPost } from '../utils/axiosService';
 
 import { Button, Card, Grid, TextField, CardContent, CardActions } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { StyledHeadline3, StyledErrorMessage } from '../styled/styled';
+import { StyledH3, StyledErrorMessage } from '../styled/styled';
 
 type FormValues = {
   username: string;
@@ -31,7 +31,6 @@ const StyledCardActions = styled(CardActions)`
 `;
 
 const LoginPage: React.FC = () => {
-  // const { t } = useTranslation();
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -70,7 +69,7 @@ const LoginPage: React.FC = () => {
     <StyledCard>
       <form onSubmit={handleSubmit(onSubmit)}>
         <CardContent>
-          <StyledHeadline3 variant="h3">Log In</StyledHeadline3>
+          <StyledH3 variant="h3">Log In</StyledH3>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { StyledBox, StyledGrid, StyledHeadline1 } from '../styled/styled';
-import { httpGet } from '../utils/axiosService';
-import { setArticles } from '../store/article';
+import { StyledBox, StyledGrid, StyledH1 } from '../styled/styled';
 import { RootState } from '../store/store';
+import { setListArticles } from '../store/article';
+import { getListArticles } from '../utils/apiUtils';
 
 import { Grid } from '@mui/material';
 
@@ -14,16 +14,15 @@ const RecentArticles: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const dispatch = useDispatch();
-  const articles = useSelector((state: RootState) => state.article.articles);
+  const articles = useSelector((state: RootState) => state.article.listArticles);
 
-  /** Get articles from API */
-  const getArticles = async () => {
+  const fetchListArticles = async () => {
     setIsLoading(true);
-
     try {
-      const response = await httpGet('/articles');
-      const data = await response.data.items;
-      dispatch(setArticles(data));
+      const data = await getListArticles();
+      if (data) {
+        return dispatch(setListArticles(data));
+      }
     } catch (error) {
       console.error(error);
     } finally {
@@ -32,14 +31,14 @@ const RecentArticles: React.FC = () => {
   };
 
   useEffect(() => {
-    getArticles();
+    fetchListArticles();
   }, []);
 
   return (
     <StyledBox>
       <StyledGrid container rowSpacing={4}>
         <Grid item xs={12}>
-          <StyledHeadline1 variant="h1">Recent articles</StyledHeadline1>
+          <StyledH1 variant="h1">Recent articles</StyledH1>
         </Grid>
         {!isLoading &&
           articles &&

@@ -24,6 +24,7 @@ import { StyledNavLink } from '../styled/styled';
 import { ArrowForward } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 import '../scss/colors.scss';
+import logo from '../assets/logo.svg';
 
 const StyledBox = styled(Box)`
   flex-grow: 1;
@@ -131,7 +132,7 @@ const AppHeader: React.FC = () => {
         <StyledToolbar variant="dense">
           <NavLink to="/">
             <IconButton size="large" edge="start" color="inherit" aria-label="menu">
-              <img src="logo.svg" alt="logo" id="logo" />
+              <img src={logo} alt="logo" id="logo" />
             </IconButton>
           </NavLink>
           <StyledBox>

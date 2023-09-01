@@ -24,18 +24,18 @@ export function useFileUpload() {
     }
   };
 
-  const deleteFile = async () => {
+  const deleteFile = async (imageId: string | null) => {
     try {
       if (imageId) {
         await httpDelete(`/images/${imageId}`);
       }
-      setImageId(null);
-      setUploadedFile(null);
     } catch (error) {
       console.error(error);
     } finally {
       setIsLoading(false);
     }
+    setImageId(null);
+    setUploadedFile(null);
   };
 
   const cleanFileInput = () => {

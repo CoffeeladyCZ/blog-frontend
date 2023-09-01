@@ -1,12 +1,12 @@
 /* eslint-disable react/jsx-key */
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { RootState } from '../store/store';
-import { setArticles } from '../store/article';
-import { httpDelete, httpGet } from '../utils/axiosService';
+import { setListArticles } from '../store/article';
+import { httpDelete } from '../utils/axiosService';
 
 import {
   Box,
@@ -21,12 +21,14 @@ import {
   IconButton,
   SvgIcon
 } from '@mui/material';
+
 import { styled } from '@mui/material/styles';
 import { ReactComponent as DeleteIcon } from '../assets/deleteIcon.svg';
 import { ReactComponent as EditIcon } from '../assets/editIcon.svg';
 
 import DataTable from '../components/DataTable';
-import { StyledHeadline1 } from '../styled/styled';
+import { StyledH1, StyledButtonGrid } from '../styled/styled';
+import { getListArticles } from '../utils/apiUtils';
 
 const StyledBox = styled(Box)`
   margin-top: 50px;
@@ -50,20 +52,19 @@ const MyArticles: React.FC = () => {
   const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false);
 
   const dispatch = useDispatch();
-  const articles = useSelector((state: RootState) => state.article.articles);
+  const articles = useSelector((state: RootState) => state.article.listArticles);
 
   const closeDialog = () => {
     setIsOpenDialog(false);
   };
 
-  /** Get articles from API */
-  const getArticles = async () => {
+  const fetchListArticles = async () => {
     setIsLoading(true);
-
     try {
-      const response = await httpGet('/articles');
-      const data = await response.data.items;
-      dispatch(setArticles(data));
+      const data = await getListArticles();
+      if (data) {
+        return dispatch(setListArticles(data));
+      }
     } catch (error) {
       console.error(error);
     } finally {
@@ -72,14 +73,13 @@ const MyArticles: React.FC = () => {
   };
 
   useEffect(() => {
-    getArticles();
+    fetchListArticles();
   }, []);
 
   const columns: GridColDef[] = [
     { field: 'title', headerName: 'Article title', flex: 1 },
     { field: 'perex', headerName: 'Perex', flex: 2 },
-    { field: 'author', headerName: 'Authod', flex: 1 },
-    { field: 'comments', headerName: '# of comments', flex: 1 },
+    { field: 'author', headerName: 'Author', flex: 1 },
     {
       field: 'actions',
       headerName: 'Actions',
@@ -87,11 +87,11 @@ const MyArticles: React.FC = () => {
       renderCell: (params: GridRenderCellParams) => (
         <>
           <IconButton aria-label="Edit">
-            <NavLink to={`/article/edit/${params.row.articleId}`}>
+            <Link to={`/article/edit/${params.row.articleId}`}>
               <SvgIcon>
                 <EditIcon />
               </SvgIcon>
-            </NavLink>
+            </Link>
           </IconButton>
           <IconButton aria-label="Delete" onClick={() => setIsOpenDialog(true)}>
             <SvgIcon>
@@ -118,16 +118,12 @@ const MyArticles: React.FC = () => {
     }
   ];
 
-  /**
-   * Deletes choose article
-   */
   const deleteArticle = async (id: number) => {
-    console.log(`Delete record with ID ${id}`);
     setIsLoading(true);
     try {
       await httpDelete(`/articles/${id}`);
       setIsOpenDialog(false);
-      await getArticles();
+      await fetchListArticles();
     } catch (error) {
       console.error(error);
     } finally {
@@ -138,17 +134,17 @@ const MyArticles: React.FC = () => {
   return (
     <StyledBox>
       <StyledGrid container rowSpacing={3}>
-        <Grid item xs={2}>
-          <StyledHeadline1 variant="h1">My articles</StyledHeadline1>
+        <Grid container justifyContent="space-between" spacing={0}>
+          <Grid item xs={12} sm="auto">
+            <StyledH1 variant="h1">My articles</StyledH1>
+          </Grid>
+          <StyledButtonGrid item xs={12} sm={3}>
+            <Link to={'/article/new'}>
+              <Button variant="contained">New article</Button>
+            </Link>
+          </StyledButtonGrid>
         </Grid>
-
-        <Grid item xs={6}>
-          <NavLink to={'/article/new'}>
-            <Button variant="contained">New article</Button>
-          </NavLink>
-        </Grid>
-
-        <Grid item xs={9}>
+        <Grid item xs={12}>
           {!articles.length ? (
             <Typography variant="body1">Nejsou k dispozici žádná data.</Typography>
           ) : (
