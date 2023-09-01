@@ -125,7 +125,7 @@ const LoginSection: React.FC = () => {
   }
 };
 
-const AppHeader: React.FC = () => {
+const Navigation: React.FC = () => {
   return (
     <StyledAppBar position="static" color="secondary">
       <StyledContainer>
@@ -146,4 +146,4 @@ const AppHeader: React.FC = () => {
   );
 };
 
-export default AppHeader;
+export default Navigation;

@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import PrivateRoutes from './PrivateRoutes';
 import LoginPage from '../pages/LoginPage';
 import MyArticles from '../pages/MyArticles';
-import Toolbar from '../components/Toolbar';
+import Navigation from '../components/Navigation';
 import Home from '../pages/Home';
 import AddArticle from '../pages/AddArticle';
 import ArticleDetail from '../pages/ArticleDetail';
@@ -14,7 +14,7 @@ const Router = () => {
   console.log('Router rendering...');
   return (
     <>
-      <Toolbar />
+      <Navigation />
       <Routes>
         <Route index element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
