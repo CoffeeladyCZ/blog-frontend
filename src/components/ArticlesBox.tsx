@@ -1,12 +1,16 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import { RootState } from '../store/store';
+import { setListArticles } from '../store/article';
 import { Article } from '../model/Articles';
 import { StyledSmallText, StyledH4, StyledLink } from '../styled/styled';
+import { getListArticles } from '../utils/apiUtils';
+
+import Loading from '../components/Loading';
 
 type ArticlePropsType = {
   title: string;
@@ -36,7 +40,34 @@ const ArticleBox: React.FC<ArticlePropsType> = ({ title, perex, articleId }) => 
 };
 
 const RelatedArticlesBox: React.FC = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const dispatch = useDispatch();
   const listArticles: Article[] = useSelector((state: RootState) => state.article.listArticles);
+
+  useEffect(() => {
+    checkListArticles();
+  });
+
+  const checkListArticles = async () => {
+    if (listArticles.length === 0) {
+      setIsLoading(true);
+      try {
+        const data = await getListArticles();
+        if (data) {
+          return dispatch(setListArticles(data));
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <StyledBox>
