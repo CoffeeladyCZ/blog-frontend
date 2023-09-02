@@ -1,5 +1,5 @@
 import { ArticleDetailTypes, FormValuesTypes, Article } from '../model/Articles';
-import { httpGetImage, httpGet, httpPatch } from '../utils/axiosService';
+import { httpGetImage, httpGet, httpPatch, httpPost } from '../utils/axiosService';
 import { blobToBase64 } from '../utils/utils';
 
 export async function fetchImage(imageId: string) {
@@ -51,6 +51,14 @@ export const getListArticles = async () => {
 export const updateArticleData = async (data: FormValuesTypes, id: string) => {
   try {
     httpPatch(`/articles/${id}`, data);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const createArticleData = async (data: FormValuesTypes) => {
+  try {
+    await httpPost('/articles', data);
   } catch (error) {
     console.error(error);
   }
