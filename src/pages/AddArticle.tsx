@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller, FormProvider } from 'react-hook-form';
 import Cookies from 'js-cookie';
-import { httpPost } from '../utils/axiosService';
-import MarkdownEditor from '@uiw/react-md-editor';
+import { useNavigate } from 'react-router-dom';
 
 import { Grid, Button, TextField, Tooltip } from '@mui/material';
 import {
@@ -19,29 +18,32 @@ import { Close } from '@mui/icons-material';
 
 import { FormValuesTypes } from '../model/Articles';
 import { useFileUpload } from '../hooks/useFileUpload';
-import { fetchImage } from '../utils/apiUtils';
+import { fetchImage, createArticleData } from '../utils/apiUtils';
 
 import LoginPage from './LoginPage';
 import Loading from '../components/Loading';
 import MediaUploadInput from '../components/MediaUploadInput';
 import Notification from '../components/Notification';
+import MarkdownControlled from '../components/MarkDownControlled';
 
 const AddArticle: React.FC = () => {
-  const [content, setContent] = useState<string>('You can use markdown! Yeeey!');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState<boolean>(false);
   const [image, setImage] = useState<string | ArrayBuffer | null>(null);
 
   const { uploadFile, deleteFile, cleanFileInput, uploadedFile, imageId } = useFileUpload();
+  const navigate = useNavigate();
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors }
-  } = useForm<FormValuesTypes>({
+  const methods = useForm<FormValuesTypes>({
     mode: 'onChange'
   });
+
+  const {
+    handleSubmit,
+    reset,
+    control,
+    formState: { errors }
+  } = methods;
 
   useEffect(() => {
     if (imageId) {
@@ -59,33 +61,24 @@ const AddArticle: React.FC = () => {
     setImage(null);
   }, [imageId]);
 
-  /** Changes actual content */
-  const handleEditorChange = (value: string | undefined) => {
-    if (value) {
-      setContent(value);
-    }
-  };
-
   const onSubmit = async (data: FormValuesTypes) => {
     setIsLoading(true);
-    data.content = content;
     data.imageId = imageId;
     await createArticle(data);
   };
 
-  /** Creates article */
   const createArticle = async (data: FormValuesTypes) => {
     setIsLoading(true);
     try {
-      await httpPost('/articles', data);
+      await createArticleData(data);
       setShowSuccessAlert(true);
       cleanFileInput();
       reset();
     } catch (error) {
       console.error(error);
     } finally {
-      setContent('You can use markdown! Yeeey!');
       setIsLoading(false);
+      navigate('/articles');
     }
   };
 
@@ -105,78 +98,89 @@ const AddArticle: React.FC = () => {
           onClose={() => setShowSuccessAlert(false)}
         />
       )}
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <StyledArticleGrid container rowSpacing={4}>
-          <Grid container justifyContent="space-between" spacing={0}>
-            <Grid item xs={4}>
-              <StyledH1 variant="h1">Create new article</StyledH1>
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <StyledArticleGrid container rowSpacing={4}>
+            <Grid container justifyContent="space-between" spacing={0}>
+              <Grid item xs={4}>
+                <StyledH1 variant="h1">Create new article</StyledH1>
+              </Grid>
+              <StyledButtonGrid item xs={3}>
+                <Button variant="contained" type="submit">
+                  Publish Article
+                </Button>
+              </StyledButtonGrid>
             </Grid>
-            <StyledButtonGrid item xs={3}>
-              <Button variant="contained" type="submit">
-                Publish Article
-              </Button>
-            </StyledButtonGrid>
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              label="Article title"
-              {...register('title', {
-                required: 'Error'
-              })}
-              error={Boolean(errors.title)}
-              helperText={errors.title?.message}
-              id="title"
-              placeholder="My First Article"
-              size="small"
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              label="Perex"
-              {...register('perex', {
-                required: 'Error'
-              })}
-              error={Boolean(errors.perex)}
-              helperText={errors.perex?.message}
-              id="title"
-              placeholder="Perex"
-              size="small"
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12}>
-            {image && typeof image === 'string' && imageId && (
-              <div>
-                <p>Featured image:</p>
-                <StyledImageContainer>
-                  <StyledImg src={image} alt="Uploaded" />
-                  <Tooltip title="Delete upload file">
-                    <StyledIconImageButton
+            <Grid item xs={12}>
+              <Controller
+                control={control}
+                name="title"
+                rules={{ required: true }}
+                render={({ field }) => {
+                  return (
+                    <TextField
+                      label="Title"
+                      error={Boolean(errors.title)}
+                      helperText={errors.title ? 'Item is required' : ''}
+                      id="title"
+                      placeholder="My First Article"
                       size="small"
-                      color="primary"
-                      onClick={() => deleteFile(imageId)}>
-                      <Close />
-                    </StyledIconImageButton>
-                  </Tooltip>
-                </StyledImageContainer>
-              </div>
-            )}
-          </Grid>
-          <Grid item xs={12}>
-            {!uploadedFile && <MediaUploadInput onFileUpload={uploadFile} isLoading={isLoading} />}
-          </Grid>
-          <Grid item xs={12}>
-            <MarkdownEditor
-              id="content"
-              value={content}
-              height={500}
-              data-color-mode="light"
-              onChange={handleEditorChange}
-            />
-          </Grid>
-        </StyledArticleGrid>
-      </form>
+                      fullWidth
+                      {...field}
+                    />
+                  );
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Controller
+                control={control}
+                name="perex"
+                rules={{ required: true }}
+                render={({ field }) => {
+                  return (
+                    <TextField
+                      label="Perex"
+                      error={Boolean(errors.perex)}
+                      helperText={errors.perex ? 'Item is required' : ''}
+                      id="perex"
+                      size="small"
+                      fullWidth
+                      {...field}
+                    />
+                  );
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              {image && typeof image === 'string' && imageId && (
+                <div>
+                  <p>Featured image:</p>
+                  <StyledImageContainer>
+                    <StyledImg src={image} alt="Uploaded" />
+                    <Tooltip title="Delete upload file">
+                      <StyledIconImageButton
+                        size="small"
+                        color="primary"
+                        onClick={() => deleteFile(imageId)}>
+                        <Close />
+                      </StyledIconImageButton>
+                    </Tooltip>
+                  </StyledImageContainer>
+                </div>
+              )}
+            </Grid>
+            <Grid item xs={12}>
+              {!uploadedFile && (
+                <MediaUploadInput onFileUpload={uploadFile} isLoading={isLoading} />
+              )}
+            </Grid>
+            <Grid item xs={12}>
+              <MarkdownControlled />
+            </Grid>
+          </StyledArticleGrid>
+        </form>
+      </FormProvider>
     </StyledBox>
   );
 };

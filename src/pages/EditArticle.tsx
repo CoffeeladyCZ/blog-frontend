@@ -203,7 +203,7 @@ const EditArticle: React.FC = () => {
                 <MediaUploadInput onFileUpload={uploadFile} isLoading={isLoading} />
               )}
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={12}>
               <MarkdownControlled />
             </Grid>
           </StyledArticleGrid>
