@@ -26,8 +26,10 @@ export const getDetailArticle = async (
       const imageId = response.data.imageId;
       if (imageId) {
         const image = await fetchImage(imageId);
+        console.log('daa', { ...article, image });
         return { ...article, image };
       } else {
+        console.log('daa', article);
         return article;
       }
     } catch (error) {
