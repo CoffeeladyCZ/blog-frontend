@@ -43,7 +43,7 @@ export type FormValuesTypes = {
   title: string;
   imageId: string | null;
   image?: string;
-  content: string;
+  content?: string;
   perex: string;
 };
 
