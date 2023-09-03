@@ -52,7 +52,7 @@ const StyledToolbar = styled(Toolbar)`
 `;
 
 const LoginSection: React.FC = () => {
-  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const [userMenu, setUserMenu] = useState<null | HTMLElement>(null);
 
   const dispatch = useDispatch();
   const login = useSelector((state: RootState) => state.login.login);
@@ -62,16 +62,6 @@ const LoginSection: React.FC = () => {
     const isLogin: boolean = token ? true : false;
     dispatch(setLogin(isLogin));
   }, [dispatch]);
-
-  /** Opens user menu */
-  const openUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  /** Closes user menu */
-  const closeUserMenu = () => {
-    setAnchorElUser(null);
-  };
 
   /** Log out user from application */
   const logoutUser = () => {
@@ -93,14 +83,14 @@ const LoginSection: React.FC = () => {
           <StyledNavLink to="/articles/">My articles</StyledNavLink>
           <StyledNavLink to="/article/new">Create articles</StyledNavLink>
           <Tooltip title="Open menu">
-            <IconButton onClick={openUserMenu}>
+            <IconButton onClick={(e) => setUserMenu(e.currentTarget)}>
               <Avatar alt="avatar" srcSet="../assets/logo_A.jpg" />
             </IconButton>
           </Tooltip>
           <Menu
             sx={{ mt: '45px' }}
             id="userMenu"
-            anchorEl={anchorElUser}
+            anchorEl={userMenu}
             anchorOrigin={{
               vertical: 'top',
               horizontal: 'right'
@@ -110,9 +100,9 @@ const LoginSection: React.FC = () => {
               vertical: 'top',
               horizontal: 'right'
             }}
-            open={Boolean(anchorElUser)}
-            onClose={closeUserMenu}>
-            <MenuItem onClick={closeUserMenu}>
+            open={Boolean(userMenu)}
+            onClose={() => setUserMenu(null)}>
+            <MenuItem onClick={() => setUserMenu(null)}>
               <Typography textAlign="center">Profile</Typography>
             </MenuItem>
             <MenuItem onClick={logoutUser}>

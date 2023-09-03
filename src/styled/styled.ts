@@ -32,6 +32,10 @@ export const StyledBox = styled(Box)`
 export const StyledNavLink = styled(NavLink)`
   text-decoration: none;
   color: rgba(33, 37, 41, 1); // upravit na globální proměnnou
+
+  &.active {
+    color: #4dabf5;
+  }
 `;
 
 export const StyledLink = styled(Link)`

@@ -7,9 +7,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store/store';
 import { setListArticles } from '../store/article';
 import { httpDelete } from '../utils/axiosService';
+import { StyledBox } from '../styled/styled';
 
 import {
-  Box,
   Typography,
   Button,
   Dialog,
@@ -29,12 +29,6 @@ import { ReactComponent as EditIcon } from '../assets/editIcon.svg';
 import DataTable from '../components/DataTable';
 import { StyledH1, StyledButtonGrid } from '../styled/styled';
 import { getListArticles } from '../utils/apiUtils';
-
-const StyledBox = styled(Box)`
-  margin-top: 50px;
-  display: flex;
-  justify-content: center;
-`;
 
 const StyledGrid = styled(Grid)`
   max-width: 1152px;
