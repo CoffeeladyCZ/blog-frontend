@@ -65,7 +65,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
         <CardContent>
           <StyledH4 variant="h4">{article.title}</StyledH4>
           <StyledSmallText variant="body2" pb={2}>
-            {author} • {dayjs(article.lastUpdatedAt).format('DD/MM/YY')}
+            {author} • {dayjs(article.createdAt).format('DD/MM/YY')}
           </StyledSmallText>
           <Typography variant="body1">{article.perex}</Typography>
         </CardContent>
