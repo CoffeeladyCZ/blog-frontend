@@ -11,7 +11,6 @@ import EditArticle from '../pages/EditArticle';
 import RecentArticles from '../pages/RecentArticles';
 
 const Router = () => {
-  console.log('Router rendering...');
   return (
     <>
       <Navigation />

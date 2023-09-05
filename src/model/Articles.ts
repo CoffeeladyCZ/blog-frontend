@@ -51,3 +51,8 @@ export type ImageType = {
   imageId: string;
   name: string;
 };
+
+export type FormLoginType = {
+  username: string;
+  password: string;
+};

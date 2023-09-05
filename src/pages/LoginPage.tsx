@@ -1,22 +1,17 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller, FormProvider } from 'react-hook-form';
 // import { useTranslation } from 'react-i18next';
 import { Navigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { RootState } from '../store/store';
 import { setLogin } from '../store/login';
-import { httpPost } from '../utils/axiosService';
+import { FormLoginType } from '../model/Articles';
+import { loginUser } from '../utils/apiUtils';
+import { StyledH3, StyledErrorMessage } from '../styled/styled';
 
 import { Button, Card, Grid, TextField, CardContent, CardActions } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { StyledH3, StyledErrorMessage } from '../styled/styled';
-
-type FormValues = {
-  username: string;
-  password: string;
-};
 
 const StyledCard = styled(Card)`
   width: 368px;
@@ -31,33 +26,32 @@ const StyledCardActions = styled(CardActions)`
 `;
 
 const LoginPage: React.FC = () => {
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const dispatch = useDispatch();
   const login = useSelector((state: RootState) => state.login.login);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm<FormValues>({
+  const methods = useForm<FormLoginType>({
     mode: 'onChange'
   });
 
-  const onSubmit = async (data: FormValues) => {
-    setIsLoading(true);
+  const {
+    handleSubmit,
+    control,
+    formState: { errors }
+  } = methods;
 
-    let response;
-    let access_token;
+  const onSubmit = async (data: FormLoginType) => {
+    setIsLoading(true);
     try {
-      response = await httpPost('/login', data);
-      access_token = await response.data.access_token;
-      Cookies.set('token', access_token);
-      dispatch(setLogin(true));
-    } catch (error) {
-      console.error(error);
-      setErrorMessage((error as any)?.response?.data?.message);
+      const response = await loginUser(data);
+      if (response.success) {
+        dispatch(setLogin(true));
+        return;
+      } else if (response.error) {
+        setErrorMessage(response.error.response.data.message);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -67,57 +61,73 @@ const LoginPage: React.FC = () => {
     <Navigate to="/articles" replace />
   ) : (
     <StyledCard>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <CardContent>
-          <StyledH3 variant="h3">Log In</StyledH3>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                label="E-mail"
-                {...register('username', {
-                  required: 'Item is required'
-                })}
-                error={Boolean(errors.username)}
-                helperText={errors.username?.message}
-                id="username"
-                placeholder="Login"
-                size="small"
-                fullWidth
-              />
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <CardContent>
+            <StyledH3 variant="h3">Log In</StyledH3>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Controller
+                  control={control}
+                  name="username"
+                  rules={{ required: true }}
+                  defaultValue=""
+                  render={({ field }) => {
+                    return (
+                      <TextField
+                        label="E-mail"
+                        error={Boolean(errors.username)}
+                        helperText={errors.username ? 'Item is required' : ''}
+                        placeholder="E-mail"
+                        size="small"
+                        fullWidth
+                        {...field}
+                      />
+                    );
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Controller
+                  control={control}
+                  name="password"
+                  rules={{ required: true }}
+                  defaultValue=""
+                  render={({ field }) => {
+                    return (
+                      <TextField
+                        label="Password"
+                        type="password"
+                        error={Boolean(errors.password)}
+                        helperText={errors.password ? 'Item is required' : ''}
+                        placeholder="********"
+                        size="small"
+                        fullWidth
+                        {...field}
+                      />
+                    );
+                  }}
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                label="Password"
-                type="password"
-                {...register('password', {
-                  required: 'Item is required'
-                })}
-                error={Boolean(errors.password)}
-                helperText={errors.password?.message}
-                id="password"
-                placeholder="********"
-                size="small"
-                fullWidth
-              />
-            </Grid>
-          </Grid>
-          {errorMessage && (
-            <StyledErrorMessage variant="h6" id="error">
-              {errorMessage}
-            </StyledErrorMessage>
-          )}
-        </CardContent>
-        <StyledCardActions>
-          <Button
-            size="small"
-            color="primary"
-            type="submit"
-            disabled={isLoading}
-            variant="contained">
-            Log In
-          </Button>
-        </StyledCardActions>
-      </form>
+            {errorMessage && (
+              <StyledErrorMessage variant="h6" id="error">
+                {errorMessage}
+              </StyledErrorMessage>
+            )}
+          </CardContent>
+          <StyledCardActions>
+            <Button
+              size="small"
+              color="primary"
+              type="submit"
+              disabled={isLoading}
+              variant="contained">
+              Log In
+            </Button>
+          </StyledCardActions>
+        </form>
+      </FormProvider>
     </StyledCard>
   );
 };
