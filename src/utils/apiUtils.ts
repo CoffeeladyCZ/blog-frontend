@@ -1,6 +1,20 @@
 import { ArticleDetailTypes, FormValuesTypes, Article } from '../model/Articles';
 import { httpGetImage, httpGet, httpPatch, httpPost } from '../utils/axiosService';
+import Cookies from 'js-cookie';
+
 import { blobToBase64 } from '../utils/utils';
+import { FormLoginType } from '../model/Articles';
+
+type ApiResponseType = {
+  success: boolean;
+  error?: {
+    response: {
+      data: {
+        message: string;
+      };
+    };
+  };
+};
 
 export async function fetchImage(imageId: string) {
   try {
@@ -26,10 +40,8 @@ export const getDetailArticle = async (
       const imageId = response.data.imageId;
       if (imageId) {
         const image = await fetchImage(imageId);
-        console.log('daa', { ...article, image });
         return { ...article, image };
       } else {
-        console.log('daa', article);
         return article;
       }
     } catch (error) {
@@ -61,5 +73,25 @@ export const createArticleData = async (data: FormValuesTypes) => {
     await httpPost('/articles', data);
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const loginUser = async (data: FormLoginType): Promise<ApiResponseType> => {
+  try {
+    const response = await httpPost('/login', data);
+    const access_token = await response.data.access_token;
+    Cookies.set('token', access_token);
+    return { success: true };
+  } catch (error) {
+    return {
+      success: false,
+      error: {
+        response: {
+          data: {
+            message: (error as any)?.response?.data?.message || 'Unknown error'
+          }
+        }
+      }
+    };
   }
 };

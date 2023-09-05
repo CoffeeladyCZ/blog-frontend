@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 import {
@@ -56,6 +56,7 @@ const LoginSection: React.FC = () => {
 
   const dispatch = useDispatch();
   const login = useSelector((state: RootState) => state.login.login);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = Cookies.get('token');
@@ -66,6 +67,9 @@ const LoginSection: React.FC = () => {
   /** Log out user from application */
   const logoutUser = () => {
     dispatch(setLogin(false));
+    Cookies.remove('token');
+    setUserMenu(null);
+    navigate('/recent-articles');
   };
 
   if (!login) {
