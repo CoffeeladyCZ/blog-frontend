@@ -13,7 +13,7 @@ const StyledContainer = styled(Container)`
 
 const Disconnected: React.FC = () => {
   return (
-    <StyledContainer>
+    <StyledContainer data-testid="disconnected">
       <StyledH1 variant="h1">You got disconnected after 1 hour.</StyledH1>
       <StyledSmallLightText>To continue, you must log in again.</StyledSmallLightText>
     </StyledContainer>

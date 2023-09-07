@@ -1,14 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
-import ArticleReducer from './article';
-import LoginReducer from './login';
+import { articleSlice } from './article';
+import { articleDetailSlice } from './articleDetail';
+import { loginSlice } from './login';
 
 const store = configureStore({
   reducer: {
-    article: ArticleReducer,
-    login: LoginReducer
+    articleList: articleSlice.reducer,
+    articleDetail: articleDetailSlice.reducer,
+    login: loginSlice.reducer
   }
 });
 
+export type AppStore = ReturnType<typeof store.getState>;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 

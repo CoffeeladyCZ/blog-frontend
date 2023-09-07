@@ -11,7 +11,7 @@ type NotificationProps = {
 
 const Notification: React.FC<NotificationProps> = ({ open, onClose, severity, message }) => {
   return (
-    <Snackbar open={open} autoHideDuration={6000} onClose={onClose}>
+    <Snackbar open={open} autoHideDuration={6000} onClose={onClose} data-testid="notification">
       <Alert severity={severity} onClose={onClose}>
         <AlertTitle>{message}</AlertTitle>
       </Alert>

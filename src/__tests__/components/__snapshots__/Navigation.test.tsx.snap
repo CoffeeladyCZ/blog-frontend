@@ -1,0 +1,492 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navigation with login should snapshot with data 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <header
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorSecondary MuiAppBar-positionStatic css-9sj8ry-MuiPaper-root-MuiAppBar-root"
+      >
+        <div
+          class="MuiContainer-root MuiContainer-maxWidthLg css-1kgzgdg-MuiContainer-root"
+        >
+          <div
+            class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-dense css-f59th8-MuiToolbar-root"
+          >
+            <a
+              class=""
+              href="/"
+            >
+              <button
+                aria-label="menu"
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart MuiIconButton-sizeLarge css-184mzhy-MuiButtonBase-root-MuiIconButton-root"
+                tabindex="0"
+                type="button"
+              >
+                <img
+                  alt="logo"
+                  id="logo"
+                  src="logo.svg"
+                />
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </a>
+            <div
+              class="MuiBox-root css-1jlf5g0"
+            >
+              <a
+                class="css-i2p79e"
+                href="/recent-articles"
+              >
+                Recent Articles
+              </a>
+            </div>
+            <div
+              class="MuiBox-root css-1h0u4nz"
+            >
+              <a
+                class="css-i2p79e"
+                href="/articles/"
+              >
+                My Articles
+              </a>
+              <a
+                class="css-i2p79e"
+                href="/article/new"
+              >
+                Create Articles
+              </a>
+              <button
+                aria-label="Open menu"
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                data-mui-internal-clone-element="true"
+                data-testid="menuButton"
+                tabindex="0"
+                type="button"
+              >
+                <div
+                  class="MuiAvatar-root MuiAvatar-circular css-1wlk0hk-MuiAvatar-root"
+                >
+                  <img
+                    alt="avatar"
+                    class="MuiAvatar-img css-1pqm26d-MuiAvatar-img"
+                    srcset="../assets/logo_A.jpg"
+                  />
+                </div>
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+    </div>
+    <div
+      aria-hidden="true"
+      class="MuiMenu-root MuiPopover-root MuiModal-root MuiModal-hidden css-14ogsoa-MuiModal-root-MuiPopover-root-MuiMenu-root"
+      id="userMenu"
+      role="presentation"
+    >
+      <div
+        aria-hidden="true"
+        class="MuiBackdrop-root MuiBackdrop-invisible MuiModal-backdrop css-g3hgs1-MuiBackdrop-root-MuiModal-backdrop"
+        style="opacity: 0; visibility: hidden;"
+      />
+      <div
+        data-testid="sentinelStart"
+        tabindex="-1"
+      />
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiMenu-paper MuiPopover-paper MuiMenu-paper css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper"
+        style="opacity: 0; transform: scale(0.75, 0.5625); visibility: hidden;"
+        tabindex="-1"
+      >
+        <ul
+          class="MuiList-root MuiList-padding MuiMenu-list css-6hp17o-MuiList-root-MuiMenu-list"
+          role="menu"
+          tabindex="-1"
+        >
+          <li
+            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root"
+            role="menuitem"
+            tabindex="0"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-1uwgr7b-MuiTypography-root"
+            >
+              Profile
+            </p>
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </li>
+          <li
+            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root"
+            data-testid="logout"
+            role="menuitem"
+            tabindex="-1"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-1uwgr7b-MuiTypography-root"
+            >
+              Log out
+            </p>
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </li>
+        </ul>
+      </div>
+      <div
+        data-testid="sentinelEnd"
+        tabindex="-1"
+      />
+    </div>
+  </body>,
+  "container": <div>
+    <header
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorSecondary MuiAppBar-positionStatic css-9sj8ry-MuiPaper-root-MuiAppBar-root"
+    >
+      <div
+        class="MuiContainer-root MuiContainer-maxWidthLg css-1kgzgdg-MuiContainer-root"
+      >
+        <div
+          class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-dense css-f59th8-MuiToolbar-root"
+        >
+          <a
+            class=""
+            href="/"
+          >
+            <button
+              aria-label="menu"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart MuiIconButton-sizeLarge css-184mzhy-MuiButtonBase-root-MuiIconButton-root"
+              tabindex="0"
+              type="button"
+            >
+              <img
+                alt="logo"
+                id="logo"
+                src="logo.svg"
+              />
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+          </a>
+          <div
+            class="MuiBox-root css-1jlf5g0"
+          >
+            <a
+              class="css-i2p79e"
+              href="/recent-articles"
+            >
+              Recent Articles
+            </a>
+          </div>
+          <div
+            class="MuiBox-root css-1h0u4nz"
+          >
+            <a
+              class="css-i2p79e"
+              href="/articles/"
+            >
+              My Articles
+            </a>
+            <a
+              class="css-i2p79e"
+              href="/article/new"
+            >
+              Create Articles
+            </a>
+            <button
+              aria-label="Open menu"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+              data-mui-internal-clone-element="true"
+              data-testid="menuButton"
+              tabindex="0"
+              type="button"
+            >
+              <div
+                class="MuiAvatar-root MuiAvatar-circular css-1wlk0hk-MuiAvatar-root"
+              >
+                <img
+                  alt="avatar"
+                  class="MuiAvatar-img css-1pqm26d-MuiAvatar-img"
+                  srcset="../assets/logo_A.jpg"
+                />
+              </div>
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`Navigation without login should snapshot with data 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <header
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorSecondary MuiAppBar-positionStatic css-9sj8ry-MuiPaper-root-MuiAppBar-root"
+      >
+        <div
+          class="MuiContainer-root MuiContainer-maxWidthLg css-1kgzgdg-MuiContainer-root"
+        >
+          <div
+            class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-dense css-f59th8-MuiToolbar-root"
+          >
+            <a
+              class=""
+              href="/"
+            >
+              <button
+                aria-label="menu"
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart MuiIconButton-sizeLarge css-184mzhy-MuiButtonBase-root-MuiIconButton-root"
+                tabindex="0"
+                type="button"
+              >
+                <img
+                  alt="logo"
+                  id="logo"
+                  src="logo.svg"
+                />
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </a>
+            <div
+              class="MuiBox-root css-1jlf5g0"
+            >
+              <a
+                class="css-i2p79e"
+                href="/recent-articles"
+              >
+                Recent Articles
+              </a>
+            </div>
+            <a
+              aria-current="page"
+              class="active"
+              href="/login"
+            >
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="button"
+              >
+                Log in
+                <span
+                  class="MuiButton-endIcon MuiButton-iconSizeMedium css-9tj150-MuiButton-endIcon"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    data-testid="ArrowForwardIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                    />
+                  </svg>
+                </span>
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </a>
+          </div>
+        </div>
+      </header>
+    </div>
+  </body>,
+  "container": <div>
+    <header
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorSecondary MuiAppBar-positionStatic css-9sj8ry-MuiPaper-root-MuiAppBar-root"
+    >
+      <div
+        class="MuiContainer-root MuiContainer-maxWidthLg css-1kgzgdg-MuiContainer-root"
+      >
+        <div
+          class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-dense css-f59th8-MuiToolbar-root"
+        >
+          <a
+            class=""
+            href="/"
+          >
+            <button
+              aria-label="menu"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart MuiIconButton-sizeLarge css-184mzhy-MuiButtonBase-root-MuiIconButton-root"
+              tabindex="0"
+              type="button"
+            >
+              <img
+                alt="logo"
+                id="logo"
+                src="logo.svg"
+              />
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+          </a>
+          <div
+            class="MuiBox-root css-1jlf5g0"
+          >
+            <a
+              class="css-i2p79e"
+              href="/recent-articles"
+            >
+              Recent Articles
+            </a>
+          </div>
+          <a
+            aria-current="page"
+            class="active"
+            href="/login"
+          >
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+              tabindex="0"
+              type="button"
+            >
+              Log in
+              <span
+                class="MuiButton-endIcon MuiButton-iconSizeMedium css-9tj150-MuiButton-endIcon"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                  data-testid="ArrowForwardIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                  />
+                </svg>
+              </span>
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+          </a>
+        </div>
+      </div>
+    </header>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

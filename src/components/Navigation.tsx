@@ -106,10 +106,10 @@ const LoginSection: React.FC = () => {
     return (
       <>
         <StyledBoxAvatar>
-          <StyledNavLink to="/articles/">My articles</StyledNavLink>
-          <StyledNavLink to="/article/new">Create articles</StyledNavLink>
+          <StyledNavLink to="/articles/">My Articles</StyledNavLink>
+          <StyledNavLink to="/article/new">Create Articles</StyledNavLink>
           <Tooltip title="Open menu">
-            <IconButton onClick={(e) => setUserMenu(e.currentTarget)}>
+            <IconButton data-testid="menuButton" onClick={(e) => setUserMenu(e.currentTarget)}>
               <Avatar alt="avatar" srcSet="../assets/logo_A.jpg" />
             </IconButton>
           </Tooltip>
@@ -131,7 +131,7 @@ const LoginSection: React.FC = () => {
             <MenuItem onClick={() => setUserMenu(null)}>
               <Typography textAlign="center">Profile</Typography>
             </MenuItem>
-            <MenuItem onClick={() => logoutUser(false)}>
+            <MenuItem onClick={() => logoutUser(false)} data-testid="logout">
               <Typography textAlign="center">Log out</Typography>
             </MenuItem>
           </Menu>

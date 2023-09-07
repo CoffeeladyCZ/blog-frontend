@@ -48,7 +48,7 @@ export const getDetailArticle = async (
   }
 };
 
-export const getListArticles = async () => {
+export const getArticleList = async () => {
   try {
     const response = await httpGet<ArticleListResponse>('/articles');
     const data: Article[] = await response.data.items;

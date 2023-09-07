@@ -27,7 +27,6 @@ const StyledCardActions = styled(CardActions)`
 
 const LoginPage: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const dispatch = useDispatch();
   const login = useSelector((state: RootState) => state.login.login);
@@ -43,7 +42,6 @@ const LoginPage: React.FC = () => {
   } = methods;
 
   const onSubmit = async (data: FormLoginType) => {
-    setIsLoading(true);
     try {
       const response = await loginUser(data);
       if (response.success) {
@@ -52,8 +50,8 @@ const LoginPage: React.FC = () => {
       } else if (response.error) {
         setErrorMessage(response.error.response.data.message);
       }
-    } finally {
-      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -76,6 +74,7 @@ const LoginPage: React.FC = () => {
                     return (
                       <TextField
                         label="E-mail"
+                        data-testid="loginEmail"
                         error={Boolean(errors.username)}
                         helperText={errors.username ? 'Item is required' : ''}
                         placeholder="E-mail"
@@ -97,6 +96,7 @@ const LoginPage: React.FC = () => {
                     return (
                       <TextField
                         label="Password"
+                        data-testid="loginPassword"
                         type="password"
                         error={Boolean(errors.password)}
                         helperText={errors.password ? 'Item is required' : ''}
@@ -119,9 +119,9 @@ const LoginPage: React.FC = () => {
           <StyledCardActions>
             <Button
               size="small"
+              data-testid="loginButton"
               color="primary"
               type="submit"
-              disabled={isLoading}
               variant="contained">
               Log In
             </Button>

@@ -24,6 +24,7 @@ const DataTable: React.FC<DataTablePropsType> = ({
   const getRowId = (articles: any) => articles.articleId;
   return (
     <StyledDataGrid
+      data-testid="dataTable"
       getRowId={getRowId}
       rows={articles}
       columns={headerColumns}
