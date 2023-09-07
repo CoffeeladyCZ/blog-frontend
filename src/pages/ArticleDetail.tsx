@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import MarkdownEditor from '@uiw/react-md-editor';
 
-import { Card, CardContent, CardMedia, Grid, Typography } from '@mui/material';
-import { StyledSmallText, StyledContainer } from '../styled/styled';
+import { Card, Container, CardContent, CardMedia, Grid, Typography } from '@mui/material';
+import { StyledSmallText } from '../styled/styled';
 import { styled } from '@mui/system';
 
 import { getDetailArticle } from '../utils/apiUtils';
@@ -12,6 +12,12 @@ import { ArticleDetailTypes, defaultArticleDetailValues } from '../model/Article
 
 import Loading from '../components/Loading';
 import RelatedArticlesBox from '../components/ArticlesBox';
+
+const StyledDetailContainer = styled(Container)`
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+`;
 
 const StyledCard = styled(Card)`
   box-shadow: none;
@@ -56,7 +62,7 @@ const ArticleDetail: React.FC = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <StyledContainer>
+    <StyledDetailContainer>
       <Grid container spacing={1}>
         <Grid item xs={12} md={8}>
           <StyledCard>
@@ -76,7 +82,7 @@ const ArticleDetail: React.FC = () => {
                 hideToolbar={true}
                 visibleDragbar={false}
                 enableScroll={true}
-                height={1500}
+                height={800}
               />
             </CardContent>
           </StyledCard>
@@ -85,7 +91,7 @@ const ArticleDetail: React.FC = () => {
           <RelatedArticlesBox />
         </Grid>
       </Grid>
-    </StyledContainer>
+    </StyledDetailContainer>
   );
 };
 

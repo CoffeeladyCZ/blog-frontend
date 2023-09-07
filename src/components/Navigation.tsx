@@ -131,7 +131,6 @@ const Navigation: React.FC = () => {
           </NavLink>
           <StyledBox>
             <StyledNavLink to="/recent-articles">Recent Articles</StyledNavLink>
-            <StyledNavLink to="/about">About</StyledNavLink>
           </StyledBox>
           <LoginSection />
         </StyledToolbar>
