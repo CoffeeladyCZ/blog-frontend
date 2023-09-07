@@ -26,27 +26,30 @@ import { styled } from '@mui/material/styles';
 import { ReactComponent as DeleteIcon } from '../assets/deleteIcon.svg';
 import { ReactComponent as EditIcon } from '../assets/editIcon.svg';
 
-import DataTable from '../components/DataTable';
 import { StyledH1, StyledButtonGrid } from '../styled/styled';
 import { getListArticles } from '../utils/apiUtils';
+import { DialogDataType } from '../model/Articles';
+
+import DataTable from '../components/DataTable';
+import SimpleDialog from '../components/SimpleDialog';
 
 const StyledGrid = styled(Grid)`
   max-width: 1152px;
   padding: 0 48px;
 `;
 
-const StyledDialogTitle = styled(DialogTitle)`
-  background-color: #4dabf5;
-  color: #ffffff;
-  margin-bottom: 20px;
-`;
-
 const MyArticles: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false);
+  const [dialogData, setDialogData] = useState<DialogDataType>({ title: '', articleId: 0 });
 
   const dispatch = useDispatch();
   const articles = useSelector((state: RootState) => state.article.listArticles);
+
+  const openDialog = (data: DialogDataType) => {
+    setDialogData(data);
+    setIsOpenDialog(true);
+  };
 
   const closeDialog = () => {
     setIsOpenDialog(false);
@@ -59,6 +62,19 @@ const MyArticles: React.FC = () => {
       if (data) {
         return dispatch(setListArticles(data));
       }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const deleteArticle = async (id: number) => {
+    setIsLoading(true);
+    try {
+      await httpDelete(`/articles/${id}`);
+      setIsOpenDialog(false);
+      await fetchListArticles();
     } catch (error) {
       console.error(error);
     } finally {
@@ -80,53 +96,38 @@ const MyArticles: React.FC = () => {
       flex: 1,
       renderCell: (params: GridRenderCellParams) => (
         <>
-          <IconButton aria-label="Edit">
+          <IconButton aria-label="Edit" data-testid="buttonEdit">
             <Link to={`/article/edit/${params.row.articleId}`}>
               <SvgIcon>
                 <EditIcon />
               </SvgIcon>
             </Link>
           </IconButton>
-          <IconButton aria-label="Delete" onClick={() => setIsOpenDialog(true)}>
+          <IconButton
+            aria-label="Delete"
+            data-testid="buttonDelete"
+            onClick={() => {
+              openDialog(params.row);
+            }}>
             <SvgIcon>
               <DeleteIcon />
             </SvgIcon>
           </IconButton>
-          <Dialog open={isOpenDialog} onClose={closeDialog}>
-            <StyledDialogTitle>Delete article</StyledDialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                <p>You are about to delete an article {params.row.title}.</p>
-                <p>Do you really want to continue? The action is irreversible.</p>
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={() => setIsOpenDialog(false)}>Cancel</Button>
-              <Button variant="contained" onClick={() => deleteArticle(params.row.articleId)}>
-                Delete
-              </Button>
-            </DialogActions>
-          </Dialog>
+          {isOpenDialog && (
+            <SimpleDialog
+              isOpenDialog={isOpenDialog}
+              closeDialog={closeDialog}
+              dialogData={dialogData}
+              deleteArticle={deleteArticle}
+            />
+          )}
         </>
       )
     }
   ];
 
-  const deleteArticle = async (id: number) => {
-    setIsLoading(true);
-    try {
-      await httpDelete(`/articles/${id}`);
-      setIsOpenDialog(false);
-      await fetchListArticles();
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   return (
-    <StyledBox>
+    <StyledBox data-testid="box_myArticles">
       <StyledGrid container rowSpacing={3}>
         <Grid container justifyContent="space-between" spacing={0}>
           <Grid item xs={12} sm="auto">
@@ -140,7 +141,7 @@ const MyArticles: React.FC = () => {
         </Grid>
         <Grid item xs={12}>
           {!articles.length ? (
-            <Typography variant="body1">Nejsou k dispozici žádná data.</Typography>
+            <Typography variant="body1">No data available.</Typography>
           ) : (
             <DataTable headerColumns={columns} articles={articles} loading={isLoading} />
           )}

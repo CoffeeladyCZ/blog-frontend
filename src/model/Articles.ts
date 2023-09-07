@@ -56,3 +56,8 @@ export type FormLoginType = {
   username: string;
   password: string;
 };
+
+export type DialogDataType = {
+  title: string;
+  articleId: number;
+};
