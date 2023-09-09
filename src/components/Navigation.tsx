@@ -65,12 +65,34 @@ const LoginSection: React.FC = () => {
   }, [dispatch]);
 
   /** Log out user from application */
-  const logoutUser = () => {
+  const logoutUser = (disconnected: boolean) => {
     dispatch(setLogin(false));
     Cookies.remove('token');
-    setUserMenu(null);
+    localStorage.removeItem('loginTime');
+    clearInterval(expirationCheckInterval);
+
+    // if an hour has passed, the user is logged out
+    if (disconnected) {
+      navigate('/disconnected');
+      return;
+    }
     navigate('/recent-articles');
   };
+
+  const checkLoginExpiration = () => {
+    const loginTimeFromStorage = localStorage.getItem('loginTime');
+
+    if (loginTimeFromStorage !== null) {
+      const currentTime: Date = new Date();
+      const loginTime = new Date(loginTimeFromStorage);
+      const timeDifferenceMinutes = (currentTime.getTime() - loginTime.getTime()) / 1000;
+      if (timeDifferenceMinutes >= 3600) {
+        logoutUser(true);
+      }
+    }
+  };
+
+  const expirationCheckInterval = setInterval(checkLoginExpiration, 600000); // 10 minutes
 
   if (!login) {
     return (
@@ -109,7 +131,7 @@ const LoginSection: React.FC = () => {
             <MenuItem onClick={() => setUserMenu(null)}>
               <Typography textAlign="center">Profile</Typography>
             </MenuItem>
-            <MenuItem onClick={logoutUser}>
+            <MenuItem onClick={() => logoutUser(false)}>
               <Typography textAlign="center">Log out</Typography>
             </MenuItem>
           </Menu>
