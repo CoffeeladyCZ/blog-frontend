@@ -36,7 +36,7 @@ const MediaUploadInput: React.FC<MediaUploadFormProps> = ({ onFileUpload, isLoad
         name="selectedFile"
         control={control}
         rules={{ required: true }}
-        render={({ field }) => (
+        render={() => (
           <TextField
             color="primary"
             type="file"

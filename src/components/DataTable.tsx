@@ -1,7 +1,7 @@
 import React from 'react';
 import { DataGrid, GridColDef, GridValidRowModel } from '@mui/x-data-grid';
 import { styled } from '@mui/material/styles';
-import { Article } from '../model/Articles';
+import { Article } from '../types/Articles';
 
 type DataTablePropsType = {
   headerColumns: GridColDef<GridValidRowModel>[];
@@ -21,7 +21,7 @@ const DataTable: React.FC<DataTablePropsType> = ({
   articles,
   loading
 }: DataTablePropsType) => {
-  const getRowId = (articles: any) => articles.articleId; // TODO otypovat articles rows
+  const getRowId = (articles: any) => articles.articleId;
   return (
     <StyledDataGrid
       getRowId={getRowId}

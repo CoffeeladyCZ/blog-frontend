@@ -1,6 +1,11 @@
 import { useState } from 'react';
 import { httpPost, httpDelete } from '../utils/axiosService';
 
+type AddImageResponse = {
+  imageId: string;
+  name: string;
+};
+
 export function useFileUpload() {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [imageId, setImageId] = useState<string | null>(null);
@@ -14,7 +19,7 @@ export function useFileUpload() {
         const formData = new FormData();
         formData.append('image', file);
 
-        const response = await httpPost('/images', formData);
+        const response = await httpPost<AddImageResponse[]>('/images', formData);
         setImageId(response.data[0].imageId);
       }
     } catch (error) {
