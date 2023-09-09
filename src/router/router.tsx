@@ -9,6 +9,8 @@ import AddArticle from '../pages/AddArticle';
 import ArticleDetail from '../pages/ArticleDetail';
 import EditArticle from '../pages/EditArticle';
 import RecentArticles from '../pages/RecentArticles';
+import NotFound from '../pages/NotFound';
+import Disconnected from '../pages/Disconected';
 
 const Router = () => {
   return (
@@ -19,6 +21,8 @@ const Router = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/recent-articles" element={<RecentArticles />} />
         <Route path="/article/:id" element={<ArticleDetail />} />
+        <Route path="/disconnected" element={<Disconnected />} />
+        <Route path="*" element={<NotFound />} />
         <Route element={<PrivateRoutes />}>
           <Route path="/articles/" element={<MyArticles />} />
           <Route path="/article/new" element={<AddArticle />} />

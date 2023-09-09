@@ -7,11 +7,13 @@ import { FormLoginType } from '../model/Articles';
 
 type ApiResponseType = {
   success: boolean;
-  error?: {
-    response: {
-      data: {
-        message: string;
-      };
+  error?: ErrorType;
+};
+
+type ErrorType = {
+  response: {
+    data: {
+      message: string;
     };
   };
 };
@@ -81,6 +83,8 @@ export const loginUser = async (data: FormLoginType): Promise<ApiResponseType> =
     const response = await httpPost('/login', data);
     const access_token = await response.data.access_token;
     Cookies.set('token', access_token);
+    const loginTime = new Date();
+    localStorage.setItem('loginTime', loginTime.toISOString());
     return { success: true };
   } catch (error) {
     return {
@@ -88,7 +92,7 @@ export const loginUser = async (data: FormLoginType): Promise<ApiResponseType> =
       error: {
         response: {
           data: {
-            message: (error as any)?.response?.data?.message || 'Unknown error'
+            message: (error as ErrorType)?.response?.data?.message || 'Unknown error'
           }
         }
       }
