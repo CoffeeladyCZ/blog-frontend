@@ -15,9 +15,9 @@ import {
   StyledIconImageButton,
   StyledImg
 } from '../styled/styled';
-import { FormValuesTypes, defaultArticleValues } from '../model/Articles';
+import { FormValuesTypes, defaultArticleValues } from '../types/Articles';
 import { useFileUpload } from '../hooks/useFileUpload';
-import { fetchImage, getDetailArticle, updateArticleData } from '../utils/apiUtils';
+import { getImageData, getDetailArticle, updateArticleData } from '../utils/apiUtils';
 
 import LoginPage from './LoginPage';
 import Loading from '../components/Loading';
@@ -66,7 +66,7 @@ const EditArticle: React.FC = () => {
     if (imageId) {
       const loadImage = async () => {
         try {
-          const base64Image = await fetchImage(imageId);
+          const base64Image = await getImageData(imageId);
           setArticleData({ ...articleData, image: base64Image });
           setShowSuccessAlert(true);
         } catch (error) {

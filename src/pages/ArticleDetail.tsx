@@ -8,7 +8,7 @@ import { StyledSmallText } from '../styled/styled';
 import { styled } from '@mui/system';
 
 import { getDetailArticle } from '../utils/apiUtils';
-import { ArticleDetailTypes, defaultArticleDetailValues } from '../model/Articles';
+import { ArticleDetailTypes, defaultArticleDetailValues } from '../types/Articles';
 
 import Loading from '../components/Loading';
 import RelatedArticlesBox from '../components/ArticlesBox';

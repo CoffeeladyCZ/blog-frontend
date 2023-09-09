@@ -1,26 +1,21 @@
-import { ArticleDetailTypes, FormValuesTypes, Article } from '../model/Articles';
 import { httpGetImage, httpGet, httpPatch, httpPost } from '../utils/axiosService';
 import Cookies from 'js-cookie';
 
 import { blobToBase64 } from '../utils/utils';
-import { FormLoginType } from '../model/Articles';
+import {
+  ArticleDetailTypes,
+  FormValuesTypes,
+  FormLoginType,
+  Article,
+  ArticleListResponse,
+  ApiResponseType,
+  LoginResponse,
+  ErrorType
+} from '../types/Articles';
 
-type ApiResponseType = {
-  success: boolean;
-  error?: ErrorType;
-};
-
-type ErrorType = {
-  response: {
-    data: {
-      message: string;
-    };
-  };
-};
-
-export async function fetchImage(imageId: string) {
+export async function getImageData(imageId: string) {
   try {
-    const imageResponse = await httpGetImage(`/images/${imageId}`, {
+    const imageResponse = await httpGetImage<string>(`/images/${imageId}`, {
       responseType: 'blob'
     });
     const imageBlob = new Blob([imageResponse.data]);
@@ -37,11 +32,11 @@ export const getDetailArticle = async (
 ): Promise<ArticleDetailTypes | void> => {
   if (id) {
     try {
-      const response = await httpGet(`/articles/${id}`);
+      const response = await httpGet<ArticleDetailTypes>(`/articles/${id}`);
       const article = response.data;
       const imageId = response.data.imageId;
       if (imageId) {
-        const image = await fetchImage(imageId);
+        const image = await getImageData(imageId);
         return { ...article, image };
       } else {
         return article;
@@ -54,7 +49,7 @@ export const getDetailArticle = async (
 
 export const getListArticles = async () => {
   try {
-    const response = await httpGet('/articles');
+    const response = await httpGet<ArticleListResponse>('/articles');
     const data: Article[] = await response.data.items;
     return data;
   } catch (error) {
@@ -80,7 +75,7 @@ export const createArticleData = async (data: FormValuesTypes) => {
 
 export const loginUser = async (data: FormLoginType): Promise<ApiResponseType> => {
   try {
-    const response = await httpPost('/login', data);
+    const response = await httpPost<LoginResponse>('/login', data);
     const access_token = await response.data.access_token;
     Cookies.set('token', access_token);
     const loginTime = new Date();

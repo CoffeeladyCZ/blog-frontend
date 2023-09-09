@@ -16,9 +16,9 @@ import {
 
 import { Close } from '@mui/icons-material';
 
-import { FormValuesTypes } from '../model/Articles';
+import { FormValuesTypes } from '../types/Articles';
 import { useFileUpload } from '../hooks/useFileUpload';
-import { fetchImage, createArticleData } from '../utils/apiUtils';
+import { getImageData, createArticleData } from '../utils/apiUtils';
 
 import LoginPage from './LoginPage';
 import Loading from '../components/Loading';
@@ -49,7 +49,7 @@ const AddArticle: React.FC = () => {
     if (imageId) {
       const loadImage = async () => {
         try {
-          const base64Image = await fetchImage(imageId);
+          const base64Image = await getImageData(imageId);
           setImage(base64Image);
           setShowSuccessAlert(true);
         } catch (error) {

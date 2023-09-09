@@ -9,18 +9,7 @@ import { setListArticles } from '../store/article';
 import { httpDelete } from '../utils/axiosService';
 import { StyledBox } from '../styled/styled';
 
-import {
-  Typography,
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  Grid,
-  IconButton,
-  SvgIcon
-} from '@mui/material';
+import { Typography, Button, Grid, IconButton, SvgIcon } from '@mui/material';
 
 import { styled } from '@mui/material/styles';
 import { ReactComponent as DeleteIcon } from '../assets/deleteIcon.svg';
@@ -28,7 +17,7 @@ import { ReactComponent as EditIcon } from '../assets/editIcon.svg';
 
 import { StyledH1, StyledButtonGrid } from '../styled/styled';
 import { getListArticles } from '../utils/apiUtils';
-import { DialogDataType } from '../model/Articles';
+import { DialogDataType } from '../types/Articles';
 
 import DataTable from '../components/DataTable';
 import SimpleDialog from '../components/SimpleDialog';

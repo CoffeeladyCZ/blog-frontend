@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-import { DialogDataType } from '../model/Articles';
+import { DialogDataType } from '../types/Articles';
 
 type DialogPropsType = {
   isOpenDialog: boolean;

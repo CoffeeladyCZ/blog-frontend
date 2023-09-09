@@ -6,7 +6,7 @@ import { styled } from '@mui/material/styles';
 
 import { RootState } from '../store/store';
 import { setListArticles } from '../store/article';
-import { Article } from '../model/Articles';
+import { Article } from '../types/Articles';
 import { StyledSmallText, StyledH4, StyledLink } from '../styled/styled';
 import { getListArticles } from '../utils/apiUtils';
 

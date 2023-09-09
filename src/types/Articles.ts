@@ -61,3 +61,31 @@ export type DialogDataType = {
   title: string;
   articleId: number;
 };
+
+export type ApiResponseType = {
+  success: boolean;
+  error?: ErrorType;
+};
+
+export type ErrorType = {
+  response: {
+    data: {
+      message: string;
+    };
+  };
+};
+
+export type ArticleListResponse = {
+  items: Article[];
+  pagination: {
+    offset: number;
+    limit: number;
+    total: number;
+  };
+};
+
+export type LoginResponse = {
+  access_token: string;
+  expires_in: number;
+  token_type: string;
+};

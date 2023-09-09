@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { RootState } from '../store/store';
 import { setLogin } from '../store/login';
-import { FormLoginType } from '../model/Articles';
+import { FormLoginType } from '../types/Articles';
 import { loginUser } from '../utils/apiUtils';
 import { StyledH3, StyledErrorMessage } from '../styled/styled';
 

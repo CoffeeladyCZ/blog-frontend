@@ -5,11 +5,10 @@ import { Link } from 'react-router-dom';
 import { Box, Button, Card, CardActions, CardMedia, CardContent, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-import { blobToBase64 } from '../utils/utils';
-import { httpGetImage } from '../utils/axiosService';
 import { StyledH4, StyledSmallText } from '../styled/styled';
+import { getImageData } from '../utils/apiUtils';
 
-import { Article } from '../model/Articles';
+import { Article } from '../types/Articles';
 import Loading from '../components/Loading';
 
 type ArticleCardProps = {
@@ -36,11 +35,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
   const getImage = async (imageId: string) => {
     setIsLoading(true);
     try {
-      const imageResponse = await httpGetImage(`/images/${imageId}`, {
-        responseType: 'blob'
-      });
-      const imageBlob = new Blob([imageResponse.data]);
-      const base64Image = await blobToBase64(imageBlob);
+      const base64Image = await getImageData(imageId);
       setImage(base64Image);
     } catch (error) {
       console.error(error);
