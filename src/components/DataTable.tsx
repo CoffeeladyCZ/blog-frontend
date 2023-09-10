@@ -1,11 +1,13 @@
 import React from 'react';
+
 import { DataGrid, GridColDef, GridValidRowModel } from '@mui/x-data-grid';
 import { styled } from '@mui/material/styles';
-import { Article } from '../types/Articles';
+
+import { ArticleType } from '../types/Articles';
 
 type DataTablePropsType = {
   headerColumns: GridColDef<GridValidRowModel>[];
-  articles: Article[];
+  articles: ArticleType[];
   loading: boolean;
 };
 

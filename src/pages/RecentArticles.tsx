@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
+import { Grid } from '@mui/material';
+
 import { StyledBox, StyledGrid, StyledH1 } from '../styled/styled';
 import { RootState } from '../store/store';
 import { setArticleList } from '../store/article';
 import { getArticleList } from '../utils/apiUtils';
-
-import { Grid } from '@mui/material';
 
 import ArticleCard from '../components/ArticleCard';
 

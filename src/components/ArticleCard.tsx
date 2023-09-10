@@ -7,12 +7,12 @@ import { styled } from '@mui/material/styles';
 
 import { StyledH4, StyledSmallLightText } from '../styled/styled';
 import { getImageData } from '../utils/apiUtils';
+import { ArticleType } from '../types/Articles';
 
-import { Article } from '../types/Articles';
 import Loading from '../components/Loading';
 
 type ArticleCardProps = {
-  article: Article;
+  article: ArticleType;
 };
 
 const StyledCard = styled(Card)`

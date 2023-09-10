@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-key */
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
@@ -10,7 +9,6 @@ import { httpDelete } from '../utils/axiosService';
 import { StyledBox } from '../styled/styled';
 
 import { Typography, Button, Grid, IconButton, SvgIcon } from '@mui/material';
-
 import { styled } from '@mui/material/styles';
 import { ReactComponent as DeleteIcon } from '../assets/deleteIcon.svg';
 import { ReactComponent as EditIcon } from '../assets/editIcon.svg';

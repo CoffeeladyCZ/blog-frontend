@@ -15,7 +15,7 @@ import {
   StyledIconImageButton,
   StyledImg
 } from '../styled/styled';
-import { FormValuesTypes, defaultArticleValues } from '../types/Articles';
+import { FormDetailType, defaultArticleValues } from '../types/Articles';
 import { useFileUpload } from '../hooks/useFileUpload';
 import { getImageData, getDetailArticle, updateArticleData } from '../utils/apiUtils';
 
@@ -28,13 +28,13 @@ import MarkdownControlled from '../components/MarkDownControlled';
 const EditArticle: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState<boolean>(false);
-  const [articleData, setArticleData] = useState<FormValuesTypes>(defaultArticleValues);
+  const [articleData, setArticleData] = useState<FormDetailType>(defaultArticleValues);
 
   const { id = '' } = useParams<{ id: string }>();
   const { uploadFile, deleteFile, imageId } = useFileUpload();
   const navigate = useNavigate();
 
-  const methods = useForm<FormValuesTypes>({
+  const methods = useForm<FormDetailType>({
     mode: 'onChange'
   });
 
@@ -78,11 +78,11 @@ const EditArticle: React.FC = () => {
     setArticleData({ ...articleData, image: '' });
   }, [imageId]);
 
-  const onSubmit = async (data: FormValuesTypes) => {
+  const onSubmit = async (data: FormDetailType) => {
     await updateArticle(data);
   };
 
-  const updateArticle = async (data: FormValuesTypes) => {
+  const updateArticle = async (data: FormDetailType) => {
     const updatedData = data;
     setIsLoading(true);
     updatedData.imageId = imageId || articleData.imageId;

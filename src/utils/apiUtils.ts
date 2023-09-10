@@ -4,10 +4,10 @@ import Cookies from 'js-cookie';
 import { blobToBase64 } from '../utils/utils';
 import {
   ArticleDetailTypes,
-  FormValuesTypes,
+  FormDetailType,
   FormLoginType,
   CommentResponseType,
-  Article,
+  ArticleType,
   ArticleListResponse,
   ApiResponseType,
   LoginResponse,
@@ -51,14 +51,14 @@ export const getDetailArticle = async (
 export const getArticleList = async () => {
   try {
     const response = await httpGet<ArticleListResponse>('/articles');
-    const data: Article[] = await response.data.items;
+    const data: ArticleType[] = await response.data.items;
     return data;
   } catch (error) {
     console.error(error);
   }
 };
 
-export const updateArticleData = async (data: FormValuesTypes, id: string) => {
+export const updateArticleData = async (data: FormDetailType, id: string) => {
   try {
     httpPatch(`/articles/${id}`, data);
   } catch (error) {
@@ -66,7 +66,7 @@ export const updateArticleData = async (data: FormValuesTypes, id: string) => {
   }
 };
 
-export const createArticleData = async (data: FormValuesTypes) => {
+export const createArticleData = async (data: FormDetailType) => {
   try {
     await httpPost('/articles', data);
   } catch (error) {
