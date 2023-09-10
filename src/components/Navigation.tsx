@@ -130,9 +130,6 @@ const LoginSection: React.FC = () => {
             }}
             open={Boolean(userMenu)}
             onClose={() => setUserMenu(null)}>
-            <MenuItem onClick={() => setUserMenu(null)}>
-              <Typography textAlign="center">Profile</Typography>
-            </MenuItem>
             <MenuItem onClick={() => logoutUser(false)} data-testid="logout">
               <Typography textAlign="center">Log out</Typography>
             </MenuItem>
