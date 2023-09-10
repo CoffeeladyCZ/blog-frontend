@@ -62,7 +62,6 @@ const AddArticle: React.FC = () => {
   }, [imageId]);
 
   const onSubmit = async (data: FormValuesTypes) => {
-    setIsLoading(true);
     data.imageId = imageId;
     await createArticle(data);
   };

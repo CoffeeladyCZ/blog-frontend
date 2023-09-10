@@ -7,7 +7,7 @@ import { styled } from '@mui/material/styles';
 import { RootState } from '../store/store';
 import { setListArticles } from '../store/article';
 import { Article } from '../types/Articles';
-import { StyledSmallText, StyledH4, StyledLink } from '../styled/styled';
+import { StyledSmallLightText, StyledH4, StyledLink } from '../styled/styled';
 import { getListArticles } from '../utils/apiUtils';
 
 import Loading from '../components/Loading';
@@ -34,7 +34,7 @@ const ArticleBox: React.FC<ArticlePropsType> = ({ title, perex, articleId }) => 
       <StyledLink to={`/article/${articleId}`}>
         <Typography variant="h6">{title}</Typography>
       </StyledLink>
-      <StyledSmallText>{perex}</StyledSmallText>
+      <StyledSmallLightText>{perex}</StyledSmallLightText>
     </StyledArticleBox>
   );
 };

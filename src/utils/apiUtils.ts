@@ -6,6 +6,7 @@ import {
   ArticleDetailTypes,
   FormValuesTypes,
   FormLoginType,
+  CommentResponseType,
   Article,
   ArticleListResponse,
   ApiResponseType,
@@ -92,5 +93,13 @@ export const loginUser = async (data: FormLoginType): Promise<ApiResponseType> =
         }
       }
     };
+  }
+};
+
+export const createCommentData = async (data: CommentResponseType) => {
+  try {
+    await httpPost<CommentResponseType>('/comments', data);
+  } catch (error) {
+    console.error(error);
   }
 };

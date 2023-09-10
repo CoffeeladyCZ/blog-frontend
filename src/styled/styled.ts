@@ -66,14 +66,28 @@ export const StyledBodyText = styled(Typography)`
   font-size: 1rem;
   line-height: 24px;
 `;
+
+export const StyledBodyBoldText = styled(Typography)`
+  font-size: 1rem;
+  line-height: 24px;
+  font-weight: 700;
+`;
+
 export const StyledBodyTextXL = styled(Typography)`
   font-size: 20px;
   line-height: 34px;
 `;
 
-export const StyledSmallText = styled(Typography)`
+export const StyledSmallLightText = styled(Typography)`
   color: rgba(108, 117, 125, 1);
+  font-size: 14px;
   line-height: 20px;
+`;
+
+export const StyledSmallText = styled(Typography)`
+  color: rgba(33, 37, 41, 1);
+  font-size: 16px;
+  line-height: 24px;
 `;
 
 export const StyledErrorMessage = styled(Typography)`
