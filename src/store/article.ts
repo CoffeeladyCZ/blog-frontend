@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Article, ArticleDetailTypes } from '../types/Articles';
+import { ArticleType } from '../types/Articles';
 
 interface ArticleState {
-  articleList: Article[];
+  articleList: ArticleType[];
 }
 
 const initialState: ArticleState = {
@@ -13,7 +13,7 @@ export const articleSlice = createSlice({
   name: 'articleList',
   initialState,
   reducers: {
-    setArticleList: (state, action: PayloadAction<Article[]>) => {
+    setArticleList: (state, action: PayloadAction<ArticleType[]>) => {
       state.articleList = action.payload;
     }
   }

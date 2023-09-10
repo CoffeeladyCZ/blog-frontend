@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Avatar,
@@ -15,15 +16,13 @@ import {
   Tooltip,
   Typography
 } from '@mui/material';
+import { ArrowForward } from '@mui/icons-material';
+import { styled } from '@mui/material/styles';
 
-import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { setLogin } from '../store/login';
 import { StyledNavLink } from '../styled/styled';
 
-import { ArrowForward } from '@mui/icons-material';
-import { styled } from '@mui/material/styles';
-import '../scss/colors.scss';
 import logo from '../assets/logo.svg';
 
 const StyledBox = styled(Box)`
@@ -49,6 +48,10 @@ const StyledAppBar = styled(AppBar)`
 
 const StyledToolbar = styled(Toolbar)`
   justify-content: space-between;
+`;
+
+const StyledMenu = styled(Menu)`
+  margin-top: 45px;
 `;
 
 const LoginSection: React.FC = () => {
@@ -113,8 +116,7 @@ const LoginSection: React.FC = () => {
               <Avatar alt="avatar" srcSet="../assets/logo_A.jpg" />
             </IconButton>
           </Tooltip>
-          <Menu
-            sx={{ mt: '45px' }}
+          <StyledMenu
             id="userMenu"
             anchorEl={userMenu}
             anchorOrigin={{
@@ -134,7 +136,7 @@ const LoginSection: React.FC = () => {
             <MenuItem onClick={() => logoutUser(false)} data-testid="logout">
               <Typography textAlign="center">Log out</Typography>
             </MenuItem>
-          </Menu>
+          </StyledMenu>
         </StyledBoxAvatar>
       </>
     );

@@ -13,10 +13,9 @@ import {
   StyledIconImageButton,
   StyledImg
 } from '../styled/styled';
-
 import { Close } from '@mui/icons-material';
 
-import { FormValuesTypes } from '../types/Articles';
+import { FormDetailType } from '../types/Articles';
 import { useFileUpload } from '../hooks/useFileUpload';
 import { getImageData, createArticleData } from '../utils/apiUtils';
 
@@ -34,7 +33,7 @@ const AddArticle: React.FC = () => {
   const { uploadFile, deleteFile, cleanFileInput, uploadedFile, imageId } = useFileUpload();
   const navigate = useNavigate();
 
-  const methods = useForm<FormValuesTypes>({
+  const methods = useForm<FormDetailType>({
     mode: 'onChange'
   });
 
@@ -61,12 +60,12 @@ const AddArticle: React.FC = () => {
     setImage(null);
   }, [imageId]);
 
-  const onSubmit = async (data: FormValuesTypes) => {
+  const onSubmit = async (data: FormDetailType) => {
     data.imageId = imageId;
     await createArticle(data);
   };
 
-  const createArticle = async (data: FormValuesTypes) => {
+  const createArticle = async (data: FormDetailType) => {
     setIsLoading(true);
     try {
       await createArticleData(data);

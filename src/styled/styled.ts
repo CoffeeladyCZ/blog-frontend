@@ -31,7 +31,7 @@ export const StyledBox = styled(Box)`
 
 export const StyledNavLink = styled(NavLink)`
   text-decoration: none;
-  color: rgba(33, 37, 41, 1); // upravit na globální proměnnou
+  color: rgba(33, 37, 41, 1);
 
   &.active {
     color: #4dabf5;
@@ -40,7 +40,7 @@ export const StyledNavLink = styled(NavLink)`
 
 export const StyledLink = styled(Link)`
   text-decoration: none;
-  color: rgba(33, 37, 41, 1); // upravit na globální proměnnou
+  color: rgba(33, 37, 41, 1);
 
   &:hover {
     text-decoration: underline;

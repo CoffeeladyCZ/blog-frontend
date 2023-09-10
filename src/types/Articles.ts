@@ -21,7 +21,7 @@ export const defaultArticleDetailValues = {
 
 // Types
 
-export type Article = {
+export type ArticleType = {
   articleId: string;
   title: string;
   perex: string;
@@ -63,7 +63,7 @@ export type CommentType = {
 
 // Form types
 
-export type FormValuesTypes = {
+export type FormDetailType = {
   articleId: string;
   title: string;
   imageId: string | null;
@@ -98,7 +98,7 @@ export type ErrorType = {
 };
 
 export type ArticleListResponse = {
-  items: Article[];
+  items: ArticleType[];
   pagination: {
     offset: number;
     limit: number;

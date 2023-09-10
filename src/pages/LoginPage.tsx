@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 import { useForm, Controller, FormProvider } from 'react-hook-form';
-// import { useTranslation } from 'react-i18next';
 import { Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { Button, Card, Grid, TextField, CardContent, CardActions } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 import { RootState } from '../store/store';
 import { setLogin } from '../store/login';
 import { FormLoginType } from '../types/Articles';
 import { loginUser } from '../utils/apiUtils';
 import { StyledH3, StyledErrorMessage } from '../styled/styled';
-
-import { Button, Card, Grid, TextField, CardContent, CardActions } from '@mui/material';
-import { styled } from '@mui/material/styles';
 
 const StyledCard = styled(Card)`
   width: 368px;

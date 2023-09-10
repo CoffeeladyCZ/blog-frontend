@@ -1,13 +1,14 @@
 import React, { useState, ChangeEvent } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+
 import { TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { styled } from '@mui/material/styles';
 
-interface MediaUploadFormProps {
+type MediaUploadFormProps = {
   onFileUpload: (file: File | null) => void;
   isLoading: boolean;
-}
+};
 
 const StyledButton = styled(LoadingButton)`
   margin-left: 24px;

@@ -6,7 +6,7 @@ import { styled } from '@mui/material/styles';
 
 import { RootState } from '../store/store';
 import { setArticleList } from '../store/article';
-import { Article } from '../types/Articles';
+import { ArticleType } from '../types/Articles';
 import { StyledSmallLightText, StyledH4, StyledLink } from '../styled/styled';
 import { getArticleList } from '../utils/apiUtils';
 
@@ -43,7 +43,9 @@ const RelatedArticlesBox: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const dispatch = useDispatch();
-  const articleList: Article[] = useSelector((state: RootState) => state.articleList.articleList);
+  const articleList: ArticleType[] = useSelector(
+    (state: RootState) => state.articleList.articleList
+  );
 
   useEffect(() => {
     checkArticleList();
@@ -73,7 +75,7 @@ const RelatedArticlesBox: React.FC = () => {
     <StyledBox data-testid="articleRelatedBox">
       <StyledH4>Related articles</StyledH4>
       {articleList &&
-        articleList.map((item: Article) => (
+        articleList.map((item: ArticleType) => (
           <ArticleBox
             key={item.articleId}
             title={item.title}

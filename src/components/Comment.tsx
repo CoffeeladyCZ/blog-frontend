@@ -45,7 +45,7 @@ const Comment: React.FC<CommentPropsType> = ({ comment }) => {
       <CardContent>
         <Grid container spacing={2}>
           <Grid item sm={2}>
-            <StyledAvatar alt="avatar" srcSet="../assets/logo_A.jpg" />
+            <StyledAvatar alt="avatar" />
           </Grid>
           <Grid item sm={10}>
             <Grid container>
