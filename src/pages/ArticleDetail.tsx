@@ -91,8 +91,7 @@ const ArticleDetail: React.FC = () => {
                   preview="preview"
                   hideToolbar={true}
                   visibleDragbar={false}
-                  enableScroll={true}
-                  height={1500}
+                  height={700}
                 />
               </CardContent>
               <CommentsBox comments={articleDetail.comments} />
