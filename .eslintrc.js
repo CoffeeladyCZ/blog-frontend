@@ -30,7 +30,7 @@ module.exports = {
   plugins: ['@typescript-eslint', 'react'],
   rules: {
     // Basic settings
-    indent: ['warn', 2],
+    indent: ['warn', 2, { SwitchCase: 1 }],
     'no-trailing-spaces': ['warn'],
 
     // Code settings

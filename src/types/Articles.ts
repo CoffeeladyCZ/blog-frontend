@@ -1,23 +1,4 @@
-export type Article = {
-  articleId: string;
-  title: string;
-  perex: string;
-  imageId: string;
-  createdAt: string;
-  lastUpdatedAt: string;
-};
-
-export type ArticleDetailTypes = {
-  articleId: string;
-  comments: string[];
-  content: string;
-  createdAt: string;
-  imageId: string;
-  lastUpdatedAt: string;
-  perex: string;
-  title: string;
-  image?: string;
-};
+// Default values
 
 export const defaultArticleValues = {
   articleId: '',
@@ -38,6 +19,50 @@ export const defaultArticleDetailValues = {
   lastUpdatedAt: ''
 };
 
+// Types
+
+export type Article = {
+  articleId: string;
+  title: string;
+  perex: string;
+  imageId: string;
+  createdAt: string;
+  lastUpdatedAt: string;
+};
+
+export type ArticleDetailTypes = {
+  articleId: string;
+  comments: CommentType[];
+  content: string;
+  createdAt: string;
+  imageId: string;
+  lastUpdatedAt: string;
+  perex: string;
+  title: string;
+  image?: string;
+};
+
+export type ImageType = {
+  imageId: string;
+  name: string;
+};
+
+export type DialogDataType = {
+  title: string;
+  articleId: number;
+};
+
+export type CommentType = {
+  commentId: string;
+  articleId: string;
+  author: string;
+  content: string;
+  postedAt: string;
+  score: number;
+};
+
+// Form types
+
 export type FormValuesTypes = {
   articleId: string;
   title: string;
@@ -47,20 +72,17 @@ export type FormValuesTypes = {
   perex: string;
 };
 
-export type ImageType = {
-  imageId: string;
-  name: string;
-};
-
 export type FormLoginType = {
   username: string;
   password: string;
 };
 
-export type DialogDataType = {
-  title: string;
-  articleId: number;
+export type FormCommentType = {
+  content: string;
+  author: string;
 };
+
+// API response types
 
 export type ApiResponseType = {
   success: boolean;
@@ -88,4 +110,10 @@ export type LoginResponse = {
   access_token: string;
   expires_in: number;
   token_type: string;
+};
+
+export type CommentResponseType = {
+  content: string;
+  articleId: string;
+  author: string;
 };

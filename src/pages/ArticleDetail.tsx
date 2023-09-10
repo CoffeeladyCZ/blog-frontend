@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import MarkdownEditor from '@uiw/react-md-editor';
 
 import { Card, Container, CardContent, CardMedia, Grid, Typography } from '@mui/material';
-import { StyledSmallText } from '../styled/styled';
+import { StyledSmallLightText } from '../styled/styled';
 import { styled } from '@mui/system';
 
 import { getDetailArticle } from '../utils/apiUtils';
@@ -12,6 +12,7 @@ import { ArticleDetailTypes, defaultArticleDetailValues } from '../types/Article
 
 import Loading from '../components/Loading';
 import RelatedArticlesBox from '../components/ArticlesBox';
+import CommentsBox from '../components/CommentsBox';
 
 const StyledDetailContainer = styled(Container)`
   margin-top: 50px;
@@ -68,9 +69,9 @@ const ArticleDetail: React.FC = () => {
           <StyledCard>
             <CardContent>
               <StyledH1 pb={2}>{articleData.title}</StyledH1>
-              <StyledSmallText variant="body2">
+              <StyledSmallLightText variant="body2">
                 {author} • {dayjs(articleData.lastUpdatedAt).format('DD/MM/YY')}
-              </StyledSmallText>
+              </StyledSmallLightText>
             </CardContent>
             {articleData.image && <StyledCardMedia image={articleData.image} />}
             <CardContent>
@@ -86,6 +87,7 @@ const ArticleDetail: React.FC = () => {
               />
             </CardContent>
           </StyledCard>
+          <CommentsBox comments={articleData.comments} />
         </Grid>
         <Grid item xs={12} md={4}>
           <RelatedArticlesBox />
