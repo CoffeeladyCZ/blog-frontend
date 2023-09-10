@@ -1,11 +1,11 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
 
-const baseURL = 'https://fullstack.exercise.applifting.cz';
+const baseURL = process.env.REACT_APP_API_URL;
 
 const defaultConfig = {
   headers: {
-    'X-API-KEY': 'd4234190-5f6b-4d51-b3f3-80cc4810d0b7'
+    'X-API-KEY': process.env.REACT_APP_X_API_KEY
   }
 };
 
@@ -37,7 +37,7 @@ export const httpGetImage = async <T>(
   config: AxiosRequestConfig
 ): Promise<AxiosResponse<T>> => {
   config.headers = {
-    'X-API-KEY': 'd4234190-5f6b-4d51-b3f3-80cc4810d0b7'
+    'X-API-KEY': process.env.REACT_APP_X_API_KEY
   };
   const response = await axios.get(`${baseURL}${url}`, config);
   return response;

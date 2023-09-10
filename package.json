@@ -21,6 +21,7 @@
     "@uiw/react-md-editor": "^3.23.3",
     "axios": "^1.4.0",
     "dayjs": "^1.11.9",
+    "dotenv": "^16.3.1",
     "eslint": "^8.44.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "js-cookie": "^3.0.5",
