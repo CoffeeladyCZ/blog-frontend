@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { StyledBox, StyledGrid, StyledH1 } from '../styled/styled';
 import { RootState } from '../store/store';
-import { setListArticles } from '../store/article';
-import { getListArticles } from '../utils/apiUtils';
+import { setArticleList } from '../store/article';
+import { getArticleList } from '../utils/apiUtils';
 
 import { Grid } from '@mui/material';
 
@@ -14,18 +14,18 @@ const RecentArticles: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const dispatch = useDispatch();
-  const articles = useSelector((state: RootState) => state.article.listArticles);
+  const articles = useSelector((state: RootState) => state.articleList.articleList);
 
   const sortedArticles = [...articles].sort((a, b) => {
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   });
 
-  const fetchListArticles = async () => {
+  const fetchArticleList = async () => {
     setIsLoading(true);
     try {
-      const data = await getListArticles();
+      const data = await getArticleList();
       if (data) {
-        return dispatch(setListArticles(data));
+        return dispatch(setArticleList(data));
       }
     } catch (error) {
       console.error(error);
@@ -35,7 +35,7 @@ const RecentArticles: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchListArticles();
+    fetchArticleList();
   }, []);
 
   return (

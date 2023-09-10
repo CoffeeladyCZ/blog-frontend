@@ -5,7 +5,7 @@ import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { RootState } from '../store/store';
-import { setListArticles } from '../store/article';
+import { setArticleList } from '../store/article';
 import { httpDelete } from '../utils/axiosService';
 import { StyledBox } from '../styled/styled';
 
@@ -16,7 +16,7 @@ import { ReactComponent as DeleteIcon } from '../assets/deleteIcon.svg';
 import { ReactComponent as EditIcon } from '../assets/editIcon.svg';
 
 import { StyledH1, StyledButtonGrid } from '../styled/styled';
-import { getListArticles } from '../utils/apiUtils';
+import { getArticleList } from '../utils/apiUtils';
 import { DialogDataType } from '../types/Articles';
 
 import DataTable from '../components/DataTable';
@@ -33,7 +33,7 @@ const MyArticles: React.FC = () => {
   const [dialogData, setDialogData] = useState<DialogDataType>({ title: '', articleId: 0 });
 
   const dispatch = useDispatch();
-  const articles = useSelector((state: RootState) => state.article.listArticles);
+  const articles = useSelector((state: RootState) => state.articleList.articleList);
 
   const openDialog = (data: DialogDataType) => {
     setDialogData(data);
@@ -44,12 +44,12 @@ const MyArticles: React.FC = () => {
     setIsOpenDialog(false);
   };
 
-  const fetchListArticles = async () => {
+  const fetchArticleList = async () => {
     setIsLoading(true);
     try {
-      const data = await getListArticles();
+      const data = await getArticleList();
       if (data) {
-        return dispatch(setListArticles(data));
+        return dispatch(setArticleList(data));
       }
     } catch (error) {
       console.error(error);
@@ -63,7 +63,7 @@ const MyArticles: React.FC = () => {
     try {
       await httpDelete(`/articles/${id}`);
       setIsOpenDialog(false);
-      await fetchListArticles();
+      await fetchArticleList();
     } catch (error) {
       console.error(error);
     } finally {
@@ -72,7 +72,7 @@ const MyArticles: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchListArticles();
+    fetchArticleList();
   }, []);
 
   const columns: GridColDef[] = [

@@ -5,10 +5,10 @@ import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import { RootState } from '../store/store';
-import { setListArticles } from '../store/article';
+import { setArticleList } from '../store/article';
 import { Article } from '../types/Articles';
 import { StyledSmallLightText, StyledH4, StyledLink } from '../styled/styled';
-import { getListArticles } from '../utils/apiUtils';
+import { getArticleList } from '../utils/apiUtils';
 
 import Loading from '../components/Loading';
 
@@ -43,19 +43,19 @@ const RelatedArticlesBox: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const dispatch = useDispatch();
-  const listArticles: Article[] = useSelector((state: RootState) => state.article.listArticles);
+  const articleList: Article[] = useSelector((state: RootState) => state.articleList.articleList);
 
   useEffect(() => {
-    checkListArticles();
-  });
+    checkArticleList();
+  }, []);
 
-  const checkListArticles = async () => {
-    if (listArticles.length === 0) {
+  const checkArticleList = async () => {
+    if (articleList.length === 0) {
       setIsLoading(true);
       try {
-        const data = await getListArticles();
+        const data = await getArticleList();
         if (data) {
-          return dispatch(setListArticles(data));
+          return dispatch(setArticleList(data));
         }
       } catch (error) {
         console.error(error);
@@ -70,16 +70,17 @@ const RelatedArticlesBox: React.FC = () => {
   }
 
   return (
-    <StyledBox>
+    <StyledBox data-testid="articleRelatedBox">
       <StyledH4>Related articles</StyledH4>
-      {listArticles.map((item: Article) => (
-        <ArticleBox
-          key={item.articleId}
-          title={item.title}
-          perex={item.perex}
-          articleId={item.articleId}
-        />
-      ))}
+      {articleList &&
+        articleList.map((item: Article) => (
+          <ArticleBox
+            key={item.articleId}
+            title={item.title}
+            perex={item.perex}
+            articleId={item.articleId}
+          />
+        ))}
     </StyledBox>
   );
 };

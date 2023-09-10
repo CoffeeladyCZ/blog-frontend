@@ -22,8 +22,8 @@ const StyledCommentsCard = styled(Card)`
 // TODO - Delete after implementing the functionality of adding comments
 const mockedComment = [
   {
-    commentId: 'string',
-    articleId: 'fe3f211e-49c8-4ae2-bb7e-304508c7e67d',
+    commentId: 'jjjf211e-49c8-4ae2-bb7e-304508c7e67d',
+    articleId: 'fd3f211e-49c8-4ae2-bb7e-304508c7e67d',
     author: 'Marcela',
     content:
       'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phsellus et lorem id felis nonummy placerat. In enim a arcu imperdiet malesuada',
@@ -31,7 +31,7 @@ const mockedComment = [
     score: 22
   },
   {
-    commentId: 'string',
+    commentId: 'ad4f211f-49c8-4ae2-bb7e-304508c7e67d',
     articleId: 'fe3f211e-49c8-4ae2-bb7e-304508c7e67d',
     author: 'Marcela',
     content:

@@ -35,8 +35,8 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
   const getImage = async (imageId: string) => {
     setIsLoading(true);
     try {
-      const base64Image = await getImageData(imageId);
-      setImage(base64Image);
+      const imageResponse = await getImageData(imageId);
+      setImage(imageResponse);
     } catch (error) {
       console.error(error);
     } finally {
