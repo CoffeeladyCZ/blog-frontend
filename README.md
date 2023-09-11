@@ -6,9 +6,9 @@ Blogging platform for adding and editing articles.
 
 - React,
 - MUI, Styled component,
-- Axios, Jest, testing-library/react.
+- Axios, Jest, testing-library/react, Cypress.
 
-The production version is in the `release/1.0` branch. This version is also viewable here: [vercel]()
+The production version is in the `release/1.0` branch. This version is also viewable on Vercel.
 
 You need to create an `.env` file with:
 - `REACT_APP_API_URL` (contains the path to the API)
@@ -30,5 +30,6 @@ After logging in, the user will receive an access_token that is valid for 1 hour
 All planned issues are submitted on github.
 
 Credentials:
-marcela@test.cz
-testpassword
+
+- marcela@test.cz
+- testpassword
