@@ -8,7 +8,7 @@ Blogging platform for adding and editing articles.
 - MUI, Styled component,
 - Axios, Jest, testing-library/react, Cypress.
 
-The production version is in the `release/1.0` branch. This version is also viewable on Vercel.
+The production version is in the `release/0.1.0` branch. This version is also viewable on Vercel.
 
 You need to create an `.env` file with:
 - `REACT_APP_API_URL` (contains the path to the API)
