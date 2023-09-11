@@ -14,7 +14,7 @@ const StyledContainer = styled(Container)`
 const NotFound: React.FC = () => {
   return (
     <StyledContainer data-testid="notFound">
-      <StyledH1 variant="h1">Page not found.</StyledH1>;
+      <StyledH1 variant="h1">Page not found.</StyledH1>
     </StyledContainer>
   );
 };
