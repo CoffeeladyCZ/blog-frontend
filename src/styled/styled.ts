@@ -11,7 +11,7 @@ export const StyledContainer = styled(Container)`
 
 export const StyledGrid = styled(Grid)`
   max-width: 1152px;
-  padding: 0 24px;
+  padding: 0 24px 24px 24px;
 `;
 
 export const StyledArticleGrid = styled(Grid)`

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { useSelector, useDispatch } from 'react-redux';
+import dayjs from 'dayjs';
 
 import { RootState } from '../store/store';
 import { setArticleList } from '../store/article';
@@ -77,6 +78,15 @@ const MyArticles: React.FC = () => {
     { field: 'title', headerName: 'Article title', flex: 1 },
     { field: 'perex', headerName: 'Perex', flex: 2 },
     { field: 'author', headerName: 'Author', flex: 1 },
+    {
+      field: 'lastUpdatedAt',
+      headerName: 'Last update date',
+      sortingOrder: ['desc', 'asc', null],
+      flex: 1,
+      renderCell: (params: GridRenderCellParams) => (
+        <>{dayjs(params.row.lastUpdatedAt).format('DD/MM/YY')}</>
+      )
+    },
     {
       field: 'actions',
       headerName: 'Actions',

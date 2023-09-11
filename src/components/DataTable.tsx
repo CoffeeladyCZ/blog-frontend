@@ -24,6 +24,7 @@ const DataTable: React.FC<DataTablePropsType> = ({
   loading
 }: DataTablePropsType) => {
   const getRowId = (articles: any) => articles.articleId;
+
   return (
     <StyledDataGrid
       data-testid="dataTable"
@@ -33,7 +34,10 @@ const DataTable: React.FC<DataTablePropsType> = ({
       loading={loading}
       initialState={{
         pagination: {
-          paginationModel: { page: 0, pageSize: 5 }
+          paginationModel: { page: 0, pageSize: 10 }
+        },
+        sorting: {
+          sortModel: [{ field: 'lastUpdatedAt', sort: 'desc' }]
         }
       }}
       pageSizeOptions={[5, 10]}
