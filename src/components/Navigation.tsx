@@ -117,9 +117,9 @@ const LoginSection: React.FC<LoginSectionType> = ({ onUserAlert }) => {
   } else {
     return (
       <>
-        <StyledBoxAvatar>
+        <StyledBoxAvatar data-testid="loginSection">
           <StyledNavLink to="/articles/">My Articles</StyledNavLink>
-          <StyledNavLink to="/article/new">Create Articles</StyledNavLink>
+          <StyledNavLink to="/article/new">Create Article</StyledNavLink>
           <Tooltip title="Open menu">
             <IconButton data-testid="menuButton" onClick={(e) => setUserMenu(e.currentTarget)}>
               <Avatar alt="avatar" srcSet="../assets/logo_A.jpg" />

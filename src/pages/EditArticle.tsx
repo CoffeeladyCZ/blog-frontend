@@ -121,7 +121,7 @@ const EditArticle: React.FC = () => {
                 <StyledH1 variant="h1">Edit article</StyledH1>
               </Grid>
               <StyledButtonGrid item xs={12} sm={3}>
-                <Button type="submit" variant="contained">
+                <Button type="submit" variant="contained" data-testid="editButton">
                   Save Article
                 </Button>
               </StyledButtonGrid>

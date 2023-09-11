@@ -104,7 +104,7 @@ const AddArticle: React.FC = () => {
                 <StyledH1 variant="h1">Create new article</StyledH1>
               </Grid>
               <StyledButtonGrid item xs={3}>
-                <Button variant="contained" type="submit">
+                <Button variant="contained" type="submit" data-testid="addArticleButton">
                   Publish Article
                 </Button>
               </StyledButtonGrid>
