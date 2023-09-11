@@ -1,6 +1,7 @@
 {
-  "name": "blog-frontend-exercise",
+  "name": "blog-frontend",
   "version": "0.1.0",
+  "author": "Marcela Karafizievová",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -16,7 +17,6 @@
     "@types/jest": "^27.5.2",
     "@types/js-cookie": "^3.0.3",
     "@types/node": "^16.18.38",
-    "@types/react-i18next": "^8.1.0",
     "@types/styled-components": "^5.1.26",
     "@uiw/react-md-editor": "^3.23.3",
     "axios": "^1.4.0",
