@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Box, Button, Card, CardActions, CardMedia, CardContent, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-import { StyledH4, StyledSmallLightText } from '../styled/styled';
+import { StyledH4, StyledSmallLightText, StyledLink } from '../styled/styled';
 import { getImageData } from '../utils/apiUtils';
 import { ArticleType } from '../types/Articles';
 
@@ -58,7 +58,9 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
       {image && <CardMedia image={image} sx={{ width: 250, height: 250 }} component="img" />}
       <StyledBox>
         <CardContent>
-          <StyledH4 variant="h4">{article.title}</StyledH4>
+          <StyledLink to={`/article/${article.articleId}`}>
+            <StyledH4 variant="h4">{article.title}</StyledH4>
+          </StyledLink>
           <StyledSmallLightText variant="body2" pb={2}>
             {author} • {dayjs(article.createdAt).format('DD/MM/YY')}
           </StyledSmallLightText>

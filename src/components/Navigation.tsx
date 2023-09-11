@@ -25,6 +25,12 @@ import { StyledNavLink } from '../styled/styled';
 
 import logo from '../assets/logo.svg';
 
+import Notification from './Notification';
+
+type LoginSectionType = {
+  onUserAlert: (item: boolean) => void;
+};
+
 const StyledBox = styled(Box)`
   flex-grow: 1;
   display: flex;
@@ -54,7 +60,7 @@ const StyledMenu = styled(Menu)`
   margin-top: 45px;
 `;
 
-const LoginSection: React.FC = () => {
+const LoginSection: React.FC<LoginSectionType> = ({ onUserAlert }) => {
   const [userMenu, setUserMenu] = useState<null | HTMLElement>(null);
 
   const dispatch = useDispatch();
@@ -73,6 +79,9 @@ const LoginSection: React.FC = () => {
     Cookies.remove('token');
     localStorage.removeItem('loginTime');
     clearInterval(expirationCheckInterval);
+
+    //props drilling to parent component for display notification
+    onUserAlert(true);
 
     // if an hour has passed, the user is logged out
     if (disconnected) {
@@ -141,8 +150,22 @@ const LoginSection: React.FC = () => {
 };
 
 const Navigation: React.FC = () => {
+  const [showSuccessAlert, setShowSuccessAlert] = useState<boolean>(false);
+
+  const setUserAlert: (item: boolean) => void = (item) => {
+    setShowSuccessAlert(item);
+  };
+
   return (
     <StyledAppBar position="static" color="secondary">
+      {showSuccessAlert && (
+        <Notification
+          severity="info"
+          message="User has been logged out."
+          open={showSuccessAlert}
+          onClose={() => setShowSuccessAlert(false)}
+        />
+      )}
       <StyledContainer>
         <StyledToolbar variant="dense">
           <NavLink to="/">
@@ -153,7 +176,7 @@ const Navigation: React.FC = () => {
           <StyledBox>
             <StyledNavLink to="/recent-articles">Recent Articles</StyledNavLink>
           </StyledBox>
-          <LoginSection />
+          <LoginSection onUserAlert={setUserAlert} />
         </StyledToolbar>
       </StyledContainer>
     </StyledAppBar>

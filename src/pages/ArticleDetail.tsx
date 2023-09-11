@@ -35,6 +35,7 @@ const StyledCardMedia = styled(CardMedia)`
 
 const StyledH1 = styled(Typography)`
   font-size: 40px;
+  word-wrap: 'break-word';
 `;
 
 const ArticleDetail: React.FC = () => {
@@ -82,6 +83,7 @@ const ArticleDetail: React.FC = () => {
                   {author} • {dayjs(articleDetail.lastUpdatedAt).format('DD/MM/YY')}
                 </StyledSmallLightText>
               </CardContent>
+              <CardContent>{articleDetail.perex}</CardContent>
               {articleDetail.image && <StyledCardMedia image={articleDetail.image} />}
               <CardContent>
                 <MarkdownEditor

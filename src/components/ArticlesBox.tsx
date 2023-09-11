@@ -32,9 +32,11 @@ const ArticleBox: React.FC<ArticlePropsType> = ({ title, perex, articleId }) => 
   return (
     <StyledArticleBox>
       <StyledLink to={`/article/${articleId}`}>
-        <Typography variant="h6">{title}</Typography>
+        <Typography variant="h6" noWrap>
+          {title}
+        </Typography>
       </StyledLink>
-      <StyledSmallLightText>{perex}</StyledSmallLightText>
+      <StyledSmallLightText noWrap>{perex}</StyledSmallLightText>
     </StyledArticleBox>
   );
 };
