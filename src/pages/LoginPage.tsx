@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm, Controller, FormProvider } from 'react-hook-form';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, Card, Grid, TextField, CardContent, CardActions } from '@mui/material';
@@ -29,6 +29,7 @@ const LoginPage: React.FC = () => {
 
   const dispatch = useDispatch();
   const login = useSelector((state: RootState) => state.login.login);
+  const navigate = useNavigate();
 
   const methods = useForm<FormLoginType>({
     mode: 'onChange'
@@ -45,6 +46,7 @@ const LoginPage: React.FC = () => {
       const response = await loginUser(data);
       if (response.success) {
         dispatch(setLogin(true));
+        navigate('/articles');
         return;
       } else if (response.error) {
         setErrorMessage(response.error.response.data.message);
@@ -54,9 +56,7 @@ const LoginPage: React.FC = () => {
     }
   };
 
-  return login ? (
-    <Navigate to="/articles" replace />
-  ) : (
+  return (
     <StyledCard>
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -73,6 +73,7 @@ const LoginPage: React.FC = () => {
                     return (
                       <TextField
                         label="E-mail"
+                        id="email"
                         data-testid="loginEmail"
                         error={Boolean(errors.username)}
                         helperText={errors.username ? 'Item is required' : ''}
@@ -95,6 +96,7 @@ const LoginPage: React.FC = () => {
                     return (
                       <TextField
                         label="Password"
+                        id="password"
                         data-testid="loginPassword"
                         type="password"
                         error={Boolean(errors.password)}

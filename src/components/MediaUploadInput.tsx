@@ -39,6 +39,7 @@ const MediaUploadInput: React.FC<MediaUploadFormProps> = ({ onFileUpload, isLoad
         rules={{ required: true }}
         render={() => (
           <TextField
+            data-testid="addFile"
             color="primary"
             type="file"
             error={Boolean(errors.selectedFile)}
@@ -50,6 +51,7 @@ const MediaUploadInput: React.FC<MediaUploadFormProps> = ({ onFileUpload, isLoad
 
       <StyledButton
         disabled={selectedFile ? false : true}
+        data-testid="uploadFileButton"
         variant="outlined"
         size="small"
         color="primary"
