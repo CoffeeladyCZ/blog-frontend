@@ -115,7 +115,7 @@ const EditArticle: React.FC = () => {
       )}
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <StyledArticleGrid container rowSpacing={3}>
+          <StyledArticleGrid container rowSpacing={4}>
             <Grid container justifyContent="space-between" spacing={0}>
               <Grid item xs={12} sm="auto">
                 <StyledH1 variant="h1">Edit article</StyledH1>

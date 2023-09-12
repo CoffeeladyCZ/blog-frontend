@@ -508,14 +508,14 @@ Object {
                   role="button"
                   tabindex="0"
                 >
-                  5
+                  10
                 </div>
                 <input
                   aria-hidden="true"
                   aria-invalid="false"
                   class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
                   tabindex="-1"
-                  value="5"
+                  value="10"
                 />
                 <svg
                   aria-hidden="true"
@@ -1088,14 +1088,14 @@ Object {
                 role="button"
                 tabindex="0"
               >
-                5
+                10
               </div>
               <input
                 aria-hidden="true"
                 aria-invalid="false"
                 class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
                 tabindex="-1"
-                value="5"
+                value="10"
               />
               <svg
                 aria-hidden="true"

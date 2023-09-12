@@ -5,7 +5,7 @@ describe('Can access protected pages', () => {
 
   it('tries to create an article', () => {
     cy.visit('http://localhost:3000/articles');
-    cy.clickLink('article/new', 'Create Article');
+    cy.clickLink('article/new', 'New Article');
 
     cy.get('input#title').type('[Cypress] Test article ');
     cy.get('input#perex').type('Perex');

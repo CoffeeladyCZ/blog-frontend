@@ -113,6 +113,7 @@ const AddArticle: React.FC = () => {
               <Controller
                 control={control}
                 name="title"
+                defaultValue={''}
                 rules={{ required: true }}
                 render={({ field }) => {
                   return (

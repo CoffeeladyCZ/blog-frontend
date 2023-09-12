@@ -2,7 +2,16 @@ import React, { useLayoutEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 
-import { Box, Button, Card, CardActions, CardMedia, CardContent, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardMedia,
+  CardContent,
+  Grid,
+  Typography
+} from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import { StyledH4, StyledSmallLightText, StyledLink } from '../styled/styled';
@@ -19,6 +28,8 @@ const StyledCard = styled(Card)`
   display: flex;
   box-shadow: none;
   max-width: 860px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(223, 223, 223, 1);
 `;
 
 const StyledBox = styled(Box)`
@@ -55,23 +66,29 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
 
   return (
     <StyledCard>
-      {image && <CardMedia image={image} sx={{ width: 250, height: 250 }} component="img" />}
-      <StyledBox>
-        <CardContent>
-          <StyledLink to={`/article/${article.articleId}`}>
-            <StyledH4 variant="h4">{article.title}</StyledH4>
-          </StyledLink>
-          <StyledSmallLightText variant="body2" pb={2}>
-            {author} • {dayjs(article.createdAt).format('DD/MM/YY')}
-          </StyledSmallLightText>
-          <Typography variant="body1">{article.perex}</Typography>
-        </CardContent>
-        <CardActions>
-          <Link to={`/article/${article.articleId}`}>
-            <Button size="small">Read whole article</Button>
-          </Link>
-        </CardActions>
-      </StyledBox>
+      <Grid container>
+        <Grid item md={4}>
+          {image && <CardMedia image={image} sx={{ width: 250, height: 250 }} component="img" />}
+        </Grid>
+        <Grid item md={8}>
+          <StyledBox>
+            <CardContent>
+              <StyledLink to={`/article/${article.articleId}`}>
+                <StyledH4 variant="h4">{article.title}</StyledH4>
+              </StyledLink>
+              <StyledSmallLightText variant="body2" pb={2}>
+                {author} • {dayjs(article.createdAt).format('DD/MM/YY')}
+              </StyledSmallLightText>
+              <Typography variant="body1">{article.perex}</Typography>
+            </CardContent>
+            <CardActions>
+              <Link to={`/article/${article.articleId}`}>
+                <Button size="small">Read whole article</Button>
+              </Link>
+            </CardActions>
+          </StyledBox>
+        </Grid>
+      </Grid>
     </StyledCard>
   );
 };

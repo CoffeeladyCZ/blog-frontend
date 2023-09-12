@@ -35,6 +35,7 @@ const StyledBox = styled(Box)`
   flex-grow: 1;
   display: flex;
   gap: 2rem;
+  flex-wrap: wrap;
 `;
 
 const StyledBoxAvatar = styled(Box)`
@@ -119,7 +120,7 @@ const LoginSection: React.FC<LoginSectionType> = ({ onUserAlert }) => {
       <>
         <StyledBoxAvatar data-testid="loginSection">
           <StyledNavLink to="/articles/">My Articles</StyledNavLink>
-          <StyledNavLink to="/article/new">Create Article</StyledNavLink>
+          <StyledNavLink to="/article/new">New Article</StyledNavLink>
           <Tooltip title="Open menu">
             <IconButton data-testid="menuButton" onClick={(e) => setUserMenu(e.currentTarget)}>
               <Avatar alt="avatar" srcSet="../assets/logo_A.jpg" />
@@ -157,7 +158,7 @@ const Navigation: React.FC = () => {
   };
 
   return (
-    <StyledAppBar position="static" color="secondary">
+    <StyledAppBar position="relative" color="secondary">
       {showSuccessAlert && (
         <Notification
           severity="info"
