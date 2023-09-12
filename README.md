@@ -4,8 +4,8 @@ Blogging platform for adding and editing articles.
 
 **Techstack:**
 
-- React,
-- MUI, Styled component,
+- React, React Router, Redux,
+- MUI, Styled components,
 - Axios, Jest, testing-library/react, Cypress.
 
 The production version is in the `release/0.1.0` branch. This version is also viewable on Vercel.
