@@ -6,7 +6,7 @@ Object {
   "baseElement": <body>
     <div>
       <header
-        class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorSecondary MuiAppBar-positionStatic css-9sj8ry-MuiPaper-root-MuiAppBar-root"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorSecondary MuiAppBar-positionRelative css-15o3gvq-MuiPaper-root-MuiAppBar-root"
       >
         <div
           class="MuiContainer-root MuiContainer-maxWidthLg css-1kgzgdg-MuiContainer-root"
@@ -35,10 +35,10 @@ Object {
               </button>
             </a>
             <div
-              class="MuiBox-root css-1jlf5g0"
+              class="MuiBox-root css-nv9fs0"
             >
               <a
-                class="css-i2p79e"
+                class="css-11zjqnh"
                 href="/recent-articles"
               >
                 Recent Articles
@@ -46,18 +46,19 @@ Object {
             </div>
             <div
               class="MuiBox-root css-1h0u4nz"
+              data-testid="loginSection"
             >
               <a
-                class="css-i2p79e"
+                class="css-11zjqnh"
                 href="/articles/"
               >
                 My Articles
               </a>
               <a
-                class="css-i2p79e"
+                class="css-11zjqnh"
                 href="/article/new"
               >
-                Create Articles
+                New Article
               </a>
               <button
                 aria-label="Open menu"
@@ -87,7 +88,7 @@ Object {
     </div>
     <div
       aria-hidden="true"
-      class="MuiMenu-root MuiPopover-root MuiModal-root MuiModal-hidden css-14ogsoa-MuiModal-root-MuiPopover-root-MuiMenu-root"
+      class="MuiMenu-root MuiPopover-root MuiModal-root MuiModal-hidden css-o9p8ou-MuiModal-root-MuiPopover-root-MuiMenu-root"
       id="userMenu"
       role="presentation"
     >
@@ -112,23 +113,9 @@ Object {
         >
           <li
             class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root"
-            role="menuitem"
-            tabindex="0"
-          >
-            <p
-              class="MuiTypography-root MuiTypography-body1 css-1uwgr7b-MuiTypography-root"
-            >
-              Profile
-            </p>
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
-          </li>
-          <li
-            class="MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root MuiMenuItem-gutters css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root"
             data-testid="logout"
             role="menuitem"
-            tabindex="-1"
+            tabindex="0"
           >
             <p
               class="MuiTypography-root MuiTypography-body1 css-1uwgr7b-MuiTypography-root"
@@ -149,7 +136,7 @@ Object {
   </body>,
   "container": <div>
     <header
-      class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorSecondary MuiAppBar-positionStatic css-9sj8ry-MuiPaper-root-MuiAppBar-root"
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorSecondary MuiAppBar-positionRelative css-15o3gvq-MuiPaper-root-MuiAppBar-root"
     >
       <div
         class="MuiContainer-root MuiContainer-maxWidthLg css-1kgzgdg-MuiContainer-root"
@@ -178,10 +165,10 @@ Object {
             </button>
           </a>
           <div
-            class="MuiBox-root css-1jlf5g0"
+            class="MuiBox-root css-nv9fs0"
           >
             <a
-              class="css-i2p79e"
+              class="css-11zjqnh"
               href="/recent-articles"
             >
               Recent Articles
@@ -189,18 +176,19 @@ Object {
           </div>
           <div
             class="MuiBox-root css-1h0u4nz"
+            data-testid="loginSection"
           >
             <a
-              class="css-i2p79e"
+              class="css-11zjqnh"
               href="/articles/"
             >
               My Articles
             </a>
             <a
-              class="css-i2p79e"
+              class="css-11zjqnh"
               href="/article/new"
             >
-              Create Articles
+              New Article
             </a>
             <button
               aria-label="Open menu"
@@ -288,7 +276,7 @@ Object {
   "baseElement": <body>
     <div>
       <header
-        class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorSecondary MuiAppBar-positionStatic css-9sj8ry-MuiPaper-root-MuiAppBar-root"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorSecondary MuiAppBar-positionRelative css-15o3gvq-MuiPaper-root-MuiAppBar-root"
       >
         <div
           class="MuiContainer-root MuiContainer-maxWidthLg css-1kgzgdg-MuiContainer-root"
@@ -317,10 +305,10 @@ Object {
               </button>
             </a>
             <div
-              class="MuiBox-root css-1jlf5g0"
+              class="MuiBox-root css-nv9fs0"
             >
               <a
-                class="css-i2p79e"
+                class="css-11zjqnh"
                 href="/recent-articles"
               >
                 Recent Articles
@@ -364,7 +352,7 @@ Object {
   </body>,
   "container": <div>
     <header
-      class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorSecondary MuiAppBar-positionStatic css-9sj8ry-MuiPaper-root-MuiAppBar-root"
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorSecondary MuiAppBar-positionRelative css-15o3gvq-MuiPaper-root-MuiAppBar-root"
     >
       <div
         class="MuiContainer-root MuiContainer-maxWidthLg css-1kgzgdg-MuiContainer-root"
@@ -393,10 +381,10 @@ Object {
             </button>
           </a>
           <div
-            class="MuiBox-root css-1jlf5g0"
+            class="MuiBox-root css-nv9fs0"
           >
             <a
-              class="css-i2p79e"
+              class="css-11zjqnh"
               href="/recent-articles"
             >
               Recent Articles

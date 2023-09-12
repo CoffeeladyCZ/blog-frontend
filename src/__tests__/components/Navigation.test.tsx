@@ -73,7 +73,7 @@ describe('Navigation with login', () => {
     );
 
     expect(screen.getByText('My Articles')).toBeInTheDocument();
-    expect(screen.getByText('Create Articles')).toBeInTheDocument();
+    expect(screen.getByText('New Article')).toBeInTheDocument();
   });
 
   test('logoutUser correctly dispatches actions and updates state', () => {
