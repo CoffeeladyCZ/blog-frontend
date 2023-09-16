@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { useSelector, useDispatch } from 'react-redux';
 import dayjs from 'dayjs';
+import { useTranslation } from 'react-i18next';
 
 import { RootState } from '../store/store';
 import { setArticleList } from '../store/article';
 import { httpDelete } from '../utils/axiosService';
 import { StyledBox } from '../styled/styled';
 
-import { Typography, Button, Grid, IconButton, SvgIcon } from '@mui/material';
+import { Button, Grid, IconButton, SvgIcon } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { ReactComponent as DeleteIcon } from '../assets/deleteIcon.svg';
 import { ReactComponent as EditIcon } from '../assets/editIcon.svg';
@@ -23,7 +24,6 @@ import SimpleDialog from '../components/SimpleDialog';
 
 const StyledGrid = styled(Grid)`
   max-width: 1152px;
-  padding: 0 48px;
 `;
 
 const MyArticles: React.FC = () => {
@@ -33,6 +33,7 @@ const MyArticles: React.FC = () => {
 
   const dispatch = useDispatch();
   const articles = useSelector((state: RootState) => state.articleList.articleList);
+  const { t } = useTranslation();
 
   const openDialog = (data: DialogDataType) => {
     setDialogData(data);
@@ -75,12 +76,12 @@ const MyArticles: React.FC = () => {
   }, []);
 
   const columns: GridColDef[] = [
-    { field: 'title', headerName: 'Article title', flex: 1 },
-    { field: 'perex', headerName: 'Perex', flex: 2 },
-    { field: 'author', headerName: 'Author', flex: 1 },
+    { field: 'title', headerName: t('table.articleTitle'), flex: 1 },
+    { field: 'perex', headerName: t('table.perex'), flex: 2 },
+    { field: 'author', headerName: t('table.author'), flex: 1 },
     {
       field: 'lastUpdatedAt',
-      headerName: 'Last update date',
+      headerName: t('table.lastUpdate'),
       sortingOrder: ['desc', 'asc', null],
       flex: 1,
       renderCell: (params: GridRenderCellParams) => (
@@ -89,7 +90,7 @@ const MyArticles: React.FC = () => {
     },
     {
       field: 'actions',
-      headerName: 'Actions',
+      headerName: t('table.actions'),
       flex: 1,
       renderCell: (params: GridRenderCellParams) => (
         <>
@@ -128,20 +129,16 @@ const MyArticles: React.FC = () => {
       <StyledGrid container rowSpacing={3}>
         <Grid container justifyContent="space-between" spacing={0}>
           <Grid item xs={12} sm="auto">
-            <StyledH1 variant="h1">My articles</StyledH1>
+            <StyledH1 variant="h1">{t('myArticles')}</StyledH1>
           </Grid>
           <StyledButtonGrid item xs={12} sm={3}>
             <Link to={'/article/new'}>
-              <Button variant="contained">New article</Button>
+              <Button variant="contained">{t('newArticle')}</Button>
             </Link>
           </StyledButtonGrid>
         </Grid>
         <Grid item xs={12}>
-          {!articles.length ? (
-            <Typography variant="body1">No data available.</Typography>
-          ) : (
-            <DataTable headerColumns={columns} articles={articles} loading={isLoading} />
-          )}
+          <DataTable headerColumns={columns} articles={articles} loading={isLoading} />
         </Grid>
       </StyledGrid>
     </StyledBox>

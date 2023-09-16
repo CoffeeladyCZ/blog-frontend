@@ -5,3 +5,11 @@ export const blobToBase64 = (blob: Blob): Promise<string> => {
     reader.readAsDataURL(blob);
   });
 };
+
+export const saveLanguageToLocalStorage = (language: string) => {
+  localStorage.setItem('language', language);
+};
+
+export const getLanguageFromLocalStorage = () => {
+  return localStorage.getItem('language');
+};

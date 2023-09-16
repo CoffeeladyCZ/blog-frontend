@@ -2,77 +2,92 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import {
-  Avatar,
   AppBar,
   Box,
   Button,
   Container,
+  CssBaseline,
+  Divider,
+  Drawer,
   IconButton,
-  Menu,
-  MenuItem,
-  Toolbar,
-  Tooltip,
-  Typography
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Toolbar
 } from '@mui/material';
-import { ArrowForward } from '@mui/icons-material';
+import { Login } from '@mui/icons-material';
+import MenuIcon from '@mui/icons-material/Menu';
 import { styled } from '@mui/material/styles';
 
 import { RootState } from '../store/store';
 import { setLogin } from '../store/login';
-import { StyledNavLink } from '../styled/styled';
+import { StyledNavLink, StyledNavButton } from '../styled/styled';
 
 import logo from '../assets/logo.svg';
 
 import Notification from './Notification';
+import LanguageSwitch from './LanguageSwitch';
 
 type LoginSectionType = {
   onUserAlert: (item: boolean) => void;
+  onCloseMenu: (item: boolean) => void;
 };
-
-const StyledBox = styled(Box)`
-  flex-grow: 1;
-  display: flex;
-  gap: 2rem;
-  flex-wrap: wrap;
-`;
-
-const StyledBoxAvatar = styled(Box)`
-  flex-grow: 0;
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-`;
-
-const StyledContainer = styled(Container)`
-  max-width: 1152px;
-`;
 
 const StyledAppBar = styled(AppBar)`
   box-shadow: none;
 `;
 
-const StyledToolbar = styled(Toolbar)`
-  justify-content: space-between;
+const StyledNavBox = styled(Box)`
+  flex-grow: 1;
 `;
 
-const StyledMenu = styled(Menu)`
-  margin-top: 45px;
+const StyledLoginBox = styled(Box)`
+  flex-grow: 0;
 `;
 
-const LoginSection: React.FC<LoginSectionType> = ({ onUserAlert }) => {
-  const [userMenu, setUserMenu] = useState<null | HTMLElement>(null);
+const StyledLanguageBox = styled(Box)`
+  flex-grow: 0;
+`;
 
+const LoginSection: React.FC<LoginSectionType> = ({ onUserAlert, onCloseMenu }) => {
   const dispatch = useDispatch();
   const login = useSelector((state: RootState) => state.login.login);
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  const loginPages = [
+    {
+      value: 'my-article',
+      name: t('navigation.myArticles'),
+      link: '/articles',
+      testId: 'navMyArticles'
+    },
+    {
+      value: 'new-article',
+      name: t('navigation.newArticle'),
+      link: '/article/new',
+      testId: 'navNewArticles'
+    },
+    { value: 'logout', name: t('logout'), link: '', testId: 'logout' }
+  ];
 
   useEffect(() => {
     const token = Cookies.get('token');
     const isLogin: boolean = token ? true : false;
     dispatch(setLogin(isLogin));
   }, [dispatch]);
+
+  const handleClick = (value: string) => {
+    if (value === 'logout') {
+      logoutUser(false);
+    } else {
+      onCloseMenu(true);
+    }
+  };
 
   /** Log out user from application */
   const logoutUser = (disconnected: boolean) => {
@@ -110,41 +125,44 @@ const LoginSection: React.FC<LoginSectionType> = ({ onUserAlert }) => {
   if (!login) {
     return (
       <NavLink to="/login">
-        <Button color="primary" endIcon={<ArrowForward />}>
-          Log in
+        <Button data-testid="navLoginButton" startIcon={<Login />}>
+          {t('login')}
         </Button>
       </NavLink>
     );
   } else {
     return (
       <>
-        <StyledBoxAvatar data-testid="loginSection">
-          <StyledNavLink to="/articles/">My Articles</StyledNavLink>
-          <StyledNavLink to="/article/new">New Article</StyledNavLink>
-          <Tooltip title="Open menu">
-            <IconButton data-testid="menuButton" onClick={(e) => setUserMenu(e.currentTarget)}>
-              <Avatar alt="avatar" srcSet="../assets/logo_A.jpg" />
-            </IconButton>
-          </Tooltip>
-          <StyledMenu
-            id="userMenu"
-            anchorEl={userMenu}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right'
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right'
-            }}
-            open={Boolean(userMenu)}
-            onClose={() => setUserMenu(null)}>
-            <MenuItem onClick={() => logoutUser(false)} data-testid="logout">
-              <Typography textAlign="center">Log out</Typography>
-            </MenuItem>
-          </StyledMenu>
-        </StyledBoxAvatar>
+        <Box
+          data-testid="loginSection"
+          sx={{
+            display: { xs: 'none', sm: 'flex' }
+          }}>
+          {loginPages.map((page) => (
+            <StyledNavButton
+              key={page.value}
+              onClick={() => handleClick(page.value)}
+              sx={{ my: 2, display: 'block' }}>
+              <StyledNavLink key={page.value} to={page.link} data-testid={page.testId}>
+                {page.name}
+              </StyledNavLink>
+            </StyledNavButton>
+          ))}
+        </Box>
+        <List
+          sx={{
+            display: { xs: 'block', sm: 'none' },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box' },
+            padding: 0
+          }}>
+          {loginPages.map((item) => (
+            <ListItem key={item.value} disablePadding>
+              <ListItemButton sx={{ textAlign: 'center' }}>
+                <ListItemText primary={item.name} onClick={() => handleClick(item.value)} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
       </>
     );
   }
@@ -152,35 +170,105 @@ const LoginSection: React.FC<LoginSectionType> = ({ onUserAlert }) => {
 
 const Navigation: React.FC = () => {
   const [showSuccessAlert, setShowSuccessAlert] = useState<boolean>(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const setUserAlert: (item: boolean) => void = (item) => {
     setShowSuccessAlert(item);
   };
+  const { t } = useTranslation();
+  const pages = [
+    {
+      value: 'recent-article',
+      name: t('navigation.recentArticles'),
+      link: '/recent-articles',
+      testId: 'navRecentArticles'
+    }
+  ];
+
+  const handleDrawerToggle = () => {
+    setMobileOpen((prevState) => !prevState);
+  };
+
+  const drawerWidth = 240;
+  const container = window !== undefined ? () => document.body : undefined;
+
+  const drawer = (
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+      <img src={logo} alt="logo" id="logo" />
+      <Divider />
+      <List>
+        {pages.map((item) => (
+          <ListItem key={item.value} disablePadding>
+            <ListItemButton sx={{ textAlign: 'center' }}>
+              <ListItemText primary={item.name} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+        <LoginSection onUserAlert={setUserAlert} onCloseMenu={handleDrawerToggle} />
+      </List>
+    </Box>
+  );
 
   return (
-    <StyledAppBar position="relative" color="secondary">
-      {showSuccessAlert && (
-        <Notification
-          severity="info"
-          message="User has been logged out."
-          open={showSuccessAlert}
-          onClose={() => setShowSuccessAlert(false)}
-        />
-      )}
-      <StyledContainer>
-        <StyledToolbar variant="dense">
-          <NavLink to="/">
+    <Box display="flex">
+      <CssBaseline />
+      <StyledAppBar color="secondary">
+        {showSuccessAlert && (
+          <Notification
+            severity="info"
+            message="User has been logged out."
+            open={showSuccessAlert}
+            onClose={() => setShowSuccessAlert(false)}
+          />
+        )}
+        <Container max-width="xl">
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { sm: 'none' } }}>
+              <MenuIcon />
+            </IconButton>
             <IconButton size="large" edge="start" color="inherit" aria-label="menu">
               <img src={logo} alt="logo" id="logo" />
             </IconButton>
-          </NavLink>
-          <StyledBox>
-            <StyledNavLink to="/recent-articles">Recent Articles</StyledNavLink>
-          </StyledBox>
-          <LoginSection onUserAlert={setUserAlert} />
-        </StyledToolbar>
-      </StyledContainer>
-    </StyledAppBar>
+            <StyledNavBox sx={{ display: { xs: 'none', sm: 'block' } }}>
+              {pages.map((page) => (
+                <StyledNavButton key={page.value}>
+                  <StyledNavLink to={page.link} data-testid={page.testId}>
+                    {page.name}
+                  </StyledNavLink>
+                </StyledNavButton>
+              ))}
+            </StyledNavBox>
+            <StyledLoginBox sx={{ display: { xs: 'none', sm: 'block' } }}>
+              <LoginSection onUserAlert={setUserAlert} onCloseMenu={handleDrawerToggle} />
+            </StyledLoginBox>
+            <StyledLanguageBox>
+              <LanguageSwitch />
+            </StyledLanguageBox>
+          </Toolbar>
+        </Container>
+      </StyledAppBar>
+      <nav>
+        <Drawer
+          container={container}
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true
+          }}
+          sx={{
+            display: { xs: 'block', sm: 'none' },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth }
+          }}>
+          {drawer}
+        </Drawer>
+      </nav>
+    </Box>
   );
 };
 

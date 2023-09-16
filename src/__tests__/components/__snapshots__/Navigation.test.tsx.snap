@@ -39,10 +39,27 @@ Object {
             >
               <a
                 class="css-11zjqnh"
+                data-testid="navRecentArticles"
                 href="/recent-articles"
               >
                 Recent Articles
               </a>
+            </div>
+            <div
+              class="MuiBox-root css-nv9fs0"
+            >
+              <div>
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  Čeština
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+              </div>
             </div>
             <div
               class="MuiBox-root css-1h0u4nz"
@@ -50,12 +67,14 @@ Object {
             >
               <a
                 class="css-11zjqnh"
+                data-testid="navMyArticles"
                 href="/articles/"
               >
                 My Articles
               </a>
               <a
                 class="css-11zjqnh"
+                data-testid="navNewArticle"
                 href="/article/new"
               >
                 New Article
@@ -120,7 +139,7 @@ Object {
             <p
               class="MuiTypography-root MuiTypography-body1 css-1uwgr7b-MuiTypography-root"
             >
-              Log out
+              Log Out
             </p>
             <span
               class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
@@ -169,10 +188,27 @@ Object {
           >
             <a
               class="css-11zjqnh"
+              data-testid="navRecentArticles"
               href="/recent-articles"
             >
               Recent Articles
             </a>
+          </div>
+          <div
+            class="MuiBox-root css-nv9fs0"
+          >
+            <div>
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="button"
+              >
+                Čeština
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </div>
           </div>
           <div
             class="MuiBox-root css-1h0u4nz"
@@ -180,12 +216,14 @@ Object {
           >
             <a
               class="css-11zjqnh"
+              data-testid="navMyArticles"
               href="/articles/"
             >
               My Articles
             </a>
             <a
               class="css-11zjqnh"
+              data-testid="navNewArticle"
               href="/article/new"
             >
               New Article
@@ -309,10 +347,27 @@ Object {
             >
               <a
                 class="css-11zjqnh"
+                data-testid="navRecentArticles"
                 href="/recent-articles"
               >
                 Recent Articles
               </a>
+            </div>
+            <div
+              class="MuiBox-root css-nv9fs0"
+            >
+              <div>
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  Čeština
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+              </div>
             </div>
             <a
               aria-current="page"
@@ -324,7 +379,7 @@ Object {
                 tabindex="0"
                 type="button"
               >
-                Log in
+                Log In
                 <span
                   class="MuiButton-endIcon MuiButton-iconSizeMedium css-9tj150-MuiButton-endIcon"
                 >
@@ -385,10 +440,27 @@ Object {
           >
             <a
               class="css-11zjqnh"
+              data-testid="navRecentArticles"
               href="/recent-articles"
             >
               Recent Articles
             </a>
+          </div>
+          <div
+            class="MuiBox-root css-nv9fs0"
+          >
+            <div>
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="button"
+              >
+                Čeština
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </div>
           </div>
           <a
             aria-current="page"
@@ -400,7 +472,7 @@ Object {
               tabindex="0"
               type="button"
             >
-              Log in
+              Log In
               <span
                 class="MuiButton-endIcon MuiButton-iconSizeMedium css-9tj150-MuiButton-endIcon"
               >

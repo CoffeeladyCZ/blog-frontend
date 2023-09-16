@@ -7,7 +7,7 @@ Cypress.Commands.add('clickLink', (href: string | RegExp, label: string | RegExp
 
 Cypress.Commands.add('login', () => {
   cy.visit('localhost:3000/');
-  cy.clickLink('login', 'Log in');
+  cy.get('[data-testid="navLoginButton"]').click();
   cy.fixture('login').then((loginData) => {
     cy.get('input#email').type(loginData.username);
     cy.get('input#password').type(loginData.password);

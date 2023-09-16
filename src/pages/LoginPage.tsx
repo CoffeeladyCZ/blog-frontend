@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useForm, Controller, FormProvider } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import { Button, Card, Grid, TextField, CardContent, CardActions } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-import { RootState } from '../store/store';
 import { setLogin } from '../store/login';
 import { FormLoginType } from '../types/Articles';
 import { loginUser } from '../utils/apiUtils';
@@ -28,8 +28,8 @@ const LoginPage: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const dispatch = useDispatch();
-  const login = useSelector((state: RootState) => state.login.login);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const methods = useForm<FormLoginType>({
     mode: 'onChange'
@@ -61,7 +61,7 @@ const LoginPage: React.FC = () => {
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <CardContent>
-            <StyledH3 variant="h3">Log In</StyledH3>
+            <StyledH3 variant="h3">{t('login')}</StyledH3>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Controller
@@ -72,12 +72,12 @@ const LoginPage: React.FC = () => {
                   render={({ field }) => {
                     return (
                       <TextField
-                        label="E-mail"
+                        label={t('email')}
                         id="email"
                         data-testid="loginEmail"
                         error={Boolean(errors.username)}
-                        helperText={errors.username ? 'Item is required' : ''}
-                        placeholder="E-mail"
+                        helperText={errors.username ? t('errorMessage.item') : ''}
+                        placeholder={t('email')}
                         size="small"
                         fullWidth
                         {...field}
@@ -95,12 +95,12 @@ const LoginPage: React.FC = () => {
                   render={({ field }) => {
                     return (
                       <TextField
-                        label="Password"
+                        label={t('password')}
                         id="password"
                         data-testid="loginPassword"
                         type="password"
                         error={Boolean(errors.password)}
-                        helperText={errors.password ? 'Item is required' : ''}
+                        helperText={errors.password ? t('errorMessage.item') : ''}
                         placeholder="********"
                         size="small"
                         fullWidth
@@ -124,7 +124,7 @@ const LoginPage: React.FC = () => {
               color="primary"
               type="submit"
               variant="contained">
-              Log In
+              {t('login')}
             </Button>
           </StyledCardActions>
         </form>

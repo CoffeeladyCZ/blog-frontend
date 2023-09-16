@@ -1,0 +1,58 @@
+{
+  "login": "Log In",
+  "logout": "Log Out",
+  "email": "E-mail",
+  "password": "Password",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "save": "Save",
+  "send": "Send",
+  "uploadImage": "Upload an image",
+  "comments": "Comments",
+  "readWholeArticle": "Read whole article",
+  "firstArticle": "My First Article",
+  "featuredImage": "Featured image",
+  "nameBlog": "Cat blog",
+  "dialog": {
+    "deleteArticle": "You are about to delete an article {{title}}. Do you really want to continue? Action is irreversible"
+  },
+  "disconnected": {
+    "textOne": "You got disconnected after 1 hour.",
+    "textTwo": "To continue, you must log in again."
+  },
+  "errorMessage": {
+    "password": "Password is required",
+    "email": "E-mail is required",
+    "error": "Something was wrong.",
+    "item": "Item is required"
+  },
+  "table": {
+    "articleTitle": "Article title",
+    "perex": "Perex",
+    "author": "Author",
+    "lastUpdate": "Last updated date",
+    "actions": "Actions"
+  },
+  "myArticles": "My articles",
+  "recentArticles": "Articles",
+  "newArticle": "Create new article",
+  "editArticle": "Edit article",
+  "publishArticle": "Publish article",
+  "relatedArticles": "Related articles",
+  "navigation": {
+    "recentArticles": "Articles",
+    "relatedArticles": "Related Articles",
+    "myArticles": "My Articles",
+    "newArticle": "New Article"
+  },
+  "tooltips": {
+    "openMenu": "Open menu",
+    "deleteFile": "Delete upload file"
+  },
+  "noSearch": "No data available",
+  "pageNotFound": "Page not found.",
+  "language": {
+    "czech": "Čeština",
+    "english": "English"
+  }
+}
