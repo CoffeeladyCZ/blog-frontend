@@ -61,6 +61,12 @@ export type CommentType = {
   score: number;
 };
 
+export type AlertType = {
+  message: string;
+  severity: 'success' | 'error' | 'info' | 'warning';
+  show: boolean;
+};
+
 // Form types
 
 export type FormDetailType = {

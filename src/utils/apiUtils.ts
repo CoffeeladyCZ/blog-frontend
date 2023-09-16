@@ -99,7 +99,17 @@ export const loginUser = async (data: FormLoginType): Promise<ApiResponseType> =
 export const createCommentData = async (data: CommentResponseType) => {
   try {
     await httpPost<CommentResponseType>('/comments', data);
+    return { success: true };
   } catch (error) {
-    console.error(error);
+    return {
+      success: false,
+      error: {
+        response: {
+          data: {
+            message: (error as ErrorType)?.response?.data?.message || 'Something was wrong'
+          }
+        }
+      }
+    };
   }
 };
