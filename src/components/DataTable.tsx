@@ -5,6 +5,8 @@ import { styled } from '@mui/material/styles';
 
 import { ArticleType } from '../types/Articles';
 
+import LinearLoading from './LinearLoading';
+
 type DataTablePropsType = {
   headerColumns: GridColDef<GridValidRowModel>[];
   articles: ArticleType[];
@@ -25,13 +27,21 @@ const DataTable: React.FC<DataTablePropsType> = ({
 }: DataTablePropsType) => {
   const getRowId = (articles: any) => articles.articleId;
 
+  const CustomNoRowsOverlays = () => {
+    return <div>No data found.</div>;
+  };
+
+  const CustomLoading = () => {
+    return <LinearLoading loading={loading} />;
+  };
+
   return (
     <StyledDataGrid
       data-testid="dataTable"
       getRowId={getRowId}
       rows={articles}
       columns={headerColumns}
-      loading={loading}
+      loading
       initialState={{
         pagination: {
           paginationModel: { page: 0, pageSize: 10 }
@@ -40,7 +50,11 @@ const DataTable: React.FC<DataTablePropsType> = ({
           sortModel: [{ field: 'lastUpdatedAt', sort: 'desc' }]
         }
       }}
-      pageSizeOptions={[5, 10]}
+      slots={{
+        loadingOverlay: CustomLoading,
+        noRowsOverlay: CustomNoRowsOverlays
+      }}
+      pageSizeOptions={[10, 25, 50]}
       checkboxSelection
     />
   );
