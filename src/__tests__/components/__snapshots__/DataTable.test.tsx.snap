@@ -306,6 +306,14 @@ Object {
             style="overflow-x: hidden;"
           >
             <div
+              class="MuiDataGrid-overlayWrapper css-ql19fo-MuiDataGrid-overlayWrapper"
+            >
+              <div
+                class="MuiDataGrid-overlayWrapperInner css-1akuw9y-MuiDataGrid-overlayWrapperInner"
+                style="height: 0px; width: 0px;"
+              />
+            </div>
+            <div
               class="MuiDataGrid-virtualScrollerContent MuiDataGrid-virtualScrollerContent--overflowed css-1kwdphh-MuiDataGrid-virtualScrollerContent"
               style="width: auto; height: 104px; min-height: auto;"
             >
@@ -885,6 +893,14 @@ Object {
           class="MuiDataGrid-virtualScroller css-axafay-MuiDataGrid-virtualScroller"
           style="overflow-x: hidden;"
         >
+          <div
+            class="MuiDataGrid-overlayWrapper css-ql19fo-MuiDataGrid-overlayWrapper"
+          >
+            <div
+              class="MuiDataGrid-overlayWrapperInner css-1akuw9y-MuiDataGrid-overlayWrapperInner"
+              style="height: 0px; width: 0px;"
+            />
+          </div>
           <div
             class="MuiDataGrid-virtualScrollerContent MuiDataGrid-virtualScrollerContent--overflowed css-1kwdphh-MuiDataGrid-virtualScrollerContent"
             style="width: auto; height: 104px; min-height: auto;"

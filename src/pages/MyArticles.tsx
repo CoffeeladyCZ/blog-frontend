@@ -137,11 +137,7 @@ const MyArticles: React.FC = () => {
           </StyledButtonGrid>
         </Grid>
         <Grid item xs={12}>
-          {!articles.length ? (
-            <Typography variant="body1">No data available.</Typography>
-          ) : (
-            <DataTable headerColumns={columns} articles={articles} loading={isLoading} />
-          )}
+          <DataTable headerColumns={columns} articles={articles} loading={isLoading} />
         </Grid>
       </StyledGrid>
     </StyledBox>
