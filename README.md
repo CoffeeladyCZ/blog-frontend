@@ -21,14 +21,14 @@ You need to create an `.env` file with:
 After logging in, the user can edit and delete his articles. After logging out, only view. 
 After logging in, the user will receive an access_token that is valid for 1 hour, after which the user will be automatically logged out. So far there is no implemented the logic of keeping the article broken down.
 
-**Planned user enhancements:**
+**Planned feature:**
 
 - Ability to add comments. - **is ready in branch `development`. But it is not BE functional.**
 - Vote about comments.
 - Improvements to the editing window.
 - Add pagination to My article table.
 - It would be good to create more unit tests.
-- Display all texts using the i18next library.
+- Display all texts using the i18next library. - **is ready in branch `development`**
 
 All planned issues are submitted on github.
 
