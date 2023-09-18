@@ -41,7 +41,7 @@ const DataTable: React.FC<DataTablePropsType> = ({
       getRowId={getRowId}
       rows={articles}
       columns={headerColumns}
-      loading
+      loading={loading}
       initialState={{
         pagination: {
           paginationModel: { page: 0, pageSize: 10 }
