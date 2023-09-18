@@ -39,6 +39,7 @@ Object {
             >
               <a
                 class="css-11zjqnh"
+                data-testid="navRecentArticles"
                 href="/recent-articles"
               >
                 Recent Articles
@@ -50,12 +51,14 @@ Object {
             >
               <a
                 class="css-11zjqnh"
+                data-testid="navMyArticles"
                 href="/articles/"
               >
                 My Articles
               </a>
               <a
                 class="css-11zjqnh"
+                data-testid="navNewArticle"
                 href="/article/new"
               >
                 New Article
@@ -120,7 +123,7 @@ Object {
             <p
               class="MuiTypography-root MuiTypography-body1 css-1uwgr7b-MuiTypography-root"
             >
-              Log out
+              Log Out
             </p>
             <span
               class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
@@ -169,6 +172,7 @@ Object {
           >
             <a
               class="css-11zjqnh"
+              data-testid="navRecentArticles"
               href="/recent-articles"
             >
               Recent Articles
@@ -180,12 +184,14 @@ Object {
           >
             <a
               class="css-11zjqnh"
+              data-testid="navMyArticles"
               href="/articles/"
             >
               My Articles
             </a>
             <a
               class="css-11zjqnh"
+              data-testid="navNewArticle"
               href="/article/new"
             >
               New Article
@@ -309,6 +315,7 @@ Object {
             >
               <a
                 class="css-11zjqnh"
+                data-testid="navRecentArticles"
                 href="/recent-articles"
               >
                 Recent Articles
@@ -324,7 +331,7 @@ Object {
                 tabindex="0"
                 type="button"
               >
-                Log in
+                Log In
                 <span
                   class="MuiButton-endIcon MuiButton-iconSizeMedium css-9tj150-MuiButton-endIcon"
                 >
@@ -385,6 +392,7 @@ Object {
           >
             <a
               class="css-11zjqnh"
+              data-testid="navRecentArticles"
               href="/recent-articles"
             >
               Recent Articles
@@ -400,7 +408,7 @@ Object {
               tabindex="0"
               type="button"
             >
-              Log in
+              Log In
               <span
                 class="MuiButton-endIcon MuiButton-iconSizeMedium css-9tj150-MuiButton-endIcon"
               >

@@ -9,7 +9,8 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
     'plugin:prettier/recommended',
-    'plugin:react/jsx-runtime'
+    'plugin:react/jsx-runtime',
+    'plugin:i18next/recommended'
   ],
   overrides: [
     {
@@ -27,15 +28,16 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module'
   },
-  plugins: ['@typescript-eslint', 'react'],
+  plugins: ['@typescript-eslint', 'react', 'i18next'],
   rules: {
-    // Basic settings
     indent: ['warn', 2, { SwitchCase: 1 }],
     'no-trailing-spaces': ['warn'],
-
-    // Code settings
     'no-var': ['warn'],
     'prefer-const': ['warn', { ignoreReadBeforeAssign: true }],
-    'no-return-assign': ['error', 'always']
+    'no-return-assign': ['error', 'always'],
+    'i18next/no-literal-string': 2
+  },
+  settings: {
+    'i18next/languages': ['en', 'cz']
   }
 };

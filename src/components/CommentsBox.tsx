@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useForm, Controller, FormProvider } from 'react-hook-form';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import { Card, Grid, Button, TextField } from '@mui/material';
 import { styled } from '@mui/material';
@@ -55,6 +56,7 @@ const CommentsBox: React.FC<CommentsBoxPropsType> = ({ comments, articleId }) =>
   const commentsNumber = mockedComment.length;
 
   const login = useSelector((state: RootState) => state.login.login);
+  const { t } = useTranslation();
 
   comments = mockedComment; // TODO - Delete after implementing the functionality of adding comments
 
@@ -98,7 +100,6 @@ const CommentsBox: React.FC<CommentsBoxPropsType> = ({ comments, articleId }) =>
         });
         reset();
       } else if (response.error) {
-        console.log(response);
         setAlert({
           message: response.error.response.data.message,
           severity: 'error',
@@ -123,7 +124,9 @@ const CommentsBox: React.FC<CommentsBoxPropsType> = ({ comments, articleId }) =>
         />
       )}
       <StyledCommentsCard>
-        <StyledH4>Comments ({commentsNumber})</StyledH4>
+        <StyledH4>
+          {t('comments')} ({commentsNumber})
+        </StyledH4>
         {login && (
           <FormProvider {...methods}>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -172,7 +175,7 @@ const CommentsBox: React.FC<CommentsBoxPropsType> = ({ comments, articleId }) =>
                 </Grid>
                 <Grid item lg={2}>
                   <Button variant="contained" endIcon={<Send />} type="submit">
-                    Send
+                    {t('send')}
                   </Button>
                 </Grid>
               </Grid>

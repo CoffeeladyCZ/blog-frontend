@@ -1,0 +1,51 @@
+{
+  "login": "Přihlásit",
+  "logout": "Odhlásit",
+  "email": "E-mail",
+  "password": "Heslo",
+  "cancel": "Zrušit",
+  "delete": "Smazat",
+  "save": "Uložit",
+  "uploadImage": "Nahrát soubor",
+  "comments": "Komentáře",
+  "readWholeArticle": "Přečíst celý článek",
+  "firstArticle": "Můj první článek",
+  "featuredImage": "Přidaný obrázek",
+  "dialog": {
+    "deleteArticle": "Chcete smazat článek {{title}}. Opravdu chcete pokračovat? Akce je nevratná."
+  },
+  "disconnected": {
+    "textOne": "Byl jste odhlášen po 1 hodině.",
+    "textTwo": "Pro pokračování se musíte znovu přihlásit."
+  },
+  "errorMessage": {
+    "password": "Heslo je povinné",
+    "email": "E-mail je povinný",
+    "error": "Něco je špatně.",
+    "item": "Položka je povinná"
+  },
+  "table": {
+    "articleTitle": "Název článku",
+    "perex": "Perex",
+    "author": "Autor",
+    "lastUpdate": "Poslední aktualizace",
+    "actions": "Akce"
+  },
+  "myArticles": "Moje články",
+  "recentArticles": "Nejnovější články",
+  "newArticle": "Vytvořit nový článek",
+  "editArticle": "Upravit článek",
+  "publishArticle": "Publikovat článek",
+  "navigation": {
+    "recentArticles": "Nejnovější články",
+    "relatedArticles": "Související články",
+    "myArticles": "Moje články",
+    "newArticle": "Nový článek"
+  },
+  "tooltips": {
+    "openMenu": "Otevřít menu",
+    "deleteFile": "Smazat nahraný soubor"
+  },
+  "noSearch": "Žádná dostupná data",
+  "pageNotFound": "Stránka nebyla nalezena."
+}

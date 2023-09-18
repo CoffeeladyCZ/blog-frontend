@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import {
   Dialog,
@@ -31,19 +32,20 @@ const SimpleDialog: React.FC<DialogPropsType> = ({
   dialogData,
   deleteArticle
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Dialog open={isOpenDialog} onClose={closeDialog}>
-      <StyledDialogTitle>Delete article</StyledDialogTitle>
+      <StyledDialogTitle>{t('deleteArticle')}</StyledDialogTitle>
       <DialogContent>
         <DialogContentText>
-          You are about to delete an article {dialogData.title}. Do you really want to continue?
-          action is irreversible.
+          {t('dialog.deleteArticle', { title: dialogData.title })}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={closeDialog}>Cancel</Button>
+        <Button onClick={closeDialog}>{t('cancel')}</Button>
         <Button variant="contained" onClick={() => deleteArticle(dialogData.articleId)}>
-          Delete
+          {t('delete')}
         </Button>
       </DialogActions>
     </Dialog>

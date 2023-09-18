@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Container } from '@mui/material';
 import { styled } from '@mui/system';
@@ -12,9 +13,10 @@ const StyledContainer = styled(Container)`
 `;
 
 const NotFound: React.FC = () => {
+  const { t } = useTranslation();
   return (
     <StyledContainer data-testid="notFound">
-      <StyledH1 variant="h1">Page not found.</StyledH1>
+      <StyledH1 variant="h1">{t('pageNotFound')}</StyledH1>
     </StyledContainer>
   );
 };

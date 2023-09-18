@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { DataGrid, GridColDef, GridValidRowModel } from '@mui/x-data-grid';
 import { styled } from '@mui/material/styles';
@@ -27,8 +28,10 @@ const DataTable: React.FC<DataTablePropsType> = ({
 }: DataTablePropsType) => {
   const getRowId = (articles: any) => articles.articleId;
 
+  const { t } = useTranslation();
+
   const CustomNoRowsOverlays = () => {
-    return <div>No data found.</div>;
+    return <div>{t('noSearch')}</div>;
   };
 
   const CustomLoading = () => {
