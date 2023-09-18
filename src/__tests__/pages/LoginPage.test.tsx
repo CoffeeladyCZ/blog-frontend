@@ -7,6 +7,8 @@ import configureStore from 'redux-mock-store';
 import { setLogin } from '../../store/login';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { I18nextProvider } from 'react-i18next';
+import i18next from '../../i18n/config';
 
 import LoginPage from '../../pages/LoginPage';
 
@@ -25,11 +27,13 @@ describe('LoginPage', () => {
     const store = mockStore(initialState);
 
     render(
-      <Provider store={store}>
-        <MemoryRouter initialEntries={['/login']}>
-          <LoginPage />
-        </MemoryRouter>
-      </Provider>
+      <I18nextProvider i18n={i18next}>
+        <Provider store={store}>
+          <MemoryRouter initialEntries={['/login']}>
+            <LoginPage />
+          </MemoryRouter>
+        </Provider>
+      </I18nextProvider>
     );
   });
 
@@ -38,11 +42,13 @@ describe('LoginPage', () => {
       const store = mockStore(initialState);
 
       const { asFragment } = render(
-        <Provider store={store}>
-          <MemoryRouter initialEntries={['/login']}>
-            <LoginPage />
-          </MemoryRouter>
-        </Provider>
+        <I18nextProvider i18n={i18next}>
+          <Provider store={store}>
+            <MemoryRouter initialEntries={['/login']}>
+              <LoginPage />
+            </MemoryRouter>
+          </Provider>
+        </I18nextProvider>
       );
 
       expect(asFragment()).toMatchSnapshot();

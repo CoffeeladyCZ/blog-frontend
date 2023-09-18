@@ -5,6 +5,7 @@ import { ThemeProvider } from '@mui/material';
 import { theme } from './themes';
 import store from './store/store';
 import { Provider } from 'react-redux';
+import './i18n/config';
 
 import './App.scss';
 

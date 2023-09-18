@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import {
   Box,
@@ -40,6 +41,7 @@ const StyledBox = styled(Box)`
 const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
   const [image, setImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { t } = useTranslation();
 
   const author = 'Marcela Karafizievová';
 
@@ -83,7 +85,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
             </CardContent>
             <CardActions>
               <Link to={`/article/${article.articleId}`}>
-                <Button size="small">Read whole article</Button>
+                <Button size="small">{t('readWholeArticle')}</Button>
               </Link>
             </CardActions>
           </StyledBox>

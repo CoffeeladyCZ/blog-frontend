@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Container } from '@mui/material';
 import { styled } from '@mui/system';
@@ -12,10 +13,11 @@ const StyledContainer = styled(Container)`
 `;
 
 const Disconnected: React.FC = () => {
+  const { t } = useTranslation();
   return (
     <StyledContainer data-testid="disconnected">
-      <StyledH1 variant="h1">You got disconnected after 1 hour.</StyledH1>
-      <StyledSmallLightText>To continue, you must log in again.</StyledSmallLightText>
+      <StyledH1 variant="h1">{t('disconnected.textTwo')}</StyledH1>
+      <StyledSmallLightText>{t('disconnected.textTwo')}</StyledSmallLightText>
     </StyledContainer>
   );
 };

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useForm, Controller, FormProvider } from 'react-hook-form';
 import Cookies from 'js-cookie';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { Grid, Button, TextField, Tooltip } from '@mui/material';
 import { Close } from '@mui/icons-material';
@@ -33,6 +34,7 @@ const EditArticle: React.FC = () => {
   const { id = '' } = useParams<{ id: string }>();
   const { uploadFile, deleteFile, imageId } = useFileUpload();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const methods = useForm<FormDetailType>({
     mode: 'onChange'
@@ -118,11 +120,11 @@ const EditArticle: React.FC = () => {
           <StyledArticleGrid container rowSpacing={4}>
             <Grid container justifyContent="space-between" spacing={0}>
               <Grid item xs={12} sm="auto">
-                <StyledH1 variant="h1">Edit article</StyledH1>
+                <StyledH1 variant="h1">{t('editArticle')}</StyledH1>
               </Grid>
               <StyledButtonGrid item xs={12} sm={3}>
                 <Button type="submit" variant="contained" data-testid="editButton">
-                  Save Article
+                  {t('save')}
                 </Button>
               </StyledButtonGrid>
             </Grid>
@@ -135,9 +137,9 @@ const EditArticle: React.FC = () => {
                 render={({ field }) => {
                   return (
                     <TextField
-                      label="Title"
+                      label={t('table.articleTitle')}
                       error={Boolean(errors.title)}
-                      helperText={errors.title ? 'Item is required' : ''}
+                      helperText={errors.title ? t('errorMessage.item') : ''}
                       id="title"
                       size="small"
                       fullWidth
@@ -156,9 +158,9 @@ const EditArticle: React.FC = () => {
                 render={({ field }) => {
                   return (
                     <TextField
-                      label="Perex"
+                      label={t('table.perex')}
                       error={Boolean(errors.perex)}
-                      helperText={errors.perex ? 'Item is required' : ''}
+                      helperText={errors.perex ? t('errorMessage.item') : ''}
                       id="perex"
                       size="small"
                       fullWidth
@@ -171,10 +173,10 @@ const EditArticle: React.FC = () => {
             <Grid item xs={12}>
               {articleData.image && typeof articleData.image === 'string' && (
                 <div>
-                  <p>Featured image:</p>
+                  <p>{t('featuredImage')}</p>
                   <StyledImageContainer>
                     <StyledImg key={imageId} src={articleData.image} alt="Uploaded" />
-                    <Tooltip title="Delete upload file">
+                    <Tooltip title={t('tooltip.deleteFile')}>
                       {articleData.image && imageId && !articleData.imageId ? (
                         <StyledIconImageButton
                           size="small"

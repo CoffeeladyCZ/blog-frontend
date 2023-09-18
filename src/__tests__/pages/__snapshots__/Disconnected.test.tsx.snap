@@ -12,7 +12,7 @@ Object {
         <h1
           class="MuiTypography-root MuiTypography-h1 css-uvq1dc-MuiTypography-root"
         >
-          You got disconnected after 1 hour.
+          To continue, you must log in again.
         </h1>
         <p
           class="MuiTypography-root MuiTypography-body1 css-1onvqr4-MuiTypography-root"
@@ -30,7 +30,7 @@ Object {
       <h1
         class="MuiTypography-root MuiTypography-h1 css-uvq1dc-MuiTypography-root"
       >
-        You got disconnected after 1 hour.
+        To continue, you must log in again.
       </h1>
       <p
         class="MuiTypography-root MuiTypography-body1 css-1onvqr4-MuiTypography-root"

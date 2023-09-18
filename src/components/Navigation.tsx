@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import {
   Avatar,
@@ -67,6 +68,7 @@ const LoginSection: React.FC<LoginSectionType> = ({ onUserAlert }) => {
   const dispatch = useDispatch();
   const login = useSelector((state: RootState) => state.login.login);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const token = Cookies.get('token');
@@ -111,7 +113,7 @@ const LoginSection: React.FC<LoginSectionType> = ({ onUserAlert }) => {
     return (
       <NavLink to="/login">
         <Button color="primary" endIcon={<ArrowForward />}>
-          Log in
+          {t('login')}
         </Button>
       </NavLink>
     );
@@ -119,8 +121,12 @@ const LoginSection: React.FC<LoginSectionType> = ({ onUserAlert }) => {
     return (
       <>
         <StyledBoxAvatar data-testid="loginSection">
-          <StyledNavLink to="/articles/">My Articles</StyledNavLink>
-          <StyledNavLink to="/article/new">New Article</StyledNavLink>
+          <StyledNavLink to="/articles/" data-testid="navMyArticles">
+            {t('navigation.myArticles')}
+          </StyledNavLink>
+          <StyledNavLink to="/article/new" data-testid="navNewArticle">
+            {t('navigation.newArticle')}
+          </StyledNavLink>
           <Tooltip title="Open menu">
             <IconButton data-testid="menuButton" onClick={(e) => setUserMenu(e.currentTarget)}>
               <Avatar alt="avatar" srcSet="../assets/logo_A.jpg" />
@@ -141,7 +147,7 @@ const LoginSection: React.FC<LoginSectionType> = ({ onUserAlert }) => {
             open={Boolean(userMenu)}
             onClose={() => setUserMenu(null)}>
             <MenuItem onClick={() => logoutUser(false)} data-testid="logout">
-              <Typography textAlign="center">Log out</Typography>
+              <Typography textAlign="center">{t('logout')}</Typography>
             </MenuItem>
           </StyledMenu>
         </StyledBoxAvatar>
@@ -156,6 +162,7 @@ const Navigation: React.FC = () => {
   const setUserAlert: (item: boolean) => void = (item) => {
     setShowSuccessAlert(item);
   };
+  const { t } = useTranslation();
 
   return (
     <StyledAppBar position="relative" color="secondary">
@@ -175,7 +182,9 @@ const Navigation: React.FC = () => {
             </IconButton>
           </NavLink>
           <StyledBox>
-            <StyledNavLink to="/recent-articles">Recent Articles</StyledNavLink>
+            <StyledNavLink to="/recent-articles" data-testid="navRecentArticles">
+              {t('navigation.recentArticles')}
+            </StyledNavLink>
           </StyledBox>
           <LoginSection onUserAlert={setUserAlert} />
         </StyledToolbar>
