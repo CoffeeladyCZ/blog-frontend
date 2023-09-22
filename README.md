@@ -31,8 +31,3 @@ After logging in, the user will receive an access_token that is valid for 1 hour
 - Display all texts using the i18next library. - **is ready in branch `development`**
 
 All planned issues are submitted on github.
-
-Credentials:
-
-- marcela@test.cz
-- testpassword
