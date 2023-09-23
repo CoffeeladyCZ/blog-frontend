@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { useForm, Controller, FormProvider } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import { Button, Card, Grid, TextField, CardContent, CardActions } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-import { RootState } from '../store/store';
 import { setLogin } from '../store/login';
 import { FormLoginType } from '../types/Articles';
 import { loginUser } from '../utils/apiUtils';
@@ -29,7 +28,6 @@ const LoginPage: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const dispatch = useDispatch();
-  const login = useSelector((state: RootState) => state.login.login);
   const navigate = useNavigate();
   const { t } = useTranslation();
 

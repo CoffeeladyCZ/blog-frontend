@@ -27,6 +27,7 @@ import { StyledNavLink } from '../styled/styled';
 import logo from '../assets/logo.svg';
 
 import Notification from './Notification';
+import LanguageSwitch from './LanguageSwitch';
 
 type LoginSectionType = {
   onUserAlert: (item: boolean) => void;
@@ -112,7 +113,7 @@ const LoginSection: React.FC<LoginSectionType> = ({ onUserAlert }) => {
   if (!login) {
     return (
       <NavLink to="/login">
-        <Button color="primary" endIcon={<ArrowForward />}>
+        <Button color="primary" data-testid="navLoginButton" endIcon={<ArrowForward />}>
           {t('login')}
         </Button>
       </NavLink>
@@ -185,6 +186,9 @@ const Navigation: React.FC = () => {
             <StyledNavLink to="/recent-articles" data-testid="navRecentArticles">
               {t('navigation.recentArticles')}
             </StyledNavLink>
+          </StyledBox>
+          <StyledBox>
+            <LanguageSwitch />
           </StyledBox>
           <LoginSection onUserAlert={setUserAlert} />
         </StyledToolbar>

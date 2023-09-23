@@ -17,7 +17,8 @@ describe('LoginPage', () => {
   const mockStore = configureStore([]);
   const initialState = {
     login: {
-      login: false
+      login: false,
+      language: 'en'
     }
   };
 
