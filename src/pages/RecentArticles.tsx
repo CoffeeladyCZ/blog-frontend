@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import { Grid } from '@mui/material';
 
@@ -15,6 +16,7 @@ const RecentArticles: React.FC = () => {
 
   const dispatch = useDispatch();
   const articles = useSelector((state: RootState) => state.articleList.articleList);
+  const { t } = useTranslation();
 
   const sortedArticles = [...articles].sort((a, b) => {
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
@@ -42,7 +44,7 @@ const RecentArticles: React.FC = () => {
     <StyledBox>
       <StyledGrid container rowSpacing={4}>
         <Grid item xs={12}>
-          <StyledH1 variant="h1">Recent articles</StyledH1>
+          <StyledH1 variant="h1">{t('recentArticles')}</StyledH1>
         </Grid>
         {!isLoading &&
           sortedArticles &&

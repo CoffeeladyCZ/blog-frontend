@@ -1,9 +1,12 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { DataGrid, GridColDef, GridValidRowModel } from '@mui/x-data-grid';
 import { styled } from '@mui/material/styles';
 
 import { ArticleType } from '../types/Articles';
+
+import LinearLoading from './LinearLoading';
 
 type DataTablePropsType = {
   headerColumns: GridColDef<GridValidRowModel>[];
@@ -25,6 +28,16 @@ const DataTable: React.FC<DataTablePropsType> = ({
 }: DataTablePropsType) => {
   const getRowId = (articles: any) => articles.articleId;
 
+  const { t } = useTranslation();
+
+  const CustomNoRowsOverlays = () => {
+    return <div>{t('noSearch')}</div>;
+  };
+
+  const CustomLoading = () => {
+    return <LinearLoading loading={loading} />;
+  };
+
   return (
     <StyledDataGrid
       data-testid="dataTable"
@@ -40,7 +53,11 @@ const DataTable: React.FC<DataTablePropsType> = ({
           sortModel: [{ field: 'lastUpdatedAt', sort: 'desc' }]
         }
       }}
-      pageSizeOptions={[5, 10]}
+      slots={{
+        loadingOverlay: CustomLoading,
+        noRowsOverlay: CustomNoRowsOverlays
+      }}
+      pageSizeOptions={[10, 25, 50]}
       checkboxSelection
     />
   );

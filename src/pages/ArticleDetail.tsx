@@ -96,7 +96,7 @@ const ArticleDetail: React.FC = () => {
                   height={700}
                 />
               </CardContent>
-              <CommentsBox comments={articleDetail.comments} />
+              <CommentsBox comments={articleDetail.comments} articleId={articleDetail.articleId} />
             </StyledCard>
           </Grid>
           <Grid item xs={12} md={4}>

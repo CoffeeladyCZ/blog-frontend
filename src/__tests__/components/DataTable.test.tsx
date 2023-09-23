@@ -1,4 +1,6 @@
 import { render, screen } from '@testing-library/react';
+import { I18nextProvider } from 'react-i18next';
+import i18next from '../../i18n/config';
 
 import { articleList } from '../../TestObjects';
 
@@ -17,15 +19,24 @@ describe('DataTable', () => {
     }
   ];
 
-  test('should snapshot with data', () => {
-    const container = render(
-      <DataTable headerColumns={columns} articles={articleList} loading={false} />
+  beforeEach(async () => {
+    render(
+      <I18nextProvider i18n={i18next}>
+        <DataTable headerColumns={columns} articles={articleList} loading={false} />
+      </I18nextProvider>
     );
-    expect(container).toMatchSnapshot();
+  });
+
+  test('should snapshot with data', () => {
+    const { asFragment } = render(
+      <I18nextProvider i18n={i18next}>
+        <DataTable headerColumns={columns} articles={articleList} loading={false} />
+      </I18nextProvider>
+    );
+    expect(asFragment).toMatchSnapshot();
   });
 
   test('component is succesfully render', async () => {
-    render(<DataTable headerColumns={columns} articles={articleList} loading={false} />);
     const dataTableElement = await screen.getByTestId('dataTable');
 
     expect(dataTableElement).toBeInTheDocument();

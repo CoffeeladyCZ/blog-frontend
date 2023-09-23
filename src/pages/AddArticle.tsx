@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useForm, Controller, FormProvider } from 'react-hook-form';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { Grid, Button, TextField, Tooltip } from '@mui/material';
 import {
@@ -32,6 +33,7 @@ const AddArticle: React.FC = () => {
 
   const { uploadFile, deleteFile, cleanFileInput, uploadedFile, imageId } = useFileUpload();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const methods = useForm<FormDetailType>({
     mode: 'onChange'
@@ -101,11 +103,11 @@ const AddArticle: React.FC = () => {
           <StyledArticleGrid container rowSpacing={4}>
             <Grid container justifyContent="space-between" spacing={0}>
               <Grid item xs={4}>
-                <StyledH1 variant="h1">Create new article</StyledH1>
+                <StyledH1 variant="h1">{t('newArticle')}</StyledH1>
               </Grid>
               <StyledButtonGrid item xs={3}>
                 <Button variant="contained" type="submit" data-testid="addArticleButton">
-                  Publish Article
+                  {t('publishArticle')}
                 </Button>
               </StyledButtonGrid>
             </Grid>
@@ -120,9 +122,9 @@ const AddArticle: React.FC = () => {
                     <TextField
                       label="Title"
                       error={Boolean(errors.title)}
-                      helperText={errors.title ? 'Item is required' : ''}
+                      helperText={errors.title ? t('errorMessage.item') : ''}
                       id="title"
-                      placeholder="My First Article"
+                      placeholder={t('firstArticle')}
                       size="small"
                       fullWidth
                       {...field}
@@ -139,9 +141,9 @@ const AddArticle: React.FC = () => {
                 render={({ field }) => {
                   return (
                     <TextField
-                      label="Perex"
+                      label={t('table.perex')}
                       error={Boolean(errors.perex)}
-                      helperText={errors.perex ? 'Item is required' : ''}
+                      helperText={errors.perex ? t('errorMessage.item') : ''}
                       id="perex"
                       size="small"
                       fullWidth
@@ -154,10 +156,10 @@ const AddArticle: React.FC = () => {
             <Grid item xs={12}>
               {image && typeof image === 'string' && imageId && (
                 <div>
-                  <p>Featured image:</p>
+                  <p>{t('featuredImage')}:</p>
                   <StyledImageContainer>
                     <StyledImg src={image} alt="Uploaded" />
-                    <Tooltip title="Delete upload file">
+                    <Tooltip title={t('tooltip.deleteFile')}>
                       <StyledIconImageButton
                         size="small"
                         color="primary"

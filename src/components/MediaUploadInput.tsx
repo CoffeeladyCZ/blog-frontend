@@ -1,5 +1,6 @@
 import React, { useState, ChangeEvent } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
@@ -21,6 +22,7 @@ const MediaUploadInput: React.FC<MediaUploadFormProps> = ({ onFileUpload, isLoad
     control,
     formState: { errors }
   } = useFormContext();
+  const { t } = useTranslation();
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
@@ -43,7 +45,7 @@ const MediaUploadInput: React.FC<MediaUploadFormProps> = ({ onFileUpload, isLoad
             color="primary"
             type="file"
             error={Boolean(errors.selectedFile)}
-            helperText={errors.selectedFile ? 'Item is required' : ''}
+            helperText={errors.selectedFile ? t('errorMessage.item') : ''}
             onChange={handleFileChange}
           />
         )}
@@ -57,7 +59,7 @@ const MediaUploadInput: React.FC<MediaUploadFormProps> = ({ onFileUpload, isLoad
         color="primary"
         loading={isLoading}
         onClick={handleUpload}>
-        Upload an image
+        {t('uploadImage')}
       </StyledButton>
     </>
   );

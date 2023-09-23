@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -48,6 +49,7 @@ const RelatedArticlesBox: React.FC = () => {
   const articleList: ArticleType[] = useSelector(
     (state: RootState) => state.articleList.articleList
   );
+  const { t } = useTranslation();
 
   useEffect(() => {
     checkArticleList();
@@ -75,7 +77,7 @@ const RelatedArticlesBox: React.FC = () => {
 
   return (
     <StyledBox data-testid="articleRelatedBox">
-      <StyledH4>Related articles</StyledH4>
+      <StyledH4>{t('relatedArticles')}</StyledH4>
       {articleList &&
         articleList.map((item: ArticleType) => (
           <ArticleBox
