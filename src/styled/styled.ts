@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Typography, IconButton } from '@mui/material';
+import { Box, Button, Container, Grid, Typography, IconButton } from '@mui/material';
 import { NavLink, Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 
@@ -23,10 +23,9 @@ export const StyledButtonGrid = styled(Grid)`
 `;
 
 export const StyledBox = styled(Box)`
-  margin-top: 50px;
   display: flex;
   justify-content: center;
-  padding: 0 24px;
+  padding: 50px 24px;
 `;
 
 export const StyledNavLink = styled(NavLink)`
@@ -36,6 +35,12 @@ export const StyledNavLink = styled(NavLink)`
   &.active {
     color: #4dabf5;
   }
+`;
+
+export const StyledNavButton = styled(Button)`
+  margin-left: 16px;
+  margin-right: 16px;
+  color: rgba(33, 37, 41, 1);
 `;
 
 export const StyledLink = styled(Link)`

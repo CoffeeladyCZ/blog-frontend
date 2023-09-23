@@ -11,6 +11,7 @@
   "readWholeArticle": "Přečíst celý článek",
   "firstArticle": "Můj první článek",
   "featuredImage": "Přidaný obrázek",
+  "nameBlog": "Cat blog",
   "dialog": {
     "deleteArticle": "Chcete smazat článek {{title}}. Opravdu chcete pokračovat? Akce je nevratná."
   },
@@ -32,16 +33,16 @@
     "actions": "Akce"
   },
   "myArticles": "Moje články",
-  "recentArticles": "Nejnovější články",
+  "recentArticles": "Články",
   "newArticle": "Vytvořit nový článek",
   "editArticle": "Upravit článek",
-  "publishArticle": "Publikovat článek",
+  "publishArticle": "Uložit článek",
   "relatedArticle": "Související články",
   "navigation": {
-    "recentArticles": "Nejnovější články",
+    "recentArticles": "Články",
     "relatedArticles": "Související články",
     "myArticles": "Moje články",
-    "newArticle": "Nový článek"
+    "newArticle": "Přidat článek"
   },
   "tooltips": {
     "openMenu": "Otevřít menu",

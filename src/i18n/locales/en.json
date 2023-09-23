@@ -12,6 +12,7 @@
   "readWholeArticle": "Read whole article",
   "firstArticle": "My First Article",
   "featuredImage": "Featured image",
+  "nameBlog": "Cat blog",
   "dialog": {
     "deleteArticle": "You are about to delete an article {{title}}. Do you really want to continue? Action is irreversible"
   },
@@ -33,13 +34,13 @@
     "actions": "Actions"
   },
   "myArticles": "My articles",
-  "recentArticles": "Recent articles",
+  "recentArticles": "Articles",
   "newArticle": "Create new article",
   "editArticle": "Edit article",
   "publishArticle": "Publish article",
   "relatedArticles": "Related articles",
   "navigation": {
-    "recentArticles": "Recent Articles",
+    "recentArticles": "Articles",
     "relatedArticles": "Related Articles",
     "myArticles": "My Articles",
     "newArticle": "New Article"

@@ -24,7 +24,6 @@ import SimpleDialog from '../components/SimpleDialog';
 
 const StyledGrid = styled(Grid)`
   max-width: 1152px;
-  padding: 0 48px;
 `;
 
 const MyArticles: React.FC = () => {

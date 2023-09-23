@@ -2,11 +2,12 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-import { Button } from '@mui/material';
+import { Language } from '@mui/icons-material';
 
 import { setLanguage } from '../store/settings';
 import { saveLanguageToLocalStorage } from '../utils/utils';
 import { RootState } from '../store/store';
+import { StyledNavButton } from '../styled/styled';
 
 const LanguageSwitch: React.FC = () => {
   const dispatch = useDispatch();
@@ -22,9 +23,13 @@ const LanguageSwitch: React.FC = () => {
   return (
     <div>
       {currentLanguage === 'cz' ? (
-        <Button onClick={() => handleLanguageChange('en')}>{t('language.english')}</Button>
+        <StyledNavButton startIcon={<Language />} onClick={() => handleLanguageChange('en')}>
+          {t('language.english')}
+        </StyledNavButton>
       ) : (
-        <Button onClick={() => handleLanguageChange('cz')}>{t('language.czech')}</Button>
+        <StyledNavButton startIcon={<Language />} onClick={() => handleLanguageChange('cz')}>
+          {t('language.czech')}
+        </StyledNavButton>
       )}
     </div>
   );
