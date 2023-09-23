@@ -28,7 +28,7 @@ After logging in, the user will receive an access_token that is valid for 1 hour
 - Improvements to the editing window.
 - Add pagination to My article table.
 - It would be good to create more unit tests.
-- Display all texts using the i18next library.
+- Display all texts using the i18next library and switch to another languages. - **is ready in branch `development`.**
 
 All planned issues are submitted on github.
 

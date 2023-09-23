@@ -1,22 +1,28 @@
 import i18next from 'i18next';
+import detector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
-import en from './en.json';
-import cz from './cz.json';
 
-export const defaultNS = 'en';
+import en from './/locales/en.json';
+import cz from './locales/cz.json';
 
-i18next.use(initReactI18next).init({
-  lng: 'en',
-  debug: true,
-  resources: {
-    en: {
-      en
-    },
-    cz: {
-      cz
-    }
+const resources = {
+  en: {
+    translation: en
   },
-  defaultNS
-});
+  cz: {
+    translation: cz
+  }
+};
+
+i18next
+  .use(detector)
+  .use(initReactI18next)
+  .init({
+    resources,
+    fallbackLng: ['en'],
+    interpolation: {
+      escapeValue: false
+    }
+  });
 
 export default i18next;

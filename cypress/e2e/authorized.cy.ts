@@ -19,7 +19,7 @@ describe('Can access protected pages', () => {
       .type('{selectAll}')
       .type('Content');
 
-    cy.get('button').contains('Publish Article').click();
+    cy.get('[data-testid="addArticleButton"]').click();
     cy.wait(1000);
 
     cy.url().should('match', new RegExp('http://localhost:3000/article'));
@@ -27,7 +27,7 @@ describe('Can access protected pages', () => {
 
   it('allows the user to edit an article', () => {
     cy.clickLink('/articles', 'My Articles');
-    cy.visit('localhost:3000/article/edit/7aa225b2-6abf-428e-ade0-89f3568ea08c');
+    cy.visit('localhost:3000/article/edit/41c5a55d-b6cd-4dae-8929-55651ab2ad9b');
 
     cy.get('[data-testid="editButton"]').click();
     cy.get('form').should('be.visible');
@@ -36,7 +36,7 @@ describe('Can access protected pages', () => {
     cy.get('input#perex').clear().type('Nový perex článku');
 
     cy.get('div#content').find('textarea').clear().type('Nový obsah článku');
-    cy.get('button[type="submit"]').click();
+    cy.get('[data-testid="editButton"]').click();
 
     cy.url().should('eq', 'http://localhost:3000/articles');
   });

@@ -36,6 +36,7 @@
   "newArticle": "Vytvořit nový článek",
   "editArticle": "Upravit článek",
   "publishArticle": "Publikovat článek",
+  "relatedArticle": "Související články",
   "navigation": {
     "recentArticles": "Nejnovější články",
     "relatedArticles": "Související články",
@@ -47,5 +48,9 @@
     "deleteFile": "Smazat nahraný soubor"
   },
   "noSearch": "Žádná dostupná data",
-  "pageNotFound": "Stránka nebyla nalezena."
+  "pageNotFound": "Stránka nebyla nalezena.",
+  "language": {
+    "czech": "Čeština",
+    "english": "English"
+  }
 }

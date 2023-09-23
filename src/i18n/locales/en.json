@@ -49,5 +49,9 @@
     "deleteFile": "Delete upload file"
   },
   "noSearch": "No data available",
-  "pageNotFound": "Page not found."
+  "pageNotFound": "Page not found.",
+  "language": {
+    "czech": "Čeština",
+    "english": "English"
+  }
 }

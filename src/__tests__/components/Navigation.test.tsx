@@ -14,6 +14,9 @@ describe('Navigation without login', () => {
   const initialState = {
     login: {
       login: false
+    },
+    settings: {
+      language: 'en'
     }
   };
   const mockStore = configureStore([]);
@@ -52,6 +55,9 @@ describe('Navigation with login', () => {
   const initialState = {
     login: {
       login: true
+    },
+    settings: {
+      language: 'en'
     }
   };
   const mockStore = configureStore([]);
