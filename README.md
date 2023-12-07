@@ -32,8 +32,3 @@ The blog offers a choice of Czech and English language (the language of the arti
 - It would be good to create more unit tests.
 
 All planned issues are submitted on github.
-
-Credentials:
-
-- marcela@test.cz
-- testpassword
