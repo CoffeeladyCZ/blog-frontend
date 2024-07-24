@@ -14,8 +14,8 @@ The production version is in the `release/0.2.0` branch. This version is also vi
 Branch `development` is for development only and may not always be fully functional.
 
 You need to create an `.env` file with:
-- `REACT_APP_API_URL` (contains the path to the API)
-- `REACT_APP_X_API_KEY` (generated tenant)
+- `VITE_APP_API_URL` (contains the path to the API)
+- `VITE_APP_X_API_KEY` (generated tenant)
 
 **Functionality:**
 
