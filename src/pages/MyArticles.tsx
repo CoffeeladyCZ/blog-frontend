@@ -1,3 +1,5 @@
+/// <reference types="vite-plugin-svgr/client" />
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
@@ -12,8 +14,8 @@ import { StyledBox } from '../styled/styled';
 
 import { Button, Grid, IconButton, SvgIcon } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { ReactComponent as DeleteIcon } from '../assets/deleteIcon.svg';
-import { ReactComponent as EditIcon } from '../assets/editIcon.svg';
+import DeleteIcon from '../assets/deleteIcon.svg?react';
+import EditIcon from '../assets/editIcon.svg?react';
 
 import { StyledH1, StyledButtonGrid } from '../styled/styled';
 import { getArticleList } from '../utils/apiUtils';
