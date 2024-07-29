@@ -9,7 +9,7 @@ Blogging platform for adding and editing articles.
 - Axios, i18next,
 - Jest, testing-library/react, Cypress.
 
-The production version is in the `release/0.2.0` branch. This version is also viewable on Vercel.
+The production version is in the `release/0.3.0` branch. This version is also viewable on Vercel.
 
 Branch `development` is for development only and may not always be fully functional.
 
