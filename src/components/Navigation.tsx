@@ -249,6 +249,7 @@ const Navigation: React.FC = () => {
             <StyledLanguageBox>
               <LanguageSwitch />
             </StyledLanguageBox>
+            
           </Toolbar>
         </Container>
       </StyledAppBar>

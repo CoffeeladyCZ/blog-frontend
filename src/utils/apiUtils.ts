@@ -81,6 +81,7 @@ export const loginUser = async (data: FormLoginType): Promise<ApiResponseType> =
     Cookies.set('token', access_token);
     const loginTime = new Date();
     localStorage.setItem('loginTime', loginTime.toISOString());
+    localStorage.setItem('user', 'Marcela'); // ideally - get user data from the server
     return { success: true };
   } catch (error) {
     return {

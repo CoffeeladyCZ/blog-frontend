@@ -4,6 +4,7 @@ import { articleSlice } from './article';
 import { articleDetailSlice } from './articleDetail';
 import { loginSlice } from './login';
 import { settingsSlice } from './settings';
+import { userSlice } from './user';
 import { getLanguageFromLocalStorage } from '../utils/utils';
 
 const persistedLanguage = getLanguageFromLocalStorage();
@@ -13,7 +14,8 @@ const store = configureStore({
     articleList: articleSlice.reducer,
     articleDetail: articleDetailSlice.reducer,
     login: loginSlice.reducer,
-    settings: settingsSlice.reducer
+    settings: settingsSlice.reducer,
+    user: userSlice.reducer,
   },
   preloadedState: {
     settings: {

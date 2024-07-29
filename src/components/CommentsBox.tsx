@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useForm, Controller, FormProvider } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-import { Card, Grid, Button, TextField } from '@mui/material';
+import { Card, Grid, Button, TextField, Avatar } from '@mui/material';
 import { styled } from '@mui/material';
 import { Send } from '@mui/icons-material';
 
 import { RootState } from '../store/store';
 import { StyledH4 } from '../styled/styled';
 import { AlertType, CommentType, FormCommentType } from '../types/Articles';
-import { createCommentData } from '../utils/apiUtils';
 
 import Comment from './Comment';
 import Loading from './Loading';
 import Notification from './Notification';
+import { useSocket } from '../hooks/useSocket';
+import { createCommentData } from '../utils/apiUtils';
 
 type CommentsBoxPropsType = {
   comments: CommentType[];
@@ -25,6 +26,10 @@ const StyledCommentsCard = styled(Card)`
   box-shadow: none;
   border-top: 1px solid rgba(223, 223, 223, 1);
   margin: 16px;
+`;
+
+const StyledAvatar = styled(Avatar)`
+  margin: 0 4px;
 `;
 
 // mocked object for presentation purposes only
@@ -53,9 +58,11 @@ const mockedComment = [
 const CommentsBox: React.FC<CommentsBoxPropsType> = ({ comments, articleId }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [alert, setAlert] = useState<AlertType>({ message: '', severity: 'success', show: false });
+
   const commentsNumber = mockedComment.length;
 
   const login = useSelector((state: RootState) => state.login.login);
+  const user = useSelector((state: RootState) => state.user.user);
   const { t } = useTranslation();
 
   comments = mockedComment; // TODO - Delete after implementing the functionality of adding comments
@@ -86,7 +93,7 @@ const CommentsBox: React.FC<CommentsBoxPropsType> = ({ comments, articleId }) =>
     const responseData = {
       content: data.content,
       articleId: articleId,
-      author: data.author
+      author: user
     };
 
     setIsLoading(true);
@@ -130,27 +137,14 @@ const CommentsBox: React.FC<CommentsBoxPropsType> = ({ comments, articleId }) =>
         {login && (
           <FormProvider {...methods}>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <Grid container spacing={2}>
-                <Grid item sm={3}>
-                  <Controller
-                    control={control}
-                    name="author"
-                    defaultValue=""
-                    rules={{ required: true }}
-                    render={({ field }) => {
-                      return (
-                        <TextField
-                          label="Author"
-                          error={Boolean(errors.author)}
-                          helperText={errors.author ? 'Item is required' : ''}
-                          id="content"
-                          size="small"
-                          fullWidth
-                          {...field}
-                        />
-                      );
-                    }}
-                  />
+              <Grid
+                container
+                spacing={2}
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Grid item sm={2}>
+                  <StyledAvatar alt="avatar" />
                 </Grid>
                 <Grid item sm={7}>
                   <Controller
