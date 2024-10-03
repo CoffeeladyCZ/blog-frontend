@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { httpPost, httpDelete } from '../utils/axiosService';
+import { supabase } from '@supabase/auth-ui-shared';
+
+import useSupabase from '../hooks/useSupabase';
 
 type AddImageResponse = {
   imageId: string;
@@ -8,8 +11,11 @@ type AddImageResponse = {
 
 export function useFileUpload() {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [fileUrl, setFileUrl] = useState<string | null>(null);
   const [imageId, setImageId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const supabase = useSupabase();
 
   const uploadFile = async (file: File | null) => {
     setIsLoading(true);
@@ -19,8 +25,30 @@ export function useFileUpload() {
         const formData = new FormData();
         formData.append('image', file);
 
-        const response = await httpPost<AddImageResponse[]>('/images', formData);
-        setImageId(response.data[0].imageId);
+        if (supabase) {
+          const fileName = file.name;
+          const { data, error } = await supabase.storage.from('images').upload(fileName, file);
+
+          const { publicUrl } = supabase.storage
+            .from('images')
+            .getPublicUrl(fileName);
+  
+          setFileUrl(publicUrl);
+
+          // set image to datatable in Supabase
+          const { data: imageData, error: dbError } = await supabase
+          .from('images')
+          .insert([{ name: fileName }])
+          .select('image_id')
+          .single();
+  
+        if (dbError) {
+          console.error('Chyba při ukládání obrázku do DB:', dbError.message);
+          return;
+        }
+        setImageId(imageData.image_id);
+        }
+
       }
     } catch (error) {
       console.error(error);
@@ -59,6 +87,7 @@ export function useFileUpload() {
     isLoading,
     uploadFile,
     deleteFile,
+    fileUrl,
     setFeaturedImage
   };
 }

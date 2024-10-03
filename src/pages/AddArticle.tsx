@@ -18,7 +18,7 @@ import { Close } from '@mui/icons-material';
 
 import { FormDetailType } from '../types/Articles';
 import { useFileUpload } from '../hooks/useFileUpload';
-import { getImageData, createArticleData } from '../utils/apiUtils';
+import { createArticleData } from '../utils/apiUtils';
 
 import LoginPage from './LoginPage';
 import Loading from '../components/Loading';
@@ -31,7 +31,7 @@ const AddArticle: React.FC = () => {
   const [showSuccessAlert, setShowSuccessAlert] = useState<boolean>(false);
   const [image, setImage] = useState<string | ArrayBuffer | null>(null);
 
-  const { uploadFile, deleteFile, cleanFileInput, uploadedFile, imageId } = useFileUpload();
+  const { uploadFile, deleteFile, fileUrl, cleanFileInput, uploadedFile, imageId } = useFileUpload();
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -46,21 +46,21 @@ const AddArticle: React.FC = () => {
     formState: { errors }
   } = methods;
 
-  useEffect(() => {
-    if (imageId) {
-      const loadImage = async () => {
-        try {
-          const base64Image = await getImageData(imageId);
-          setImage(base64Image);
-          setShowSuccessAlert(true);
-        } catch (error) {
-          console.error(error);
-        }
-      };
-      loadImage();
-    }
-    setImage(null);
-  }, [imageId]);
+  // useEffect(() => {
+  //   if (imageId) {
+  //     const loadImage = async () => {
+  //       try {
+  //         const base64Image = await getImageData(imageId);
+  //         setImage(base64Image);
+  //         setShowSuccessAlert(true);
+  //       } catch (error) {
+  //         console.error(error);
+  //       }
+  //     };
+  //     loadImage();
+  //   }
+  //   setImage(null);
+  // }, [imageId]);
 
   const onSubmit = async (data: FormDetailType) => {
     data.imageId = imageId;
@@ -154,11 +154,11 @@ const AddArticle: React.FC = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              {image && typeof image === 'string' && imageId && (
+              {fileUrl && imageId && (
                 <div>
                   <p>{t('featuredImage')}:</p>
                   <StyledImageContainer>
-                    <StyledImg src={image} alt="Uploaded" />
+                    <StyledImg src={fileUrl} alt="Uploaded" />
                     <Tooltip title={t('tooltip.deleteFile')}>
                       <StyledIconImageButton
                         size="small"
