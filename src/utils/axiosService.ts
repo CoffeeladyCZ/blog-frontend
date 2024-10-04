@@ -1,11 +1,11 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
 
-const baseURL = import.meta.env.VITE_APP_API_URL;
+const baseURL = process.env.VITE_APP_API_URL;
 
 const defaultConfig = {
   headers: {
-    'X-API-KEY': import.meta.env.VITE_APP_X_API_KEY
+    'X-API-KEY': process.env.VITE_APP_X_API_KEY
   }
 };
 
@@ -37,7 +37,7 @@ export const httpGetImage = async <T>(
   config: AxiosRequestConfig
 ): Promise<AxiosResponse<T>> => {
   config.headers = {
-    'X-API-KEY': import.meta.env.VITE_APP_X_API_KEY
+    'X-API-KEY': process.env.VITE_APP_X_API_KEY
   };
   const response = await axios.get(`${baseURL}${url}`, config);
   return response;

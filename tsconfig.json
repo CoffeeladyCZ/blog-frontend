@@ -1,12 +1,15 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "module": "esnext",
+    "target": "es2022",
+    "moduleResolution": "node",
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
     ],
     "types": [
+      "node",
       "@mui/material",
       "@emotion/styled",
       "react-router-dom",
@@ -21,8 +24,6 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
