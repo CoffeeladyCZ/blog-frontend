@@ -5,7 +5,10 @@ let supabase: SupabaseClient | null = null;
 
 const getSupabaseClient = () => {
   if (!supabase) {
-    supabase = createClient(import.meta.env.VITE_APP_SUPABASE_URL, import.meta.env.VITE_APP_SUPABASE_ANNON_KEY);
+    supabase = createClient(
+      process.env.VITE_APP_SUPABASE_URL as string,
+      process.env.VITE_APP_SUPABASE_ANNON_KEY as string
+    );
   }
   return supabase;
 };

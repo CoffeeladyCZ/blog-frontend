@@ -29,7 +29,7 @@ const Router = () => {
         <Route path="/disconnected" element={<Disconnected />} />
         <Route path="*" element={<NotFound />} />
         <Route element={<PrivateRoutes />}>
-          <Route path="/articles/" element={<MyArticles />} />
+          <Route path="/articles" element={<MyArticles />} />
           <Route path="/article/new" element={<AddArticle />} />
           <Route path="/article/edit/:id" element={<EditArticle />} />
         </Route>

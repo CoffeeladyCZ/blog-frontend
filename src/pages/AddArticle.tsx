@@ -18,7 +18,7 @@ import { Close } from '@mui/icons-material';
 
 import { FormDetailType } from '../types/Articles';
 import { useFileUpload } from '../hooks/useFileUpload';
-import { createArticleData } from '../utils/apiUtils';
+import useSupabase from '../hooks/useSupabase';
 
 import LoginPage from './LoginPage';
 import Loading from '../components/Loading';
@@ -31,9 +31,11 @@ const AddArticle: React.FC = () => {
   const [showSuccessAlert, setShowSuccessAlert] = useState<boolean>(false);
   const [image, setImage] = useState<string | ArrayBuffer | null>(null);
 
-  const { uploadFile, deleteFile, fileUrl, cleanFileInput, uploadedFile, imageId } = useFileUpload();
+  const { uploadFile, deleteFile, fileUrl, cleanFileInput, uploadedFile, imageId } =
+    useFileUpload();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const supabase = useSupabase();
 
   const methods = useForm<FormDetailType>({
     mode: 'onChange'
@@ -62,6 +64,16 @@ const AddArticle: React.FC = () => {
   //   setImage(null);
   // }, [imageId]);
 
+  // get data from localStorage after refresh if exists
+  useEffect(() => {
+    const data = localStorage.getItem('image');
+    const parseData = data ? JSON.parse(data) : null;
+    if (parseData) {
+      console.log('imageUrl', parseData.fileUrl);
+      console.log('imageId', parseData.imageId);
+    }
+  }, []);
+
   const onSubmit = async (data: FormDetailType) => {
     data.imageId = imageId;
     await createArticle(data);
@@ -79,6 +91,14 @@ const AddArticle: React.FC = () => {
     } finally {
       setIsLoading(false);
       navigate('/articles');
+    }
+  };
+
+  const createArticleData = async (data: FormDetailType) => {
+    try {
+      const { data, error } = supabase.storage.from('images').upload(fileName, file);
+    } catch (error) {
+      console.error(error);
     }
   };
 

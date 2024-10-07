@@ -9,8 +9,9 @@ import { styled } from '@mui/material/styles';
 
 import { setLogin } from '../store/login';
 import { FormLoginType } from '../types/Articles';
-import { loginUser } from '../utils/apiUtils';
 import { StyledH3, StyledErrorMessage } from '../styled/styled';
+import useSupabase from '../hooks/useSupabase';
+import Cookies from 'js-cookie';
 
 const StyledCard = styled(Card)`
   width: 368px;
@@ -30,6 +31,7 @@ const LoginPage: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const supabase = useSupabase();
 
   const methods = useForm<FormLoginType>({
     mode: 'onChange'
@@ -46,6 +48,7 @@ const LoginPage: React.FC = () => {
       const response = await loginUser(data);
       if (response.success) {
         dispatch(setLogin(true));
+        console.log('redirect');
         navigate('/articles');
         return;
       } else if (response.error) {
@@ -54,6 +57,25 @@ const LoginPage: React.FC = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const loginUser = async (dataLogin: FormLoginType) => {
+    if (supabase) {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: dataLogin.username,
+        password: dataLogin.password
+      });
+      if (data.session !== null) {
+        console.log('data', data.session.access_token);
+        Cookies.set('token', data.session.access_token);
+      }
+
+      if (error) {
+        return { success: false, error };
+      }
+      return { success: true };
+    }
+    return { success: false };
   };
 
   return (

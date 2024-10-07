@@ -1,16 +1,12 @@
 import { httpGetImage, httpGet, httpPatch, httpPost } from '../utils/axiosService';
-import Cookies from 'js-cookie';
 
 import { blobToBase64 } from '../utils/utils';
 import {
   ArticleDetailTypes,
   FormDetailType,
-  FormLoginType,
   CommentResponseType,
   ArticleType,
   ArticleListResponse,
-  ApiResponseType,
-  LoginResponse,
   ErrorType
 } from '../types/Articles';
 
@@ -63,36 +59,6 @@ export const updateArticleData = async (data: FormDetailType, id: string) => {
     httpPatch(`/articles/${id}`, data);
   } catch (error) {
     console.error(error);
-  }
-};
-
-export const createArticleData = async (data: FormDetailType) => {
-  try {
-    await httpPost('/articles', data);
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-export const loginUser = async (data: FormLoginType): Promise<ApiResponseType> => {
-  try {
-    const response = await httpPost<LoginResponse>('/login', data);
-    const access_token = await response.data.access_token;
-    Cookies.set('token', access_token);
-    const loginTime = new Date();
-    localStorage.setItem('loginTime', loginTime.toISOString());
-    return { success: true };
-  } catch (error) {
-    return {
-      success: false,
-      error: {
-        response: {
-          data: {
-            message: (error as ErrorType)?.response?.data?.message || 'Unknown error'
-          }
-        }
-      }
-    };
   }
 };
 
