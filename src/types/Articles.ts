@@ -23,6 +23,7 @@ export const defaultArticleDetailValues = {
 
 export type ArticleType = {
   articleId: string;
+  author: string;
   title: string;
   perex: string;
   imageId: string;
@@ -44,6 +45,7 @@ export type ArticleDetailTypes = {
 
 export type ImageType = {
   imageId: string;
+  fileUrl: string;
   name: string;
 };
 

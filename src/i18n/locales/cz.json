@@ -53,5 +53,8 @@
   "language": {
     "czech": "Čeština",
     "english": "English"
+  },
+  "notifications": {
+    "noImage": "Problém s nalezením obrázku:"
   }
 }

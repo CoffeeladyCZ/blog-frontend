@@ -16,23 +16,27 @@ import {
 } from '../styled/styled';
 import { Close } from '@mui/icons-material';
 
-import { FormDetailType } from '../types/Articles';
+import { FormDetailType, defaultArticleValues } from '../types/Articles';
 import { useFileUpload } from '../hooks/useFileUpload';
 import useSupabase from '../hooks/useSupabase';
+import { useArticle } from '../hooks/useArticle';
 
 import LoginPage from './LoginPage';
 import Loading from '../components/Loading';
 import MediaUploadInput from '../components/MediaUploadInput';
 import Notification from '../components/Notification';
 import MarkdownControlled from '../components/MarkDownControlled';
+// import { updateArticleData } from '../utils/apiUtils';
 
 const AddArticle: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState<boolean>(false);
-  const [image, setImage] = useState<string | ArrayBuffer | null>(null);
+  const [image, setImage] = useState<string | null>(null);
+  const [articleData, setArticleData] = useState<FormDetailType>(defaultArticleValues);
 
   const { uploadFile, deleteFile, fileUrl, cleanFileInput, uploadedFile, imageId } =
     useFileUpload();
+  const { createArticleData } = useArticle();
   const navigate = useNavigate();
   const { t } = useTranslation();
   const supabase = useSupabase();
@@ -45,7 +49,9 @@ const AddArticle: React.FC = () => {
     handleSubmit,
     reset,
     control,
-    formState: { errors }
+    formState: { errors },
+    setValue,
+    watch
   } = methods;
 
   // useEffect(() => {
@@ -67,12 +73,24 @@ const AddArticle: React.FC = () => {
   // get data from localStorage after refresh if exists
   useEffect(() => {
     const data = localStorage.getItem('image');
-    const parseData = data ? JSON.parse(data) : null;
-    if (parseData) {
-      console.log('imageUrl', parseData.fileUrl);
-      console.log('imageId', parseData.imageId);
+    const savedImage = data ? JSON.parse(data) : null;
+    if (savedImage) {
+      setImage(savedImage.fileUrl);
+    }
+    const savedArticle = localStorage.getItem("articleDraft");
+    if (savedArticle) {
+      const parsedData = JSON.parse(savedArticle);
+      setValue('title', parsedData.title || '');
+      setValue('perex', parsedData.perex || '');
+      setValue('content', parsedData.content || '');
     }
   }, []);
+
+  const watchedFields = watch();
+
+  useEffect(() => {
+    localStorage.setItem("articleDraft", JSON.stringify(watchedFields));
+  }, [watchedFields]);
 
   const onSubmit = async (data: FormDetailType) => {
     data.imageId = imageId;
@@ -81,24 +99,18 @@ const AddArticle: React.FC = () => {
 
   const createArticle = async (data: FormDetailType) => {
     setIsLoading(true);
+    const updatedArticleData = { ...data, author: 'Marcela Karafizievová' }; // TODO maybe author from login???
     try {
-      await createArticleData(data);
+      await createArticleData(updatedArticleData);
       setShowSuccessAlert(true);
       cleanFileInput();
       reset();
+      localStorage.removeItem('articleDraft');
     } catch (error) {
       console.error(error);
     } finally {
       setIsLoading(false);
       navigate('/articles');
-    }
-  };
-
-  const createArticleData = async (data: FormDetailType) => {
-    try {
-      const { data, error } = supabase.storage.from('images').upload(fileName, file);
-    } catch (error) {
-      console.error(error);
     }
   };
 
@@ -174,7 +186,7 @@ const AddArticle: React.FC = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              {fileUrl && imageId && (
+              {articleData.image && fileUrl && imageId && (
                 <div>
                   <p>{t('featuredImage')}:</p>
                   <StyledImageContainer>

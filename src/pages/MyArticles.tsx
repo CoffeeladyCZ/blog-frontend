@@ -18,8 +18,8 @@ import DeleteIcon from '../assets/deleteIcon.svg?react';
 import EditIcon from '../assets/editIcon.svg?react';
 
 import { StyledH1, StyledButtonGrid } from '../styled/styled';
-import { getArticleList } from '../utils/apiUtils';
 import { DialogDataType } from '../types/Articles';
+import { useArticle } from '../hooks/useArticle';
 
 import DataTable from '../components/DataTable';
 import SimpleDialog from '../components/SimpleDialog';
@@ -36,6 +36,7 @@ const MyArticles: React.FC = () => {
   const dispatch = useDispatch();
   const articles = useSelector((state: RootState) => state.articleList.articleList);
   const { t } = useTranslation();
+  const { getArticleList } = useArticle();
 
   const openDialog = (data: DialogDataType) => {
     setDialogData(data);

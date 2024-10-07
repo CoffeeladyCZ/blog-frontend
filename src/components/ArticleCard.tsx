@@ -43,8 +43,6 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { t } = useTranslation();
 
-  const author = 'Marcela Karafizievová';
-
   const getImage = async (imageId: string) => {
     setIsLoading(true);
     try {
@@ -79,7 +77,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
                 <StyledH4 variant="h4">{article.title}</StyledH4>
               </StyledLink>
               <StyledSmallLightText variant="body2" pb={2}>
-                {author} • {dayjs(article.createdAt).format('DD/MM/YY')}
+                {article.author} • {dayjs(article.createdAt).format('DD/MM/YY')}
               </StyledSmallLightText>
               <Typography variant="body1">{article.perex}</Typography>
             </CardContent>

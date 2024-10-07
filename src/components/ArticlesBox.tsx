@@ -9,7 +9,7 @@ import { RootState } from '../store/store';
 import { setArticleList } from '../store/article';
 import { ArticleType } from '../types/Articles';
 import { StyledSmallLightText, StyledH4, StyledLink } from '../styled/styled';
-import { getArticleList } from '../utils/apiUtils';
+import { useArticle } from '../hooks/useArticle';
 
 import Loading from '../components/Loading';
 
@@ -50,6 +50,7 @@ const RelatedArticlesBox: React.FC = () => {
     (state: RootState) => state.articleList.articleList
   );
   const { t } = useTranslation();
+  const { getArticleList } = useArticle();
 
   useEffect(() => {
     checkArticleList();
