@@ -8,13 +8,17 @@ export function useArticle() {
     if (!supabase) {
       return null;
     }
-    const { data, error } = await supabase.from('articles').select('*').eq('id', articleId).single();
+    const { data, error } = await supabase
+      .from('articles')
+      .select('*')
+      .eq('id', articleId)
+      .single();
     if (error) {
       console.error(error);
       return null;
     }
     return data;
-  }
+  };
 
   const getArticleList = async () => {
     if (!supabase) {
@@ -26,17 +30,17 @@ export function useArticle() {
       return null;
     }
     return data;
-  }
+  };
 
   const createArticleData = async (data: FormDetailType) => {
     if (supabase) {
-      const { error: dbError } = await supabase
-        .from('articles')
-        .insert([data])
+      const { error } = await supabase.from('articles').insert([data]);
 
-      if (dbError) dbError;
+      if (error) {
+        console.error(error);
+      }
     }
   };
 
   return { getArticleDetail, getArticleList, createArticleData };
-};
+}

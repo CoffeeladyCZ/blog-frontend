@@ -51,8 +51,8 @@ const LoginPage: React.FC = () => {
         console.log('redirect');
         navigate('/articles');
         return;
-      } else if (response.error) {
-        setErrorMessage(response.error.response.data.message);
+      } else {
+        setErrorMessage(t('errorMessage.login'));
       }
     } catch (error) {
       console.error(error);
@@ -66,7 +66,6 @@ const LoginPage: React.FC = () => {
         password: dataLogin.password
       });
       if (data.session !== null) {
-        console.log('data', data.session.access_token);
         Cookies.set('token', data.session.access_token);
       }
 

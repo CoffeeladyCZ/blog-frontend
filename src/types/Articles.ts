@@ -1,9 +1,9 @@
 // Default values
 
 export const defaultArticleValues = {
-  articleId: '',
+  article_id: '',
   title: '',
-  imageId: '',
+  image_id: '',
   content: '',
   perex: ''
 };
@@ -72,9 +72,9 @@ export type AlertType = {
 // Form types
 
 export type FormDetailType = {
-  articleId: string;
+  article_id: string;
   title: string;
-  imageId: string | null;
+  image_id: string | null;
   image?: string;
   content?: string;
   perex: string;

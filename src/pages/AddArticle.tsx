@@ -18,7 +18,7 @@ import { Close } from '@mui/icons-material';
 
 import { FormDetailType, defaultArticleValues } from '../types/Articles';
 import { useFileUpload } from '../hooks/useFileUpload';
-import useSupabase from '../hooks/useSupabase';
+// import useSupabase from '../hooks/useSupabase';
 import { useArticle } from '../hooks/useArticle';
 
 import LoginPage from './LoginPage';
@@ -26,20 +26,20 @@ import Loading from '../components/Loading';
 import MediaUploadInput from '../components/MediaUploadInput';
 import Notification from '../components/Notification';
 import MarkdownControlled from '../components/MarkDownControlled';
-// import { updateArticleData } from '../utils/apiUtils';
 
 const AddArticle: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState<boolean>(false);
   const [image, setImage] = useState<string | null>(null);
   const [articleData, setArticleData] = useState<FormDetailType>(defaultArticleValues);
+  const [user, setUser] = useState<string | null>(null);
 
   const { uploadFile, deleteFile, fileUrl, cleanFileInput, uploadedFile, imageId } =
     useFileUpload();
   const { createArticleData } = useArticle();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const supabase = useSupabase();
+  // const supabase = useSupabase();
 
   const methods = useForm<FormDetailType>({
     mode: 'onChange'
@@ -77,29 +77,30 @@ const AddArticle: React.FC = () => {
     if (savedImage) {
       setImage(savedImage.fileUrl);
     }
-    const savedArticle = localStorage.getItem("articleDraft");
+    const savedArticle = localStorage.getItem('articleDraft');
     if (savedArticle) {
       const parsedData = JSON.parse(savedArticle);
       setValue('title', parsedData.title || '');
       setValue('perex', parsedData.perex || '');
       setValue('content', parsedData.content || '');
     }
+
+    const userData = localStorage.getItem('sb-mmoccjwzmjbtmiotkzai-auth-token');
+    if (userData) {
+      const user = JSON.parse(userData);
+      setUser(user.user.email);
+    }
   }, []);
 
   const watchedFields = watch();
 
   useEffect(() => {
-    localStorage.setItem("articleDraft", JSON.stringify(watchedFields));
+    localStorage.setItem('articleDraft', JSON.stringify(watchedFields));
   }, [watchedFields]);
 
   const onSubmit = async (data: FormDetailType) => {
-    data.imageId = imageId;
-    await createArticle(data);
-  };
-
-  const createArticle = async (data: FormDetailType) => {
     setIsLoading(true);
-    const updatedArticleData = { ...data, author: 'Marcela Karafizievová' }; // TODO maybe author from login???
+    const updatedArticleData = { ...data, image_id: imageId, author: user };
     try {
       await createArticleData(updatedArticleData);
       setShowSuccessAlert(true);
