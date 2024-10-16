@@ -7,7 +7,7 @@ import { Grid } from '@mui/material';
 import { StyledBox, StyledGrid, StyledH1 } from '../styled/styled';
 import { RootState } from '../store/store';
 import { setArticleList } from '../store/article';
-import { getArticleList } from '../utils/apiUtils';
+import { useArticle } from '../hooks/useArticle';
 
 import ArticleCard from '../components/ArticleCard';
 
@@ -17,6 +17,7 @@ const RecentArticles: React.FC = () => {
   const dispatch = useDispatch();
   const articles = useSelector((state: RootState) => state.articleList.articleList);
   const { t } = useTranslation();
+  const { getArticleList } = useArticle();
 
   const sortedArticles = [...articles].sort((a, b) => {
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
@@ -50,7 +51,7 @@ const RecentArticles: React.FC = () => {
           sortedArticles &&
           sortedArticles.map((article) => {
             return (
-              <Grid item xs={12} key={article.articleId}>
+              <Grid item xs={12} key={article.id}>
                 <ArticleCard article={article} />
               </Grid>
             );

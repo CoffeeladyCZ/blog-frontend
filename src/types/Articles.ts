@@ -22,22 +22,24 @@ export const defaultArticleDetailValues = {
 // Types
 
 export type ArticleType = {
-  articleId: string;
+  id: string;
+  article_id: string;
   author: string;
   title: string;
   perex: string;
-  imageId: string;
+  image_id: string;
   createdAt: string;
   lastUpdatedAt: string;
 };
 
 export type ArticleDetailTypes = {
-  articleId: string;
+  article_id: string;
+  author: string;
   comments: CommentType[];
   content: string;
-  createdAt: string;
-  imageId: string;
-  lastUpdatedAt: string;
+  created_at: string;
+  image_id: string;
+  last_updated_at: string;
   perex: string;
   title: string;
   image?: string;
@@ -45,13 +47,14 @@ export type ArticleDetailTypes = {
 
 export type ImageType = {
   imageId: string;
-  fileUrl: string;
+  imageUrl: string;
   name: string;
 };
 
 export type DialogDataType = {
   title: string;
-  articleId: number;
+  article_id: string;
+  image_id: string;
 };
 
 export type CommentType = {
@@ -72,10 +75,8 @@ export type AlertType = {
 // Form types
 
 export type FormDetailType = {
-  article_id: string;
   title: string;
   image_id: string | null;
-  image?: string;
   content?: string;
   perex: string;
 };

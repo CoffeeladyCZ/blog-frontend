@@ -8,9 +8,9 @@ import { Card, Container, CardContent, CardMedia, Grid, Typography } from '@mui/
 import { StyledSmallLightText } from '../styled/styled';
 import { styled } from '@mui/system';
 
-import { getDetailArticle } from '../utils/apiUtils';
 import { setArticleDetail } from '../store/articleDetail';
 import { RootState } from '../store/store';
+import { useArticle } from '../hooks/useArticle';
 
 import Loading from '../components/Loading';
 import RelatedArticlesBox from '../components/ArticlesBox';
@@ -43,14 +43,13 @@ const ArticleDetail: React.FC = () => {
 
   const dispatch = useDispatch();
   const articleDetail = useSelector((state: RootState) => state.articleDetail.articleDetail);
-
-  const author = 'Marcela Karafizievová';
   const { id } = useParams();
+  const { getArticleDetail } = useArticle();
 
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const article = await getDetailArticle(id);
+      const article = await getArticleDetail(id);
       if (article) {
         dispatch(setArticleDetail(article));
       }
@@ -80,7 +79,7 @@ const ArticleDetail: React.FC = () => {
               <CardContent>
                 <StyledH1 pb={2}>{articleDetail.title}</StyledH1>
                 <StyledSmallLightText variant="body2">
-                  {author} • {dayjs(articleDetail.lastUpdatedAt).format('DD/MM/YY')}
+                  {articleDetail.author} • {dayjs(articleDetail.last_updated_at).format('DD/MM/YY')}
                 </StyledSmallLightText>
               </CardContent>
               <CardContent>{articleDetail.perex}</CardContent>
@@ -96,7 +95,7 @@ const ArticleDetail: React.FC = () => {
                   height={700}
                 />
               </CardContent>
-              <CommentsBox comments={articleDetail.comments} articleId={articleDetail.articleId} />
+              <CommentsBox comments={articleDetail.comments} articleId={articleDetail.article_id} />
             </StyledCard>
           </Grid>
           <Grid item xs={12} md={4}>

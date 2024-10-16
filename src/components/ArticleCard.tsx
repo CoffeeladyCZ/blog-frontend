@@ -16,8 +16,8 @@ import {
 import { styled } from '@mui/material/styles';
 
 import { StyledH4, StyledSmallLightText, StyledLink } from '../styled/styled';
-import { getImageData } from '../utils/apiUtils';
 import { ArticleType } from '../types/Articles';
+import { useFileUpload } from '../hooks/useFileUpload';
 
 import Loading from '../components/Loading';
 
@@ -41,13 +41,17 @@ const StyledBox = styled(Box)`
 const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
   const [image, setImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { t } = useTranslation();
 
-  const getImage = async (imageId: string) => {
+  const { t } = useTranslation();
+  const { getImage } = useFileUpload();
+
+  const setImageUrl = async (imageId: string) => {
     setIsLoading(true);
     try {
-      const imageResponse = await getImageData(imageId);
-      setImage(imageResponse);
+      const imageUrl = await getImage(imageId);
+      if (imageUrl) {
+        setImage(imageUrl);
+      }
     } catch (error) {
       console.error(error);
     } finally {
@@ -56,8 +60,8 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
   };
 
   useLayoutEffect(() => {
-    if (article.imageId) {
-      getImage(article.imageId);
+    if (article.image_id) {
+      setImageUrl(article.image_id);
     }
     setImage(null);
   }, [article]);
@@ -73,7 +77,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
         <Grid item md={8}>
           <StyledBox>
             <CardContent>
-              <StyledLink to={`/article/${article.articleId}`}>
+              <StyledLink to={`/article/${article.article_id}`}>
                 <StyledH4 variant="h4">{article.title}</StyledH4>
               </StyledLink>
               <StyledSmallLightText variant="body2" pb={2}>
@@ -82,7 +86,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
               <Typography variant="body1">{article.perex}</Typography>
             </CardContent>
             <CardActions>
-              <Link to={`/article/${article.articleId}`}>
+              <Link to={`/article/${article.article_id}`}>
                 <Button size="small">{t('readWholeArticle')}</Button>
               </Link>
             </CardActions>

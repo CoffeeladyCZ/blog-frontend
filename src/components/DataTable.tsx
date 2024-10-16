@@ -26,7 +26,7 @@ const DataTable: React.FC<DataTablePropsType> = ({
   articles,
   loading
 }: DataTablePropsType) => {
-  const getRowId = (articles: any) => articles.articleId;
+  const getRowId = (articles: any) => articles.id;
 
   const { t } = useTranslation();
 

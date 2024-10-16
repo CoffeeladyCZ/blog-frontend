@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next';
 
 import { RootState } from '../store/store';
 import { setArticleList } from '../store/article';
-import { httpDelete } from '../utils/axiosService';
 import { StyledBox } from '../styled/styled';
 
 import { Button, Grid, IconButton, SvgIcon } from '@mui/material';
@@ -23,6 +22,7 @@ import { useArticle } from '../hooks/useArticle';
 
 import DataTable from '../components/DataTable';
 import SimpleDialog from '../components/SimpleDialog';
+import Notification from '../components/Notification';
 
 const StyledGrid = styled(Grid)`
   max-width: 1152px;
@@ -31,12 +31,21 @@ const StyledGrid = styled(Grid)`
 const MyArticles: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false);
-  const [dialogData, setDialogData] = useState<DialogDataType>({ title: '', articleId: 0 });
+  const [dialogData, setDialogData] = useState<DialogDataType>({
+    title: '',
+    article_id: '',
+    image_id: ''
+  });
+  const [alert, setAlert] = useState<{
+    show: boolean;
+    message: string;
+    severity: 'success' | 'error' | 'warning' | 'info';
+  }>({ show: false, message: '', severity: 'success' });
 
   const dispatch = useDispatch();
   const articles = useSelector((state: RootState) => state.articleList.articleList);
   const { t } = useTranslation();
-  const { getArticleList } = useArticle();
+  const { getArticleList, deleteArticle } = useArticle();
 
   const openDialog = (data: DialogDataType) => {
     setDialogData(data);
@@ -61,16 +70,17 @@ const MyArticles: React.FC = () => {
     }
   };
 
-  const deleteArticle = async (id: number) => {
+  const handleDeleteArticle = async (articleId: string, imageId: string) => {
     setIsLoading(true);
     try {
-      await httpDelete(`/articles/${id}`);
+      await deleteArticle(articleId, imageId);
       setIsOpenDialog(false);
       await fetchArticleList();
     } catch (error) {
-      console.error(error);
+      setAlert({ show: true, message: String(error), severity: 'error' });
     } finally {
       setIsLoading(false);
+      setAlert({ show: true, message: 'Článek byl úspěšné smazán', severity: 'success' });
     }
   };
 
@@ -119,7 +129,7 @@ const MyArticles: React.FC = () => {
               isOpenDialog={isOpenDialog}
               closeDialog={closeDialog}
               dialogData={dialogData}
-              deleteArticle={deleteArticle}
+              deleteArticle={() => handleDeleteArticle(dialogData.article_id, dialogData.image_id)}
             />
           )}
         </>
@@ -128,23 +138,33 @@ const MyArticles: React.FC = () => {
   ];
 
   return (
-    <StyledBox data-testid="box_myArticles">
-      <StyledGrid container rowSpacing={3}>
-        <Grid container justifyContent="space-between" spacing={0}>
-          <Grid item xs={12} sm="auto">
-            <StyledH1 variant="h1">{t('myArticles')}</StyledH1>
+    <>
+      {alert && (
+        <Notification
+          severity={alert.severity}
+          message={alert.message}
+          open={alert.show}
+          onClose={() => setAlert({ ...alert, show: false })}
+        />
+      )}
+      <StyledBox data-testid="box_myArticles">
+        <StyledGrid container rowSpacing={3}>
+          <Grid container justifyContent="space-between" spacing={0}>
+            <Grid item xs={12} sm="auto">
+              <StyledH1 variant="h1">{t('myArticles')}</StyledH1>
+            </Grid>
+            <StyledButtonGrid item xs={12} sm={3}>
+              <Link to={'/article/new'}>
+                <Button variant="contained">{t('newArticle')}</Button>
+              </Link>
+            </StyledButtonGrid>
           </Grid>
-          <StyledButtonGrid item xs={12} sm={3}>
-            <Link to={'/article/new'}>
-              <Button variant="contained">{t('newArticle')}</Button>
-            </Link>
-          </StyledButtonGrid>
-        </Grid>
-        <Grid item xs={12}>
-          <DataTable headerColumns={columns} articles={articles} loading={isLoading} />
-        </Grid>
-      </StyledGrid>
-    </StyledBox>
+          <Grid item xs={12}>
+            <DataTable headerColumns={columns} articles={articles} loading={isLoading} />
+          </Grid>
+        </StyledGrid>
+      </StyledBox>
+    </>
   );
 };
 

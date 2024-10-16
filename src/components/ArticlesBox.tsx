@@ -82,10 +82,10 @@ const RelatedArticlesBox: React.FC = () => {
       {articleList &&
         articleList.map((item: ArticleType) => (
           <ArticleBox
-            key={item.articleId}
+            key={item.article_id}
             title={item.title}
             perex={item.perex}
-            articleId={item.articleId}
+            articleId={item.article_id}
           />
         ))}
     </StyledBox>

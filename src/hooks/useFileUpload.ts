@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { httpDelete } from '../utils/axiosService';
 
-import useSupabase from '../hooks/useSupabase';
+import { supabase } from '../supabaseClient';
 
 export function useFileUpload() {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
@@ -9,54 +8,37 @@ export function useFileUpload() {
   const [imageId, setImageId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const supabase = useSupabase();
-
-  const uploadFile = async (file: File | null) => {
+  const uploadFile = async (file: File) => {
     setIsLoading(true);
     try {
       setUploadedFile(file);
+      const formData = new FormData();
+      formData.append('image', file);
 
-      // if exist image_id in localStorage use it
-      const storedImageId = localStorage.getItem('image_id');
-      if (storedImageId) {
-        setImageId(storedImageId);
-        setIsLoading(false);
+      if (!supabase) return;
+
+      const fileName = file.name;
+
+      // remove previous image from storage
+      const savedImage = localStorage.getItem('image');
+      if (savedImage) {
+        const previousImage = JSON.parse(savedImage);
+        await supabase.storage.from('images').remove([previousImage.imageId]);
       }
 
-      if (file) {
-        const formData = new FormData();
-        formData.append('image', file);
+      const { data } = await supabase.storage.from('images').upload(fileName, file);
+      const { data: dataUrl } = supabase.storage.from('images').getPublicUrl(fileName);
 
-        if (supabase) {
-          const fileName = file.name;
-          const { data } = await supabase.storage.from('images').upload(fileName, file);
-          if (data) {
-            setImageId(data.id);
-          }
+      if (data) {
+        setImageId(data.id);
+        setFileUrl(dataUrl.publicUrl);
 
-          const { data: dataUrl } = supabase.storage.from('images').getPublicUrl(fileName);
-
-          const publicUrl = dataUrl.publicUrl;
-          setFileUrl(publicUrl);
-
-          const localStorageData = {
-            imageId: data?.id,
-            fileUrl: dataUrl.publicUrl
-          };
-          localStorage.setItem('image', JSON.stringify(localStorageData));
-
-          // set image to datatable in Supabase
-          const { error: dbError } = await supabase
-            .from('images')
-            .insert([{ name: fileName }])
-            .select('image_id')
-            .single();
-
-          if (dbError) {
-            console.error('Chyba při ukládání obrázku do DB:', dbError.message);
-            return;
-          }
-        }
+        const localStorageData = {
+          imageId: data.id,
+          imageUrl: dataUrl.publicUrl,
+          name: data.path
+        };
+        localStorage.setItem('image', JSON.stringify(localStorageData));
       }
     } catch (error) {
       console.error(error);
@@ -65,18 +47,31 @@ export function useFileUpload() {
     }
   };
 
-  const deleteFile = async (imageId: string | null) => {
-    try {
-      if (imageId) {
-        await httpDelete(`/images/${imageId}`);
+  const deleteFile = async (imageId: string) => {
+    if (supabase) {
+      try {
+        const { error: dbError } = await supabase
+          .from('images')
+          .delete()
+          .match({ image_id: imageId });
+
+        if (dbError) {
+          console.error('Chyba při mazání obrázku z databáze:', dbError.message);
+          return;
+        }
+
+        const { error: storageError } = await supabase.storage.from('images').remove([imageId]);
+
+        localStorage.removeItem('image');
+
+        if (storageError) {
+          console.error('Chyba při mazání souboru ze storage:', storageError.message);
+          return;
+        }
+      } catch (error) {
+        console.error('Chyba při mazání obrázku:', error);
       }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
     }
-    setImageId(null);
-    setUploadedFile(null);
   };
 
   const cleanFileInput = () => {
@@ -88,6 +83,20 @@ export function useFileUpload() {
     setImageId(imageId);
   };
 
+  const getImage = async (imageId: string) => {
+    if (!supabase) return;
+    const { data } = await supabase.from('images').select('name').eq('image_id', imageId).single();
+    if (data) {
+      return getImageUrl(data.name, 'images');
+    }
+  };
+
+  const getImageUrl = (imageName: string, bucket: string) => {
+    const { data } = supabase.storage.from(bucket).getPublicUrl(imageName);
+
+    return data.publicUrl;
+  };
+
   return {
     uploadedFile,
     imageId,
@@ -96,6 +105,8 @@ export function useFileUpload() {
     uploadFile,
     deleteFile,
     fileUrl,
-    setFeaturedImage
+    setFeaturedImage,
+    getImageUrl,
+    getImage
   };
 }

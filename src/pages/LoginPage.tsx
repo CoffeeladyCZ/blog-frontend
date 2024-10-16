@@ -3,6 +3,7 @@ import { useForm, Controller, FormProvider } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
 
 import { Button, Card, Grid, TextField, CardContent, CardActions } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -10,8 +11,7 @@ import { styled } from '@mui/material/styles';
 import { setLogin } from '../store/login';
 import { FormLoginType } from '../types/Articles';
 import { StyledH3, StyledErrorMessage } from '../styled/styled';
-import useSupabase from '../hooks/useSupabase';
-import Cookies from 'js-cookie';
+import { supabase } from '../supabaseClient';
 
 const StyledCard = styled(Card)`
   width: 368px;
@@ -31,7 +31,6 @@ const LoginPage: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const supabase = useSupabase();
 
   const methods = useForm<FormLoginType>({
     mode: 'onChange'
@@ -48,7 +47,6 @@ const LoginPage: React.FC = () => {
       const response = await loginUser(data);
       if (response.success) {
         dispatch(setLogin(true));
-        console.log('redirect');
         navigate('/articles');
         return;
       } else {

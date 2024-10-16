@@ -1,4 +1,4 @@
-import useSupabase from '../hooks/useSupabase';
+import useSupabase from '../supabaseClient';
 import { useTranslation } from 'react-i18next';
 
 export function useImage() {

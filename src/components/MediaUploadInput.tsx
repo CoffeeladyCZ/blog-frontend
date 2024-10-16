@@ -7,7 +7,7 @@ import { LoadingButton } from '@mui/lab';
 import { styled } from '@mui/material/styles';
 
 type MediaUploadFormProps = {
-  onFileUpload: (file: File | null) => void;
+  onFileUpload: (file: File) => void;
   isLoading: boolean;
 };
 
@@ -30,7 +30,9 @@ const MediaUploadInput: React.FC<MediaUploadFormProps> = ({ onFileUpload, isLoad
   };
 
   const handleUpload = () => {
-    onFileUpload(selectedFile);
+    if (selectedFile) {
+      onFileUpload(selectedFile);
+    }
   };
 
   return (

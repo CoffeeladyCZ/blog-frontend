@@ -16,9 +16,8 @@ import {
 } from '../styled/styled';
 import { Close } from '@mui/icons-material';
 
-import { FormDetailType, defaultArticleValues } from '../types/Articles';
+import { FormDetailType, ImageType } from '../types/Articles';
 import { useFileUpload } from '../hooks/useFileUpload';
-// import useSupabase from '../hooks/useSupabase';
 import { useArticle } from '../hooks/useArticle';
 
 import LoginPage from './LoginPage';
@@ -30,16 +29,13 @@ import MarkdownControlled from '../components/MarkDownControlled';
 const AddArticle: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState<boolean>(false);
-  const [image, setImage] = useState<string | null>(null);
-  const [articleData, setArticleData] = useState<FormDetailType>(defaultArticleValues);
+  const [image, setImage] = useState<ImageType | null>(null);
   const [user, setUser] = useState<string | null>(null);
 
-  const { uploadFile, deleteFile, fileUrl, cleanFileInput, uploadedFile, imageId } =
-    useFileUpload();
+  const { uploadFile, cleanFileInput } = useFileUpload();
   const { createArticleData } = useArticle();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  // const supabase = useSupabase();
 
   const methods = useForm<FormDetailType>({
     mode: 'onChange'
@@ -54,28 +50,12 @@ const AddArticle: React.FC = () => {
     watch
   } = methods;
 
-  // useEffect(() => {
-  //   if (imageId) {
-  //     const loadImage = async () => {
-  //       try {
-  //         const base64Image = await getImageData(imageId);
-  //         setImage(base64Image);
-  //         setShowSuccessAlert(true);
-  //       } catch (error) {
-  //         console.error(error);
-  //       }
-  //     };
-  //     loadImage();
-  //   }
-  //   setImage(null);
-  // }, [imageId]);
-
   // get data from localStorage after refresh if exists
   useEffect(() => {
     const data = localStorage.getItem('image');
     const savedImage = data ? JSON.parse(data) : null;
     if (savedImage) {
-      setImage(savedImage.fileUrl);
+      setImage(savedImage);
     }
     const savedArticle = localStorage.getItem('articleDraft');
     if (savedArticle) {
@@ -92,27 +72,46 @@ const AddArticle: React.FC = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const data = localStorage.getItem('image');
+    const savedImage = data ? JSON.parse(data) : null;
+    if (savedImage) {
+      setImage(savedImage);
+    }
+  }, [uploadFile]);
+
   const watchedFields = watch();
 
   useEffect(() => {
-    localStorage.setItem('articleDraft', JSON.stringify(watchedFields));
+    if (Object.keys(watchedFields).length > 0) {
+      localStorage.setItem('articleDraft', JSON.stringify(watchedFields));
+    }
   }, [watchedFields]);
 
   const onSubmit = async (data: FormDetailType) => {
     setIsLoading(true);
-    const updatedArticleData = { ...data, image_id: imageId, author: user };
-    try {
-      await createArticleData(updatedArticleData);
-      setShowSuccessAlert(true);
-      cleanFileInput();
-      reset();
-      localStorage.removeItem('articleDraft');
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-      navigate('/articles');
+    if (image) {
+      const updatedArticleData = { ...data, image_id: image.imageId, author: user };
+
+      try {
+        await createArticleData(updatedArticleData, image);
+        setShowSuccessAlert(true);
+        cleanFileInput();
+        reset();
+        localStorage.removeItem('articleDraft');
+        localStorage.removeItem('image');
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+        navigate('/articles');
+      }
     }
+  };
+
+  const deleteImage = async () => {
+    setImage(null);
+    localStorage.removeItem('image');
   };
 
   if (!Cookies.get('token')) return <LoginPage />;
@@ -135,14 +134,9 @@ const AddArticle: React.FC = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <StyledArticleGrid container rowSpacing={4}>
             <Grid container justifyContent="space-between" spacing={0}>
-              <Grid item xs={4}>
+              <Grid item xs={12}>
                 <StyledH1 variant="h1">{t('newArticle')}</StyledH1>
               </Grid>
-              <StyledButtonGrid item xs={3}>
-                <Button variant="contained" type="submit" data-testid="addArticleButton">
-                  {t('publishArticle')}
-                </Button>
-              </StyledButtonGrid>
             </Grid>
             <Grid item xs={12}>
               <Controller
@@ -187,16 +181,13 @@ const AddArticle: React.FC = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              {articleData.image && fileUrl && imageId && (
+              {image && (
                 <div>
                   <p>{t('featuredImage')}:</p>
                   <StyledImageContainer>
-                    <StyledImg src={fileUrl} alt="Uploaded" />
+                    <StyledImg src={image.imageUrl} alt="Uploaded" />
                     <Tooltip title={t('tooltip.deleteFile')}>
-                      <StyledIconImageButton
-                        size="small"
-                        color="primary"
-                        onClick={() => deleteFile(imageId)}>
+                      <StyledIconImageButton size="small" color="primary" onClick={deleteImage}>
                         <Close />
                       </StyledIconImageButton>
                     </Tooltip>
@@ -205,12 +196,24 @@ const AddArticle: React.FC = () => {
               )}
             </Grid>
             <Grid item xs={12}>
-              {!uploadedFile && (
-                <MediaUploadInput onFileUpload={uploadFile} isLoading={isLoading} />
-              )}
+              {!image && <MediaUploadInput onFileUpload={uploadFile} isLoading={isLoading} />}
             </Grid>
             <Grid item xs={12}>
               <MarkdownControlled />
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container justifyContent="end" spacing={0}>
+                <StyledButtonGrid item xs={3}>
+                  <Button variant="outlined" type="button" data-testid="cancelArticleButton">
+                    {t('cancel')}
+                  </Button>
+                </StyledButtonGrid>
+                <StyledButtonGrid item xs={3}>
+                  <Button variant="contained" type="submit" data-testid="addArticleButton">
+                    {t('publishArticle')}
+                  </Button>
+                </StyledButtonGrid>
+              </Grid>
             </Grid>
           </StyledArticleGrid>
         </form>
