@@ -1,7 +1,7 @@
 /// <reference types="vite-plugin-svgr/client" />
 
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { useSelector, useDispatch } from 'react-redux';
 import dayjs from 'dayjs';

@@ -1,5 +1,5 @@
 import { Box, Button, Container, Grid, Typography, IconButton } from '@mui/material';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router';
 import { styled } from '@mui/material/styles';
 
 export const StyledContainer = styled(Container)`

@@ -1,5 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
-
+import { Routes, Route } from 'react-router';
 import { Container } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
@@ -18,7 +17,7 @@ const StyledRouterContainer = styled(Container)`
   margin-top: 100px;
 `;
 
-const Router = () => {
+export const Router = () => {
   return (
     <StyledRouterContainer>
       <Routes>
@@ -37,5 +36,3 @@ const Router = () => {
     </StyledRouterContainer>
   );
 };
-
-export default Router;

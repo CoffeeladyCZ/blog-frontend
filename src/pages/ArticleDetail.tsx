@@ -1,5 +1,5 @@
 import React, { useState, useLayoutEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import dayjs from 'dayjs';
 import MarkdownEditor from '@uiw/react-md-editor';
 import { useDispatch, useSelector } from 'react-redux';

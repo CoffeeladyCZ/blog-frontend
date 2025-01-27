@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router';
 import Cookies from 'js-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';

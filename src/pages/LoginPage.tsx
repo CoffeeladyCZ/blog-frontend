@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm, Controller, FormProvider } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 

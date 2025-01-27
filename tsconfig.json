@@ -12,7 +12,7 @@
       "node",
       "@mui/material",
       "@emotion/styled",
-      "react-router-dom",
+      "react-router",
       "react",
       "vite/client"
     ],
